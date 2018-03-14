@@ -51,14 +51,19 @@
         </dependency>
         -->
         <dependency>
-            <groupId>group9</groupId>
-            <artifactId>Common</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>LibGDXLibary</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>group9</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>Core</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>Common</artifactId>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 

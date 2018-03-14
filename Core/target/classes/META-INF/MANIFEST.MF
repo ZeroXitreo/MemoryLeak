@@ -3,7 +3,7 @@ OpenIDE-Module-Install: group9/core/Installer.class
 OpenIDE-Module-Localizing-Bundle: group9/core/Bundle.properties
 OpenIDE-Module-Specification-Version: 1.0
 OpenIDE-Module-Implementation-Version: 1.0-20180314
-OpenIDE-Module-Build-Version: 201803141253
+OpenIDE-Module-Build-Version: 201803141321
 OpenIDE-Module: com.group9.Core
 OpenIDE-Module-Public-Packages: -
 OpenIDE-Module-Requires: org.openide.modules.ModuleFormat1

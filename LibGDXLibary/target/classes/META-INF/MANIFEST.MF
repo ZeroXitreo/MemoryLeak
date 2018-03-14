@@ -3,7 +3,7 @@ OpenIDE-Module-Localizing-Bundle: group9/libgdxlibary/Bundle.propertie
  s
 OpenIDE-Module-Specification-Version: 1.0
 OpenIDE-Module-Implementation-Version: 1.0-20180314
-OpenIDE-Module-Build-Version: 201803141253
+OpenIDE-Module-Build-Version: 201803141320
 OpenIDE-Module: com.group9.LibGDXLibary
 OpenIDE-Module-Public-Packages: com.badlogic.gdx.**
 OpenIDE-Module-Requires: org.openide.modules.ModuleFormat1

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><module codename="com.group9.LibGDXLibary">
-    <module_version install_time="1521032028557" last="true" origin="installer" specification_version="1.0">
+    <module_version install_time="1521033659650" last="true" origin="installer" specification_version="1.0">
         <file crc="3135239772" name="config/Modules/com-group9-LibGDXLibary.xml"/>
-        <file crc="3714141847" name="modules/com-group9-LibGDXLibary.jar"/>
+        <file crc="3582048973" name="modules/com-group9-LibGDXLibary.jar"/>
         <file crc="2488665527" name="modules/ext/com.group9.LibGDXLibary/com-badlogicgames-gdx/gdx-backend-lwjgl.jar"/>
         <file crc="2933476186" name="modules/ext/com.group9.LibGDXLibary/com-badlogicgames-gdx/gdx-box2d-platform-natives-desktop.jar"/>
         <file crc="3989081260" name="modules/ext/com.group9.LibGDXLibary/com-badlogicgames-gdx/gdx-box2d.jar"/>
