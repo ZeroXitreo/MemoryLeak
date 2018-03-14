@@ -1,22 +1,11 @@
-<<<<<<< HEAD
-platform=1521031109943
-cluster.bin=1521031109939
-cluster.etc=1521031109941
-cluster.memoryleak=1521031109942
-cluster.platform=1521031109943
-user=1521031109943
-=======
-platform=1521030050176
-cluster.bin=1521030050173
-cluster.etc=1521030050174
-cluster.extra=1521030050174
-cluster.java=1521030050175
-cluster.memoryleak=1521030050175
-cluster.platform=1521030050176
-user=1521030050176
->>>>>>> 6fc7a9061ea8f44e232008baa96e7a594e5fcf1e
+platform=1521032210455
+cluster.bin=1521032210453
+cluster.etc=1521032210454
+cluster.memoryleak=1521032210455
+cluster.platform=1521032210455
+user=1521032210455
 crc=7
-locale=en_US
+locale=da_DK
 branding=memoryleak
 java.version=1.8.0_121
 java.vm.version=25.121-b13
