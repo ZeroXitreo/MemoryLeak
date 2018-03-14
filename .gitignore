@@ -29,6 +29,7 @@ application/target/
 /application/target/*
 application/target/*
 /Core/target/
+/LibGDXLibary/target/
 <<<<<<< HEAD
 /Common/target/
 =======
