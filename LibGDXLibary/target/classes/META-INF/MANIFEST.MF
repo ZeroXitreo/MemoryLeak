@@ -1,0 +1,44 @@
+Manifest-Version: 1.0
+OpenIDE-Module-Localizing-Bundle: group9/libgdxlibary/Bundle.propertie
+ s
+OpenIDE-Module-Specification-Version: 1.0.1
+OpenIDE-Module-Implementation-Version: 1.0.1-20180314
+OpenIDE-Module-Build-Version: 201803141131
+OpenIDE-Module: group9.LibGDXLibary
+OpenIDE-Module-Public-Packages: com.badlogic.gdx.**
+OpenIDE-Module-Requires: org.openide.modules.ModuleFormat1
+OpenIDE-Module-Display-Category: group9
+OpenIDE-Module-Name: LibGDXLibary
+OpenIDE-Module-Short-Description: <undefined>
+OpenIDE-Module-Long-Description: <undefined>
+X-Class-Path: ext/group9.LibGDXLibary/com-badlogicgames-gdx/gdx.jar ex
+ t/group9.LibGDXLibary/com-badlogicgames-gdx/gdx-platform-natives-desk
+ top.jar ext/group9.LibGDXLibary/com-badlogicgames-gdx/gdx-backend-lwj
+ gl.jar ext/group9.LibGDXLibary/org-lwjgl-lwjgl/lwjgl.jar ext/group9.L
+ ibGDXLibary/org-lwjgl-lwjgl/lwjgl-platform-natives-windows.jar ext/gr
+ oup9.LibGDXLibary/org-lwjgl-lwjgl/lwjgl-platform-natives-linux.jar ex
+ t/group9.LibGDXLibary/org-lwjgl-lwjgl/lwjgl-platform-natives-osx.jar 
+ ext/group9.LibGDXLibary/net-java-jinput/jinput.jar ext/group9.LibGDXL
+ ibary/net-java-jutils/jutils.jar ext/group9.LibGDXLibary/org-lwjgl-lw
+ jgl/lwjgl_util.jar ext/group9.LibGDXLibary/com-badlogicgames-jlayer/j
+ layer.jar ext/group9.LibGDXLibary/org-jcraft/jorbis.jar ext/group9.Li
+ bGDXLibary/com-badlogicgames-gdx/gdx-box2d.jar ext/group9.LibGDXLibar
+ y/com-badlogicgames-gdx/gdx-box2d-platform-natives-desktop.jar ext/gr
+ oup9.LibGDXLibary/com-badlogicgames-gdx/gdx-freetype.jar ext/group9.L
+ ibGDXLibary/com-badlogicgames-gdx/gdx-freetype-platform-natives-deskt
+ op.jar
+Maven-Class-Path: com.badlogicgames.gdx:gdx:1.5.0 com.badlogicgames.gd
+ x:gdx-platform:1.5.0:natives-desktop com.badlogicgames.gdx:gdx-backen
+ d-lwjgl:1.5.0 org.lwjgl.lwjgl:lwjgl:2.9.1 org.lwjgl.lwjgl:lwjgl-platf
+ orm:2.9.1:natives-windows org.lwjgl.lwjgl:lwjgl-platform:2.9.1:native
+ s-linux org.lwjgl.lwjgl:lwjgl-platform:2.9.1:natives-osx net.java.jin
+ put:jinput:2.0.5 net.java.jutils:jutils:1.0.0 org.lwjgl.lwjgl:lwjgl_u
+ til:2.9.1 com.badlogicgames.jlayer:jlayer:1.0.1-gdx org.jcraft:jorbis
+ :0.0.17 com.badlogicgames.gdx:gdx-box2d:1.5.0 com.badlogicgames.gdx:g
+ dx-box2d-platform:1.5.0:natives-desktop com.badlogicgames.gdx:gdx-fre
+ etype:1.5.0 com.badlogicgames.gdx:gdx-freetype-platform:1.5.0:natives
+ -desktop
+OpenIDE-Module-Module-Dependencies: org.netbeans.api.annotations.commo
+ n/1 > 1.27.1, org.openide.modules > 7.48.1, org.openide.util.ui > 9.6
+ .1
+

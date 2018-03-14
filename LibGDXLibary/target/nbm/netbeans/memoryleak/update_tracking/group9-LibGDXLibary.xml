@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="group9.LibGDXLibary">
+    <module_version install_time="1521027081344" last="true" origin="installer" specification_version="1.0.1">
+        <file crc="3849179845" name="config/Modules/group9-LibGDXLibary.xml"/>
+        <file crc="2488665527" name="modules/ext/group9.LibGDXLibary/com-badlogicgames-gdx/gdx-backend-lwjgl.jar"/>
+        <file crc="2933476186" name="modules/ext/group9.LibGDXLibary/com-badlogicgames-gdx/gdx-box2d-platform-natives-desktop.jar"/>
+        <file crc="3989081260" name="modules/ext/group9.LibGDXLibary/com-badlogicgames-gdx/gdx-box2d.jar"/>
+        <file crc="1825961012" name="modules/ext/group9.LibGDXLibary/com-badlogicgames-gdx/gdx-freetype-platform-natives-desktop.jar"/>
+        <file crc="2089937641" name="modules/ext/group9.LibGDXLibary/com-badlogicgames-gdx/gdx-freetype.jar"/>
+        <file crc="456878805" name="modules/ext/group9.LibGDXLibary/com-badlogicgames-gdx/gdx-platform-natives-desktop.jar"/>
+        <file crc="1015876392" name="modules/ext/group9.LibGDXLibary/com-badlogicgames-gdx/gdx.jar"/>
+        <file crc="1146210713" name="modules/ext/group9.LibGDXLibary/com-badlogicgames-jlayer/jlayer.jar"/>
+        <file crc="426864957" name="modules/ext/group9.LibGDXLibary/net-java-jinput/jinput.jar"/>
+        <file crc="1529865491" name="modules/ext/group9.LibGDXLibary/net-java-jutils/jutils.jar"/>
+        <file crc="2846045197" name="modules/ext/group9.LibGDXLibary/org-jcraft/jorbis.jar"/>
+        <file crc="3894734527" name="modules/ext/group9.LibGDXLibary/org-lwjgl-lwjgl/lwjgl-platform-natives-linux.jar"/>
+        <file crc="2888251747" name="modules/ext/group9.LibGDXLibary/org-lwjgl-lwjgl/lwjgl-platform-natives-osx.jar"/>
+        <file crc="1629828147" name="modules/ext/group9.LibGDXLibary/org-lwjgl-lwjgl/lwjgl-platform-natives-windows.jar"/>
+        <file crc="1810775593" name="modules/ext/group9.LibGDXLibary/org-lwjgl-lwjgl/lwjgl.jar"/>
+        <file crc="1003691195" name="modules/ext/group9.LibGDXLibary/org-lwjgl-lwjgl/lwjgl_util.jar"/>
+        <file crc="2254309" name="modules/group9-LibGDXLibary.jar"/>
+    </module_version>
+</module>
