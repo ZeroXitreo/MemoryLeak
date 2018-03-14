@@ -50,3 +50,16 @@ application/target/memoryleak/platform/update_tracking/org-openide-util.xml
 application/target/test-classes/.netbeans_automatic_build
 application/target/userdir/lock
 application/target/userdir/var/cache/lastModified/all-checksum.txt
+application/target/memoryleak/memoryleak/update_tracking/com-group9-MemoryLeak-branding.xml
+application/target/memoryleak/platform/update_tracking/org-netbeans-api-annotations-common.xml
+application/target/memoryleak/platform/update_tracking/org-netbeans-bootstrap.xml
+application/target/memoryleak/platform/update_tracking/org-netbeans-core-startup-base.xml
+application/target/memoryleak/platform/update_tracking/org-netbeans-core-startup.xml
+application/target/memoryleak/platform/update_tracking/org-netbeans-libs-asm.xml
+application/target/memoryleak/platform/update_tracking/org-openide-filesystems.xml
+application/target/memoryleak/platform/update_tracking/org-openide-modules.xml
+application/target/memoryleak/platform/update_tracking/org-openide-util-lookup.xml
+application/target/memoryleak/platform/update_tracking/org-openide-util-ui.xml
+application/target/memoryleak/platform/update_tracking/org-openide-util.xml
+application/target/userdir/lock
+application/target/userdir/var/cache/lastModified/all-checksum.txt
