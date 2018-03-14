@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 OpenIDE-Module-Localizing-Bundle: group9/common/Bundle.properties
 OpenIDE-Module-Specification-Version: 1.0.1
 OpenIDE-Module-Implementation-Version: 1.0.1-20180314
-OpenIDE-Module-Build-Version: 201803141157
+OpenIDE-Module-Build-Version: 201803141238
 OpenIDE-Module: group9.Common
 OpenIDE-Module-Public-Packages: data.*, services.*, util.*
 OpenIDE-Module-Requires: org.openide.modules.ModuleFormat1

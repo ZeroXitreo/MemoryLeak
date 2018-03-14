@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="com.group9.MemoryLeak.branding">
+    <module_version install_time="1521031098854" last="true" origin="installer" specification_version="1.0">
+        <file crc="990757052" name="config/Modules/com-group9-MemoryLeak-branding.xml"/>
+        <file crc="4173313732" name="modules/com-group9-MemoryLeak-branding.jar"/>
+    </module_version>
+</module>

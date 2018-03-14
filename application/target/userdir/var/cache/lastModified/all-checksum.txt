@@ -1,0 +1,11 @@
+platform=1521031109943
+cluster.bin=1521031109939
+cluster.etc=1521031109941
+cluster.memoryleak=1521031109942
+cluster.platform=1521031109943
+user=1521031109943
+crc=7
+locale=da_DK
+branding=memoryleak
+java.version=1.8.0_121
+java.vm.version=25.121-b13
