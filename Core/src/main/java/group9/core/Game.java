@@ -1,6 +1,6 @@
 
 
-package com.group9.core;
+package group9.core;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
