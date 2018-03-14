@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><module codename="com.group9.Common">
+    <module_version install_time="1521029921958" last="true" origin="installer" specification_version="1.0">
+        <file crc="3276689114" name="config/Modules/com-group9-Common.xml"/>
+        <file crc="2345557524" name="modules/com-group9-Common.jar"/>
+    </module_version>
+</module>
