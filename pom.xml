@@ -59,6 +59,9 @@
     <modules>
         <module>branding</module>
         <module>application</module>
+        <module>LibGDXLibary</module>
+        <module>Core</module>
+        <module>Common</module>
     </modules>
 
     <properties>
