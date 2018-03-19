@@ -5,8 +5,9 @@
  */
 package com.group9.player;
 
-import data.Entity;
+
 import data.GameData;
+import data.MovableEntity;
 import data.World;
 import services.iGamePluginServices;
 
@@ -16,7 +17,7 @@ import services.iGamePluginServices;
  */
 public class PlayerPlugin implements iGamePluginServices
 {
-	private Entity player;
+	private MovableEntity player;
 	
 	@Override
 	public void start(GameData gameData, World world)
@@ -24,8 +25,8 @@ public class PlayerPlugin implements iGamePluginServices
 		player = createPlayer(gameData);
 		world.addEntity(player);
 	}
-	private Entity createPlayer(GameData gameData){
-		Entity playerCharacter = new Player();
+	private MovableEntity createPlayer(GameData gameData){
+		MovableEntity playerCharacter = new Player();
 		return playerCharacter;
 	}
 	@Override

@@ -5,7 +5,8 @@
  */
 package com.group9.player;
 
-import data.Entity;
+
+import data.MovableEntity;
 
 
 
@@ -13,7 +14,7 @@ import data.Entity;
  *
  * @author Christian
  */
-public class Player extends Entity 
+public class Player extends MovableEntity 
 {
 	
 }

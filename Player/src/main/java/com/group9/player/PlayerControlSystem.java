@@ -7,6 +7,7 @@ package com.group9.player;
 
 import data.Entity;
 import data.GameData;
+import data.MovableEntity;
 import data.World;
 import services.iEntityProcessingService;
 
@@ -22,7 +23,7 @@ public class PlayerControlSystem implements iEntityProcessingService
 //		Entity player = new Entity();
 //		updateSprite(player);
 	}
-	private void updateSprite(Entity entity){
+	private void updateSprite(MovableEntity movableEntity){
 		
 	}
 }

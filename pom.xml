@@ -63,6 +63,9 @@
         <module>Core</module>
         <module>Common</module>
         <module>Player</module>
+        <module>EnemyAI</module>
+        <module>Boss</module>
+        <module>MapBuildingBlocks</module>
     </modules>
     <properties>
         <netbeans.version>RELEASE82</netbeans.version>
