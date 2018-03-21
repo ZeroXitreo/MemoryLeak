@@ -66,6 +66,7 @@
         <module>EnemyAI</module>
         <module>Boss</module>
         <module>MapBuildingBlocks</module>
+        <module>HealthSystem</module>
     </modules>
     <properties>
         <netbeans.version>RELEASE82</netbeans.version>
