@@ -35,4 +35,5 @@ public class GameData {
 	{
 		this.displayHeight = displayHeight;
 	}
+	
 }

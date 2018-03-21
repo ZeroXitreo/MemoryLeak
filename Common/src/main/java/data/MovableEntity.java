@@ -9,4 +9,6 @@ package data;
 public class MovableEntity extends Entity {
 
 	
+	
+	
 }
