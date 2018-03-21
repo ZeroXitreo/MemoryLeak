@@ -10,27 +10,35 @@ import com.badlogic.gdx.Input.Keys;
 import data.Entity;
 import data.GameData;
 import data.GameKeys;
+import static data.GameKeys.*;
 import data.MovableEntity;
 import data.World;
 import movableentityparts.Move;
 import services.iEntityProcessingService;
 import movableentityparts.Position;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  *
  * @author Christian
  */
+
+    @ServiceProvider (service = iEntityProcessingService.class)
 public class PlayerControlSystem implements iEntityProcessingService
 {
 	@Override
 	public void process(GameData gameData, World world)
 	{
-		GameKeys gameKeys = new GameKeys(gameData);
 		for(Entity player : world.getEntities(Player.class)){
 			Position position = player.getPart(Position.class);
 			Move move = player.getPart(Move.class);
 			
-			gameKeys.keyPress();
+                        move.setUp(gameData.getKeys().isDown(W));
+                        System.out.println("get down");
+                        move.process(gameData, player);
+                        position.process(gameData, player);
+                        updateSprite(player);
+	//		gameKeys.keyPress();
 //			move.setDown(gameKeys.keyPress());
 //			move.setLeft(true);
 //			move.setRight(true);
@@ -42,10 +50,8 @@ public class PlayerControlSystem implements iEntityProcessingService
 			
 			
 		}
-//		Entity player = new Entity();
-//		updateSprite(player);
 	}
-	private void updateSprite(MovableEntity movableEntity){
+	private void updateSprite(Entity Entity){
 		
 	}
 }

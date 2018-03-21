@@ -9,6 +9,7 @@ package data;
 public class GameData {
 	private int displayWidth;
 	private int displayHeight;
+        private GameKeys gameKeys = new GameKeys();
 	
 	//private List<Event> events = new CopyOnWriteArrayList<>();
 	
@@ -19,6 +20,10 @@ public class GameData {
 	public int getDisplayWidth(){
 		return displayWidth;
 	}
+        
+        public GameKeys getKeys(){
+            return gameKeys;
+        }
 
 	/**
 	 * @return the displayHeight

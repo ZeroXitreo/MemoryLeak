@@ -2,8 +2,8 @@
 
 package movableentityparts;
 
+import data.Entity;
 import data.GameData;
-import data.MovableEntity;
 
 /**
  *
@@ -40,7 +40,7 @@ public class Position implements EntityPart {
 	}
 	
 	@Override
-	public void process(GameData gameData, MovableEntity movableEntity)
+	public void process(GameData gameData, Entity entity)
 	{
 		
 	}

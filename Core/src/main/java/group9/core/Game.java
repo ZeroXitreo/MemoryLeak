@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import data.Entity;
 import data.GameData;
 import data.World;
 import group9.manager.GameInputProcessor;
@@ -53,6 +54,7 @@ public class Game implements ApplicationListener
 			plugin.start(gameData, world);
 			gamePlugin.add(plugin);
 		}
+
 	}
 	
 	private void update(){
@@ -63,6 +65,12 @@ public class Game implements ApplicationListener
 			postEntityProcessor.process(gameData, world);
 		}
 	}
+        
+        private void draw(){
+            for (Entity entity : world.getEntities()){
+                System.out.println("hej");
+            }
+        }
 
 	@Override
 	public void resize(int i, int i1)
@@ -73,6 +81,7 @@ public class Game implements ApplicationListener
 	@Override
 	public void render()
 	{
+                update();
 		gip.keyPress();
 	}
 

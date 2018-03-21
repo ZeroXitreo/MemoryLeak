@@ -2,6 +2,7 @@
 
 package movableentityparts;
 
+import data.Entity;
 import data.GameData;
 import data.MovableEntity;
 
@@ -32,9 +33,9 @@ public class Move implements EntityPart {
 	}
 	
 	@Override
-	public void process(GameData gameData, MovableEntity movableEntity)
+	public void process(GameData gameData, Entity entity)
 	{
-		Position position = movableEntity.getPart(Position.class);
+		Position position = entity.getPart(Position.class);
 		float x = position.getX();
 		float y = position.getY();
 		
@@ -49,7 +50,9 @@ public class Move implements EntityPart {
 		}
 		
 		if(up){
+                    System.out.println(position.getY() + " before");
 			y++;
+                    System.out.println(position.getY());
 		}
 		
 		if(down){

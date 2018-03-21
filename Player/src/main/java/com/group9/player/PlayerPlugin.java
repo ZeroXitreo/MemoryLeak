@@ -9,12 +9,15 @@ package com.group9.player;
 import data.GameData;
 import data.MovableEntity;
 import data.World;
+import org.openide.util.lookup.ServiceProvider;
 import services.iGamePluginServices;
 
 /**
  *
  * @author Christian
  */
+
+@ServiceProvider (service = iGamePluginServices.class)
 public class PlayerPlugin implements iGamePluginServices
 {
 	private MovableEntity player;

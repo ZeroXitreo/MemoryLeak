@@ -7,6 +7,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
 import data.GameData;
+import data.GameKeys;
 
 /**
  *
@@ -21,7 +22,9 @@ public class GameInputProcessor {
 	}
 	
 	public void keyPress(){
+         
 		if(Gdx.input.isKeyPressed(Keys.W)){
+                    gameData.getKeys().setKeys(GameKeys.W, true);
 		}
 		if(Gdx.input.isKeyPressed(Keys.A)){
 		}
@@ -37,7 +40,6 @@ public class GameInputProcessor {
 		}
 		if(Gdx.input.isKeyPressed(Keys.LEFT)){
 		}
-	
 	}
 	
 
