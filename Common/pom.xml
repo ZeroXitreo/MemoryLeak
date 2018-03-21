@@ -18,6 +18,7 @@
                     <useOSGiDependencies>true</useOSGiDependencies>
                     <publicPackages>
                         <publicPackage>data</publicPackage>
+                        <publicPackage>events</publicPackage>
                         <publicPackage>movableentityparts</publicPackage>
                         <publicPackage>services</publicPackage>
                         <publicPackage>util</publicPackage>

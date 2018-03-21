@@ -9,6 +9,8 @@ package com.group9.player;
 import data.GameData;
 import data.MovableEntity;
 import data.World;
+import movableentityparts.Move;
+import movableentityparts.Position;
 import org.openide.util.lookup.ServiceProvider;
 import services.iGamePluginServices;
 
@@ -21,6 +23,10 @@ import services.iGamePluginServices;
 public class PlayerPlugin implements iGamePluginServices
 {
 	private MovableEntity player;
+        
+        public PlayerPlugin(){
+            
+        }
 	
 	@Override
 	public void start(GameData gameData, World world)
@@ -32,8 +38,11 @@ public class PlayerPlugin implements iGamePluginServices
 		
 		float x = gameData.getDisplayWidth() / 2;
 		float y = gameData.getDisplayHeight() /2;
+                float maxSpeed = 1;
 		
 		MovableEntity playerCharacter = new Player();
+                playerCharacter.add(new Move(maxSpeed));
+                playerCharacter.add(new Position(x, y));
 		return playerCharacter;
 	}
 	@Override

@@ -8,6 +8,8 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
 import data.GameData;
 import data.GameKeys;
+import static data.GameKeys.*;
+
 
 /**
  *
@@ -24,8 +26,40 @@ public class GameInputProcessor {
 	public void keyPress(){
          
 		if(Gdx.input.isKeyPressed(Keys.W)){
-                    gameData.getKeys().setKeys(GameKeys.W, true);
+                    gameData.getKeys().setKeys(W, true);
 		}
+                else{
+                    gameData.getKeys().setKeys(W, false);
+                }
+                
+		if(Gdx.input.isKeyPressed(Keys.A)){
+                    gameData.getKeys().setKeys(A, true);
+		}
+                else{
+                    gameData.getKeys().setKeys(A, false);
+                }
+                
+		if(Gdx.input.isKeyPressed(Keys.S)){
+                    gameData.getKeys().setKeys(S, true);
+		}
+                else{
+                    gameData.getKeys().setKeys(S, false);
+                }
+                
+		if(Gdx.input.isKeyPressed(Keys.D)){
+                    gameData.getKeys().setKeys(D, true);
+		}
+                else{
+                    gameData.getKeys().setKeys(D, false);
+                }
+//		if(gameData.getKeys().isDown(W)){
+//                    Gdx.input.isKeyPressed(Keys.W);
+//		}
+                
+//		if(Gdx.input.isKeyPressed(Keys.W)){
+//                    gameData.getKeys().isDown(W);
+//		}
+                
 		if(Gdx.input.isKeyPressed(Keys.A)){
 		}
 		if(Gdx.input.isKeyPressed(Keys.S)){

@@ -66,11 +66,11 @@ public class Game implements ApplicationListener
 		}
 	}
         
-        private void draw(){
-            for (Entity entity : world.getEntities()){
-                System.out.println("hej");
-            }
-        }
+//        private void draw(){
+//            for (Entity entity : world.getEntities()){
+//                System.out.println("hej");
+//            }
+//        }
 
 	@Override
 	public void resize(int i, int i1)
