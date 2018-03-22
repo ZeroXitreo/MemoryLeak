@@ -41,13 +41,13 @@ public class Move implements EntityPart {
 		
 		if(left){
 			System.out.println(position.getX() + " x before");
-			x++;
+			x--;
 			System.out.println(position.getX());
 		}
 		
 		if(right){
 			System.out.println(position.getX() + " x before");
-			x--;
+			x++;
 			System.out.println(position.getX());
 		}
 		
