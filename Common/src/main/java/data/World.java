@@ -28,20 +28,20 @@ public class World {
 		entityMap.remove(entity.getID());
 	}
 	
-	public Collection<Entity> getEntites(){
+	public Collection<Entity> getEntities(){
 		return entityMap.values();
 	}
 	
 	public <E extends Entity> List<Entity> getEntities(Class<E>... entityTypes) {
-        List<Entity> r = new ArrayList<>();
-        for (Entity e : getEntities()) {
-            for (Class<E> entityType : entityTypes) {
-                if (entityType.equals(e.getClass())) {
-                    r.add(e);
+            List<Entity> r = new ArrayList<>();
+            for (Entity e : getEntities()) {
+                for (Class<E> entityType : entityTypes) {
+                    if (entityType.equals(e.getClass())) {
+                        r.add(e);
+                    }
                 }
             }
-        }
-        return r;
+            return r;
     }
 	
 	public Entity getEntity(String ID){

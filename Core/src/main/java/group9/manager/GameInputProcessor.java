@@ -1,5 +1,3 @@
-
-
 package group9.manager;
 
 import com.badlogic.gdx.Gdx;
@@ -7,46 +5,61 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
 import data.GameData;
+import data.GameKeys;
+import static data.GameKeys.*;
 
 /**
  *
  * @author Jorge Báez Garrido
  */
-public class GameInputProcessor {
-	
+public class GameInputProcessor
+{
+
 	private final GameData gameData;
+
 	public GameInputProcessor(GameData gameData)
 	{
 		this.gameData = gameData;
 	}
-	
-	public void keyPress(){
-		if(Gdx.input.isKeyPressed(Keys.W)){
-			System.out.println("W");
+
+	public void keyPress()
+	{
+
+		if(Gdx.input.isKeyPressed(Keys.W))
+		{
+			gameData.getKeys().setKeys(W, true);
 		}
-		if(Gdx.input.isKeyPressed(Keys.A)){
-			System.out.println("A");
+		else
+		{
+			gameData.getKeys().setKeys(W, false);
 		}
-		if(Gdx.input.isKeyPressed(Keys.S)){
-			System.out.println("S");
+
+		if(Gdx.input.isKeyPressed(Keys.A))
+		{
+			gameData.getKeys().setKeys(A, true);
 		}
-		if(Gdx.input.isKeyPressed(Keys.D)){
-			System.out.println("D");
+		else
+		{
+			gameData.getKeys().setKeys(A, false);
 		}
-		if(Gdx.input.isKeyPressed(Keys.UP)){
-			System.out.println("up");
+
+		if(Gdx.input.isKeyPressed(Keys.S))
+		{
+			gameData.getKeys().setKeys(S, true);
 		}
-		if(Gdx.input.isKeyPressed(Keys.DOWN)){
-			System.out.println("down");
+		else
+		{
+			gameData.getKeys().setKeys(S, false);
 		}
-		if(Gdx.input.isKeyPressed(Keys.RIGHT)){
-			System.out.println("right");
+
+		if(Gdx.input.isKeyPressed(Keys.D))
+		{
+			gameData.getKeys().setKeys(D, true);
 		}
-		if(Gdx.input.isKeyPressed(Keys.LEFT)){
-			System.out.println("left");
+		else
+		{
+			gameData.getKeys().setKeys(D, false);
 		}
-	
 	}
-	
 
 }
