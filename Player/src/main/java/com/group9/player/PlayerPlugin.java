@@ -22,10 +22,6 @@ public class PlayerPlugin implements iGamePluginServices
 {
 	private MovableEntity player;
 
-	public PlayerPlugin()
-	{
-
-	}
 
 	@Override
 	public void start(GameData gameData, World world)

@@ -53,7 +53,7 @@ public class PlayerControlSystem implements iEntityProcessingService
 			
 		}
 	}
-	private void updateSprite(Entity Entity){
+	private void updateSprite(Entity entity){
 		
 	}
 }
