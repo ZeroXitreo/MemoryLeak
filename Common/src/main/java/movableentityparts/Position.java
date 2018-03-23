@@ -4,6 +4,7 @@ package movableentityparts;
 
 import data.Entity;
 import data.GameData;
+import data.MovableEntity;
 
 /**
  *
@@ -12,6 +13,7 @@ import data.GameData;
 public class Position implements EntityPart {
 	
 	private float x, y;
+	private float radians;
 	
 	public Position(float x, float y){
 		this.x = x;
@@ -39,8 +41,18 @@ public class Position implements EntityPart {
 		this.y = y;
 	}
 	
+	public void setRadians(float radians){
+		this.radians = radians;
+	}
+	
+	public float getRadians(){
+		return radians;
+	}
+	
+	
+
 	@Override
-	public void process(GameData gameData, Entity entity)
+	public void process(GameData gameData, MovableEntity entity)
 	{
 		
 	}
