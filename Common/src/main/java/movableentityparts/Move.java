@@ -33,7 +33,7 @@ public class Move implements EntityPart {
 	}
 	
 	@Override
-	public void process(GameData gameData, Entity entity)
+	public void process(GameData gameData, MovableEntity entity)
 	{
 		Position position = entity.getPart(Position.class);
 		float x = position.getX();

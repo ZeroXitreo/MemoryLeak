@@ -4,6 +4,7 @@ package movableentityparts;
 
 import data.Entity;
 import data.GameData;
+import data.MovableEntity;
 
 /**
  *
@@ -11,6 +12,6 @@ import data.GameData;
  */
 public interface EntityPart {
 	
-	public void process(GameData gameData, Entity entity);
+	public void process(GameData gameData, MovableEntity entity);
 
 }

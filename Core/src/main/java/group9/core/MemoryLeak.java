@@ -1,25 +1,10 @@
 package group9.core;
 
-import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import data.Entity;
 import data.GameData;
 import data.World;
 import group9.manager.GameInputProcessor;
 import group9.screens.PlayScreen;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import org.openide.util.Lookup;
-import org.openide.util.LookupEvent;
-import org.openide.util.LookupListener;
-import services.iEntityProcessingService;
-import services.iGamePluginServices;
-import services.iPostEntityProcessingService;
 
 /**
  *
@@ -46,7 +31,7 @@ public class MemoryLeak extends Game {
 //        }
     @Override
     public void resize(int i, int i1) {
-
+		
     }
 
     @Override

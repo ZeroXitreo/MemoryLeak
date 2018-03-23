@@ -25,6 +25,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import data.Entity;
 import data.GameData;
+import data.MovableEntity;
 import data.World;
 import group9.core.MemoryLeak;
 import group9.manager.GameInputProcessor;
@@ -43,6 +44,7 @@ import services.iPostEntityProcessingService;
  * @author jonas
  */
 public class PlayScreen implements Screen {
+
     private MemoryLeak memoryleak;
     private GameData gamedata;
     private Stage stage;
@@ -75,33 +77,37 @@ public class PlayScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
     }
 
-    @Override
-    public void render(float f) {
-        update();
-        gip.keyPress();
-
-        for (Entity entity : world.getEntities()) {
+    private void draw() {
+        for (MovableEntity movableEntity : world.getMovableEntities()) {
             sr.setColor(1, 1, 1, 1);
-
             sr.begin(ShapeRenderer.ShapeType.Line);
 
-            float[] shapex = entity.getShapeX();
-            float[] shapey = entity.getShapeY();
+            float[] shapeX = movableEntity.getShapeX();
+            float[] shapeY = movableEntity.getShapeY();
 
-            for (int i = 0, j = shapex.length - 1;
-                    i < shapex.length;
+            for (int i = 0, j = shapeX.length - 1;
+                    i < shapeX.length;
                     j = i++) {
 
-                sr.line(shapex[i], shapey[i], shapex[j], shapey[j]);
+                sr.line(shapeX[i], shapeY[i], shapeX[j], shapeY[j]);
             }
-
             sr.end();
         }
-        
-        Gdx.gl.glClearColor(0, 0, 0, 0);
+
+    }
+
+    @Override
+    public void render(float f) {
+
+        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); // Clear screen
         stage.act();
-        stage.draw();
+        update();
+        draw();
+        //stage.draw();
+        
+        gip.keyPress();
+        //stage.clear();
     }
 
     @Override
@@ -133,8 +139,8 @@ public class PlayScreen implements Screen {
             postEntityProcessor.process(gamedata, world);
         }
     }
-    
-        private Collection<? extends iGamePluginServices> getPluginServices() {
+
+    private Collection<? extends iGamePluginServices> getPluginServices() {
         return lookup.lookupAll(iGamePluginServices.class);
     }
 
