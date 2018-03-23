@@ -5,11 +5,7 @@
  */
 package com.group9.player;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
-import data.Entity;
 import data.GameData;
-import data.GameKeys;
 import static data.GameKeys.*;
 import data.MovableEntity;
 import data.World;

@@ -27,19 +27,23 @@ public class EnemyPlugin implements iGamePluginServices {
 	@Override
 	public void start(GameData gameData, World world)
 	{
+		System.out.println("Hej1");
 		enemy = createEnemy(gameData);
-		world.addEntity(enemy);
+		world.addMovableEntity(enemy);
 	}
 	
-	private MovableEntity createEnemy(GameData gamedata){
+	private MovableEntity createEnemy(GameData gameData){
 		
 		//Spawn location of enemy/enemies
-		float x =666, y=420;
+//		float x =100, y=420;
+		float x = gameData.getDisplayWidth()/2;
+		float y = gameData.getDisplayHeight()/2;
 		float maxSpeed = 4;
-		createCoordinates(x, y);
 		MovableEntity enemyCharacter = new Enemy();
+		enemyCharacter.setRadius(10);
 		enemyCharacter.add(new Move(maxSpeed));
 		enemyCharacter.add(new Position(x, y));
+		System.out.println("Hej");
 		return enemyCharacter;
 	}
 	
@@ -49,13 +53,13 @@ public class EnemyPlugin implements iGamePluginServices {
         world.removeEntity(enemy);
 	}
 	
-	private void createCoordinates(float x, float y){
-		coordinateList.add(coordinate);
-		String[] tempCoordinate = coordinate.split(";");
-		String xCoordinate = tempCoordinate[0];
-		String yCoordinate = tempCoordinate[1];
-		x = Float.parseFloat(xCoordinate);
-		y = Float.parseFloat(yCoordinate);
-	}
+//	private void createCoordinates(float x, float y){
+//		coordinateList.add(coordinate);
+//		String[] tempCoordinate = coordinate.split(";");
+//		String xCoordinate = tempCoordinate[0];
+//		String yCoordinate = tempCoordinate[1];
+//		x = Float.parseFloat(xCoordinate);
+//		y = Float.parseFloat(yCoordinate);
+//	}
 
 }

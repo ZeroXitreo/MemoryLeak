@@ -17,6 +17,8 @@ import java.util.concurrent.ConcurrentHashMap;
 public class World {
 	private final Map<String, Entity> entityMap = new ConcurrentHashMap<>();
 	private final Map<String, MovableEntity> mEntityMap = new ConcurrentHashMap<>();
+	
+	
 	public String addEntity(Entity entity){
 		entityMap.put(entity.getID(), entity);
 		return entity.getID();
@@ -80,6 +82,10 @@ public class World {
 	
 	public Entity getEntity(String ID){
 		return entityMap.get(ID);
+	}
+	
+	public MovableEntity getMovableEntity(String ID){
+		return mEntityMap.get(ID);
 	}
 
 

@@ -31,8 +31,29 @@ public class EnemyAI implements iEntityProcessingService {
 		
 	}
 	
-	private void updateSprite(Entity entity){
+	private void updateSprite(MovableEntity movableEntity){
+			
+		int numPoints = 12;
+		float [] shapeX = new float[numPoints];
+		float [] shapeY = new float[numPoints];
 		
+		Position position = movableEntity.getPart(Position.class);
+		float radians = position.getRadians();
+		float radius = movableEntity.getRadius();
+		float x = position.getX();
+		float y = position.getY();
+		
+		float angle = 0;
+		
+		for(int i = 0; i < numPoints; i++)
+		{
+			shapeX[i] = x +(float) Math.cos(angle + radians) * radius;
+			shapeY[i] = y + (float) Math.sin(angle + radians) * radius;
+			angle += 2 * 3.1415f / numPoints;
+		}
+		movableEntity.setShapeX(shapeX);
+        movableEntity.setShapeY(shapeY);
+	}
 	}
 
-}
+
