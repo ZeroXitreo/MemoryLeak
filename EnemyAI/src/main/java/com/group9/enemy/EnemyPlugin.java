@@ -27,7 +27,6 @@ public class EnemyPlugin implements iGamePluginServices {
 	@Override
 	public void start(GameData gameData, World world)
 	{
-		System.out.println("Hej1");
 		enemy = createEnemy(gameData);
 		world.addMovableEntity(enemy);
 	}
@@ -43,7 +42,6 @@ public class EnemyPlugin implements iGamePluginServices {
 		enemyCharacter.setRadius(10);
 		enemyCharacter.add(new Move(maxSpeed));
 		enemyCharacter.add(new Position(x, y));
-		System.out.println("Hej");
 		return enemyCharacter;
 	}
 	
