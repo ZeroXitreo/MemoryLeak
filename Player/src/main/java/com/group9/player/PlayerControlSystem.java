@@ -29,7 +29,7 @@ public class PlayerControlSystem implements iEntityProcessingService
 	@Override
 	public void process(GameData gameData, World world)
 	{
-		for(Entity player : world.getEntities(Player.class)){
+		for(MovableEntity player : world.getMovableEntities(Player.class)){
 			Position position = player.getPart(Position.class);
 			Move move = player.getPart(Move.class);
 			
@@ -53,7 +53,25 @@ public class PlayerControlSystem implements iEntityProcessingService
 			
 		}
 	}
-	private void updateSprite(Entity entity){
+	private void updateSprite(MovableEntity entity){
+		int numPoints = 10;
+		float [] shapeX = new float[numPoints];
+		float [] shapeY = new float[numPoints];
+		
+		Position position = entity.getPart(Position.class);
+		float radians = position.getRadians();
+		float radius = entity.getRadius();
+		float x = position.getX();
+		float y = position.getY();
+		
+		float angle = 0;
+		
+		for(int i = 0; i < numPoints; i++)
+		{
+			shapeX[i] = x +(float) Math.cos(angle + radians) * radius;
+			shapeY[i] = y + (float) Math.sin(angle + radians) * radius;
+			angle += 2 * 3.1415f / numPoints;
+		}
 		
 	}
 }

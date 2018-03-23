@@ -27,7 +27,7 @@ public class PlayerPlugin implements iGamePluginServices
 	public void start(GameData gameData, World world)
 	{
 		player = createPlayer(gameData);
-		world.addEntity(player);
+		world.addMovableEntity(player);
 	}
 
 	private MovableEntity createPlayer(GameData gameData)
@@ -36,8 +36,8 @@ public class PlayerPlugin implements iGamePluginServices
 		float x = gameData.getDisplayWidth() / 2;
 		float y = gameData.getDisplayHeight() / 2;
 		float maxSpeed = 1;
-
 		MovableEntity playerCharacter = new Player();
+		playerCharacter.setRadius(20);
 		playerCharacter.add(new Move(maxSpeed));
 		playerCharacter.add(new Position(x, y));
 		return playerCharacter;

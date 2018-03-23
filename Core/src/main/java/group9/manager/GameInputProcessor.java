@@ -14,7 +14,7 @@ import static data.GameKeys.*;
  */
 public class GameInputProcessor
 {
-
+	//Instance of GameData from the common component
 	private final GameData gameData;
 
 	public GameInputProcessor(GameData gameData)
@@ -22,6 +22,11 @@ public class GameInputProcessor
 		this.gameData = gameData;
 	}
 
+	/**
+	 * This method will check rather or not the keys that are used in the game
+	 * are pressed. If one of the keys is pressed it will set it true in the
+	 * setKeys() method and tell what key it is.
+	 */
 	public void keyPress()
 	{
 
