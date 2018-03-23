@@ -25,6 +25,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import data.Entity;
 import data.GameData;
+import data.MovableEntity;
 import data.World;
 import group9.core.MemoryLeak;
 import group9.manager.GameInputProcessor;
@@ -80,25 +81,25 @@ public class PlayScreen implements Screen {
         update();
         gip.keyPress();
 
-        for (Entity entity : world.getEntities()) {
-            sr.setColor(1, 1, 1, 1);
+		for(MovableEntity movableEntity : world.getMovableEntities())
+		{
+			sr.setColor(1, 1, 1, 1);
+			sr.begin(ShapeRenderer.ShapeType.Line);
 
-            sr.begin(ShapeRenderer.ShapeType.Line);
+			float[] shapeX = movableEntity.getShapeX();
+			float[] shapeY = movableEntity.getShapeY();
 
-            float[] shapex = entity.getShapeX();
-            float[] shapey = entity.getShapeY();
+			for(int i = 0, j = shapeX.length - 1;
+					i < shapeX.length;
+					j = i++)
+			{
 
-            for (int i = 0, j = shapex.length - 1;
-                    i < shapex.length;
-                    j = i++) {
-
-                sr.line(shapex[i], shapey[i], shapex[j], shapey[j]);
-            }
-
-            sr.end();
-        }
-        
-        Gdx.gl.glClearColor(0, 0, 0, 0);
+				sr.line(shapeX[i], shapeY[i], shapeX[j], shapeY[j]);
+			}
+			sr.end();
+		}
+		
+        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); // Clear screen
         stage.act();
         stage.draw();

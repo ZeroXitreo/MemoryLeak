@@ -31,7 +31,7 @@ public class MemoryLeak extends Game {
 //        }
     @Override
     public void resize(int i, int i1) {
-
+		
     }
 
     @Override
