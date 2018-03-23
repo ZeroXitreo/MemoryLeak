@@ -44,6 +44,7 @@ import services.iPostEntityProcessingService;
  * @author jonas
  */
 public class PlayScreen implements Screen {
+
     private MemoryLeak memoryleak;
     private GameData gamedata;
     private Stage stage;
@@ -76,33 +77,37 @@ public class PlayScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
     }
 
+    private void draw() {
+        for (MovableEntity movableEntity : world.getMovableEntities()) {
+            sr.setColor(1, 1, 1, 1);
+            sr.begin(ShapeRenderer.ShapeType.Line);
+
+            float[] shapeX = movableEntity.getShapeX();
+            float[] shapeY = movableEntity.getShapeY();
+
+            for (int i = 0, j = shapeX.length - 1;
+                    i < shapeX.length;
+                    j = i++) {
+
+                sr.line(shapeX[i], shapeY[i], shapeX[j], shapeY[j]);
+            }
+            sr.end();
+        }
+
+    }
+
     @Override
     public void render(float f) {
-        update();
-        gip.keyPress();
 
-		for(MovableEntity movableEntity : world.getMovableEntities())
-		{
-			sr.setColor(1, 1, 1, 1);
-			sr.begin(ShapeRenderer.ShapeType.Line);
-
-			float[] shapeX = movableEntity.getShapeX();
-			float[] shapeY = movableEntity.getShapeY();
-
-			for(int i = 0, j = shapeX.length - 1;
-					i < shapeX.length;
-					j = i++)
-			{
-
-				sr.line(shapeX[i], shapeY[i], shapeX[j], shapeY[j]);
-			}
-			sr.end();
-		}
-		
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); // Clear screen
         stage.act();
-        stage.draw();
+        update();
+        draw();
+        //stage.draw();
+        
+        gip.keyPress();
+        //stage.clear();
     }
 
     @Override
@@ -134,8 +139,8 @@ public class PlayScreen implements Screen {
             postEntityProcessor.process(gamedata, world);
         }
     }
-    
-        private Collection<? extends iGamePluginServices> getPluginServices() {
+
+    private Collection<? extends iGamePluginServices> getPluginServices() {
         return lookup.lookupAll(iGamePluginServices.class);
     }
 
