@@ -54,7 +54,7 @@ public class PlayerControlSystem implements iEntityProcessingService
 		}
 	}
 	private void updateSprite(MovableEntity entity){
-		int numPoints = 10;
+		int numPoints = 12;
 		float [] shapeX = new float[numPoints];
 		float [] shapeY = new float[numPoints];
 		
@@ -72,6 +72,7 @@ public class PlayerControlSystem implements iEntityProcessingService
 			shapeY[i] = y + (float) Math.sin(angle + radians) * radius;
 			angle += 2 * 3.1415f / numPoints;
 		}
-		
+		entity.setShapeX(shapeX);
+        entity.setShapeY(shapeY);
 	}
 }
