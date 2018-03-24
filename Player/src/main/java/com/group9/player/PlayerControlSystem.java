@@ -35,7 +35,8 @@ public class PlayerControlSystem implements iEntityProcessingService
                         move.setRight(gameData.getKeys().isDown(D));
                         move.process(gameData, player);
                         position.process(gameData, player);
-                        updateSprite(player);
+                        updateSpriteSquare(player);
+						//updateSpriteCircle(player);
 	//		gameKeys.keyPress();
 //			move.setDown(gameKeys.keyPress());
 //			move.setLeft(true);
@@ -49,7 +50,7 @@ public class PlayerControlSystem implements iEntityProcessingService
 			
 		}
 	}
-	private void updateSprite(MovableEntity entity){
+	private void updateSpriteCircle(MovableEntity entity){
 		int numPoints = 12;
 		float [] shapeX = new float[numPoints];
 		float [] shapeY = new float[numPoints];
@@ -68,6 +69,33 @@ public class PlayerControlSystem implements iEntityProcessingService
 			shapeY[i] = y + (float) Math.sin(angle + radians) * radius;
 			angle += 2 * 3.1415f / numPoints;
 		}
+		entity.setShapeX(shapeX);
+        entity.setShapeY(shapeY);
+	}
+	
+	private void updateSpriteSquare(MovableEntity entity){
+		float [] shapeX =  entity.getShapeX();
+		float [] shapeY = entity.getShapeY();
+		
+		Position position = entity.getPart(Position.class);
+		float radians = position.getRadians();
+		float pi = 3.1415f;
+		//float radius = entity.getRadius();
+		float x = position.getX();
+		float y = position.getY();
+		
+		shapeX[0] = x + (float) Math.cos(radians - 3 * pi / 4) *20;
+		shapeY[0] = y + (float) Math.sin(radians - 3 * pi / 4) *20;
+		
+		shapeX[3] = x + (float) Math.cos(radians - 5 * pi /4) * 20;
+		shapeY[3] = y + (float) Math.sin(radians - 5 * pi /4) * 20;
+		
+		shapeX[1] = x + (float) Math.cos(radians + 7 * pi / 4) *20;
+		shapeY[1] = y + (float) Math.sin(radians + 7 * pi / 4) *20;
+		
+		shapeX[2] = x + (float) Math.cos(radians + pi /4) *     20;
+		shapeY[2] = y + (float) Math.sin(radians + pi /4) *     20;
+		
 		entity.setShapeX(shapeX);
         entity.setShapeY(shapeY);
 	}
