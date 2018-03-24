@@ -21,7 +21,7 @@ public class Installer extends ModuleInstall {
         cfg.useGL30 = false;
         cfg.resizable = false;
 
-        new LwjglApplication(new Game(), cfg);
+        new LwjglApplication(new MemoryLeak(), cfg);
     }
 
 }
