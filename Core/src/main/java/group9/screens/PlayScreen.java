@@ -8,11 +8,13 @@ package group9.screens;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -45,7 +47,6 @@ import services.iPostEntityProcessingService;
  */
 public class PlayScreen implements Screen {
 
-    private MemoryLeak memoryleak;
     private GameData gamedata;
     private Stage stage;
     private Game game;
@@ -55,6 +56,13 @@ public class PlayScreen implements Screen {
     private World world;
     private GameInputProcessor gip;
     private ShapeRenderer sr;
+    public static final int GAME_RUNNING = 1;
+    public static final int GAME_OVER = 0;
+    private int state;
+    long time;
+    long time2;
+    private SpriteBatch batch;
+    private BitmapFont font;
 
     public PlayScreen(Game aGame, World aWorld, GameData aGameData, GameInputProcessor aGip) {
         stage = new Stage(new ScreenViewport());
@@ -70,6 +78,12 @@ public class PlayScreen implements Screen {
             plugin.start(gamedata, world);
             gamePlugin.add(plugin);
         }
+        state = 1;
+        batch = new SpriteBatch();
+        font = new BitmapFont();
+        font.setColor(Color.WHITE);
+        time = java.lang.System.currentTimeMillis();
+        font.setScale(2);
     }
 
     @Override
@@ -81,14 +95,11 @@ public class PlayScreen implements Screen {
         for (MovableEntity movableEntity : world.getMovableEntities()) {
             sr.setColor(1, 1, 1, 1);
             sr.begin(ShapeRenderer.ShapeType.Line);
-
             float[] shapeX = movableEntity.getShapeX();
             float[] shapeY = movableEntity.getShapeY();
-
             for (int i = 0, j = shapeX.length - 1;
                     i < shapeX.length;
                     j = i++) {
-
                 sr.line(shapeX[i], shapeY[i], shapeX[j], shapeY[j]);
             }
             sr.end();
@@ -98,15 +109,41 @@ public class PlayScreen implements Screen {
 
     @Override
     public void render(float f) {
-
+        if(world.getMovableEntities().contains(this)) {
+            
+        }
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); // Clear screen
-        stage.act();
-        update();
-        draw();
+        time2 = java.lang.System.currentTimeMillis();
+
+//        if (time2 - time > 2500) {
+//            state = 0;
+//        }
+
+        switch (state) {
+            case GAME_RUNNING:
+                stage.act();
+                update();
+                gip.keyPress();
+                draw();
+                break;
+            case GAME_OVER:
+                
+                draw();
+                Gdx.gl.glEnable(GL20.GL_BLEND);
+                Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+                sr.begin(ShapeRenderer.ShapeType.Filled);
+                sr.setColor(new Color(0.5f, 0, 0, 0.7f));
+                sr.rect(0, 0, gamedata.getDisplayWidth(), gamedata.getDisplayHeight());
+                sr.end();
+                Gdx.gl.glDisable(GL20.GL_BLEND);
+                batch.begin();
+                font.draw(batch, "U DED", gamedata.getDisplayWidth()/2, gamedata.getDisplayHeight()/2);
+                batch.end();
+                break;
+        }
+
         //stage.draw();
-        
-        gip.keyPress();
         //stage.clear();
     }
 
