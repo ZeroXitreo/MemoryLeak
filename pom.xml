@@ -67,6 +67,7 @@
         <module>Boss</module>
         <module>MapBuildingBlocks</module>
         <module>HealthSystem</module>
+        <module>Collision</module>
     </modules>
     <properties>
         <netbeans.version>RELEASE82</netbeans.version>
