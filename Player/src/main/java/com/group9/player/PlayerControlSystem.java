@@ -79,7 +79,7 @@ public class PlayerControlSystem implements iEntityProcessingService
 		
 		Position position = entity.getPart(Position.class);
 		float radians = position.getRadians();
-		float pi = 3.1415f;
+		double pi = Math.PI;
 		//float radius = entity.getRadius();
 		float x = position.getX();
 		float y = position.getY();
