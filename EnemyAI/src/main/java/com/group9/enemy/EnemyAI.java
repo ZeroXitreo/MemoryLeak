@@ -27,8 +27,21 @@ public class EnemyAI implements iEntityProcessingService {
 			move.process(gameData, enemy);
 			position.process(gameData, enemy);
 			updateSprite(enemy);
+			enemyPositionX(enemy);
+			enemyPositionY(enemy);
 		}
 		
+	}
+	
+	private float enemyPositionX(MovableEntity movableEntity){
+		Position position = movableEntity.getPart(Position.class);
+		float x = position.getX();
+		return x; 
+	}
+	private float enemyPositionY(MovableEntity movableEntity){
+		Position position = movableEntity.getPart(Position.class);
+		float y = position.getY();
+		return y;
 	}
 	
 	private void updateSprite(MovableEntity movableEntity){
