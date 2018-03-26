@@ -5,14 +5,11 @@
  */
 package com.group9.player;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
-import data.Entity;
 import data.GameData;
-import data.GameKeys;
 import static data.GameKeys.*;
 import data.MovableEntity;
 import data.World;
+import movableentityparts.HealthPart;
 import movableentityparts.Move;
 import services.iEntityProcessingService;
 import movableentityparts.Position;
@@ -29,12 +26,13 @@ public class PlayerControlSystem implements iEntityProcessingService {
     public void process(GameData gameData, World world) {
         for (MovableEntity player : world.getMovableEntities(Player.class)) {
             Position position = player.getPart(Position.class);
+            HealthPart healthPart = player.getPart(HealthPart.class);
             Move move = player.getPart(Move.class);
-
             move.setUp(gameData.getKeys().isDown(W));
             move.setLeft(gameData.getKeys().isDown(A));
             move.setDown(gameData.getKeys().isDown(S));
             move.setRight(gameData.getKeys().isDown(D));
+            healthPart.process(gameData, player);
             move.process(gameData, player);
             position.process(gameData, player);
             updateSprite(player);
