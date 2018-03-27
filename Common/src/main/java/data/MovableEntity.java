@@ -1,5 +1,3 @@
-
-
 package data;
 
 /**
@@ -8,7 +6,7 @@ package data;
  */
 public class MovableEntity extends Entity {
 
-	
-	
-	
+    public String getType() {
+        return "";
+    }
 }

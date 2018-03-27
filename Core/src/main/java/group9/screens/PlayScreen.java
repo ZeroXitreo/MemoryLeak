@@ -10,26 +10,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.TextureData;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import data.Entity;
 import data.GameData;
 import data.MovableEntity;
 import data.World;
-import group9.core.MemoryLeak;
 import group9.manager.GameInputProcessor;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -47,42 +35,44 @@ import services.iPostEntityProcessingService;
  */
 public class PlayScreen implements Screen {
 
-    private GameData gamedata;
+//    private GameData gamedata;
     private Stage stage;
-    private Game game;
-    private List<iGamePluginServices> gamePlugin = new ArrayList<>();
-    private Lookup lookup = Lookup.getDefault();
-    private Lookup.Result<iGamePluginServices> result;
-    private World world;
-    private GameInputProcessor gip;
+//    private World world;
+//    private GameInputProcessor gip;
     private ShapeRenderer sr;
+    public static final int GAME_WON = 2;
     public static final int GAME_RUNNING = 1;
     public static final int GAME_OVER = 0;
     private int state;
-    long time;
-    long time2;
     private SpriteBatch batch;
     private BitmapFont font;
+    private boolean alive;
+    private boolean stageClear;
+    private ParentScreen parentScreen;
 
-    public PlayScreen(Game aGame, World aWorld, GameData aGameData, GameInputProcessor aGip) {
+    //public PlayScreen(Game game, World world, GameData gameData, GameInputProcessor gip) {
+//        super.game = game;
+//        super.world = world;
+//        super.gameData = gameData;
+//        super.gip = gip;
+    public PlayScreen() {
+        parentScreen = ParentScreen.getInstance();
         stage = new Stage(new ScreenViewport());
-        game = aGame;
-        world = aWorld;
-        gamedata = aGameData;
         sr = new ShapeRenderer();
-        gip = aGip;
-        result = lookup.lookupResult(iGamePluginServices.class);
-        result.addLookupListener(lookupListener);
-        result.allItems();
-        for (iGamePluginServices plugin : result.allInstances()) {
-            plugin.start(gamedata, world);
-            gamePlugin.add(plugin);
-        }
+
+//        result = lookup.lookupResult(iGamePluginServices.class);
+//        result.addLookupListener(lookupListener);
+//        result.allItems();
+//        for (iGamePluginServices plugin : result.allInstances()) {
+//            plugin.start(super.gameData, world);
+//            gamePlugin.add(plugin);
+//        }
+        parentScreen.setResult();
+
         state = 1;
         batch = new SpriteBatch();
         font = new BitmapFont();
         font.setColor(Color.WHITE);
-        time = java.lang.System.currentTimeMillis();
         font.setScale(2);
     }
 
@@ -91,9 +81,76 @@ public class PlayScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
     }
 
+    @Override
+    public void render(float f) {
+        alive = false;
+        stageClear = true;
+        for (MovableEntity movableEntity : ParentScreen.getWorld().getMovableEntities()) {
+            if (movableEntity.getType().equalsIgnoreCase("player")) {
+                alive = true;
+            }
+            if (movableEntity.getType().equalsIgnoreCase("enemy")) {
+                stageClear = false;
+            }
+        }
+        if (alive) {
+            state = 1;
+        } else {
+            state = 0;
+        }
+        if (stageClear) {
+            state = 2;
+        }
+        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); // Clear screen
+
+        switch (state) {
+            case GAME_RUNNING:
+                stage.act();
+                update();
+                ParentScreen.getGip().keyPress();
+                draw();
+                break;
+            case GAME_OVER:
+                draw();
+                Gdx.gl.glEnable(GL20.GL_BLEND);
+                Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+                sr.begin(ShapeRenderer.ShapeType.Filled);
+                sr.setColor(new Color(0.5f, 0, 0, 0.7f));
+                sr.rect(0, 0, ParentScreen.getGameData().getDisplayWidth(), ParentScreen.getGameData().getDisplayHeight());
+                sr.end();
+                Gdx.gl.glDisable(GL20.GL_BLEND);
+                batch.begin();
+                font.draw(batch, "U DED", ParentScreen.getGameData().getDisplayWidth() / 2, ParentScreen.getGameData().getDisplayHeight() / 2);
+                batch.end();
+                break;
+            case GAME_WON:
+                draw();
+                Gdx.gl.glEnable(GL20.GL_BLEND);
+                Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+                sr.begin(ShapeRenderer.ShapeType.Filled);
+                sr.setColor(new Color(0, 0.5f, 0, 0.7f));
+                sr.rect(0, 0, ParentScreen.getGameData().getDisplayWidth(), ParentScreen.getGameData().getDisplayHeight());
+                sr.end();
+                Gdx.gl.glDisable(GL20.GL_BLEND);
+                batch.begin();
+                font.draw(batch, "U WON", ParentScreen.getGameData().getDisplayWidth() / 2, ParentScreen.getGameData().getDisplayHeight() / 2);
+                batch.end();
+                break;
+        }
+
+        //stage.draw();
+        //stage.clear();
+    }
+
     private void draw() {
-        for (MovableEntity movableEntity : world.getMovableEntities()) {
-            sr.setColor(1, 1, 1, 1);
+        for (MovableEntity movableEntity : ParentScreen.getWorld().getMovableEntities()) {
+            if (movableEntity.getType().equalsIgnoreCase("player")) {
+                sr.setColor(1, 1, 1, 1);
+            } else {
+                sr.setColor(0, 1, 0, 1);
+            }
+
             sr.begin(ShapeRenderer.ShapeType.Line);
             float[] shapeX = movableEntity.getShapeX();
             float[] shapeY = movableEntity.getShapeY();
@@ -105,46 +162,6 @@ public class PlayScreen implements Screen {
             sr.end();
         }
 
-    }
-
-    @Override
-    public void render(float f) {
-        if(world.getMovableEntities().contains(this)) {
-            
-        }
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); // Clear screen
-        time2 = java.lang.System.currentTimeMillis();
-
-//        if (time2 - time > 2500) {
-//            state = 0;
-//        }
-
-        switch (state) {
-            case GAME_RUNNING:
-                stage.act();
-                update();
-                gip.keyPress();
-                draw();
-                break;
-            case GAME_OVER:
-                
-                draw();
-                Gdx.gl.glEnable(GL20.GL_BLEND);
-                Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-                sr.begin(ShapeRenderer.ShapeType.Filled);
-                sr.setColor(new Color(0.5f, 0, 0, 0.7f));
-                sr.rect(0, 0, gamedata.getDisplayWidth(), gamedata.getDisplayHeight());
-                sr.end();
-                Gdx.gl.glDisable(GL20.GL_BLEND);
-                batch.begin();
-                font.draw(batch, "U DED", gamedata.getDisplayWidth()/2, gamedata.getDisplayHeight()/2);
-                batch.end();
-                break;
-        }
-
-        //stage.draw();
-        //stage.clear();
     }
 
     @Override
@@ -169,39 +186,12 @@ public class PlayScreen implements Screen {
     }
 
     private void update() {
-        for (iEntityProcessingService entityProcessor : getEntityProcessingServices()) {
-            entityProcessor.process(gamedata, world);
+        for (iEntityProcessingService entityProcessor : parentScreen.getEntityProcessingServices()) {
+            entityProcessor.process(ParentScreen.getGameData(), ParentScreen.getWorld());
         }
-        for (iPostEntityProcessingService postEntityProcessor : getPostEntityProcessingService()) {
-            postEntityProcessor.process(gamedata, world);
+        for (iPostEntityProcessingService postEntityProcessor : parentScreen.getPostEntityProcessingService()) {
+            postEntityProcessor.process(ParentScreen.getGameData(), ParentScreen.getWorld());
         }
     }
-
-    private Collection<? extends iGamePluginServices> getPluginServices() {
-        return lookup.lookupAll(iGamePluginServices.class);
-    }
-
-    private Collection<? extends iEntityProcessingService> getEntityProcessingServices() {
-        return lookup.lookupAll(iEntityProcessingService.class);
-    }
-
-    private Collection<? extends iPostEntityProcessingService> getPostEntityProcessingService() {
-        return lookup.lookupAll(iPostEntityProcessingService.class);
-    }
-
-    private final LookupListener lookupListener = new LookupListener() {
-
-        @Override
-        public void resultChanged(LookupEvent le) {
-            Collection<? extends iGamePluginServices> updated = result.allInstances();
-
-            for (iGamePluginServices gs : updated) {
-                if (!gamePlugin.contains(gs)) {
-                    gs.start(gamedata, world);
-                    gamePlugin.remove(gs);
-                }
-            }
-        }
-    };
 
 }

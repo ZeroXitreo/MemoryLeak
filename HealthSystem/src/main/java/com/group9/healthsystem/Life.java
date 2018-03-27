@@ -24,18 +24,10 @@ public class Life implements iEntityProcessingService {
     @Override
     public void process(GameData gameData, World world) {
         for (MovableEntity movableEntity : world.getMovableEntities()) {
-            //if(movableEntity)
-            //System.out.println("AM I CALLED????");
             HealthPart current = movableEntity.getPart(HealthPart.class);
             if(current.isDead()){
                 System.out.println("AM I DEAD??? HINT: YES");
-                
                 world.removeMovableEntity(movableEntity.getID());
-
-                
-//                movableEntity.remove(partClass);
-//                gameData.
-                
             }
         }
     }
