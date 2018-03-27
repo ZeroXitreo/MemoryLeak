@@ -45,7 +45,7 @@ public class Position implements EntityPart
 		this.x = x;
 		this.y = y;
 	}
-
+	
 	public void setRadians(float radians)
 	{
 		this.radians = radians;
