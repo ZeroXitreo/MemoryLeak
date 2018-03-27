@@ -21,15 +21,20 @@ import services.iGamePluginServices;
 public class PlayerPlugin implements iGamePluginServices
 {
 	private MovableEntity player;
-
+	String test = "test";
 
 	@Override
 	public void start(GameData gameData, World world)
 	{
 		player = createPlayer(gameData);
 		world.addMovableEntity(player);
+		test = world.addMovableEntity(player);
 	}
-
+	
+	public String getTest(){
+		return this.test;
+	}
+	
 	private MovableEntity createPlayer(GameData gameData)
 	{
 

@@ -22,10 +22,14 @@ import org.openide.util.lookup.ServiceProvider;
     @ServiceProvider (service = iEntityProcessingService.class)
 public class PlayerControlSystem implements iEntityProcessingService
 {
+		PlayerPlugin pp;
 	@Override
 	public void process(GameData gameData, World world)
 	{
+		String playerID;
+		float x , y;
 		for(MovableEntity player : world.getMovableEntities(Player.class)){
+			playerID = world.addMovableEntity(player);
 			Position position = player.getPart(Position.class);
 			Move move = player.getPart(Move.class);
 			
@@ -34,8 +38,13 @@ public class PlayerControlSystem implements iEntityProcessingService
                         move.setDown(gameData.getKeys().isDown(S));
                         move.setRight(gameData.getKeys().isDown(D));
                         move.process(gameData, player);
-                        position.process(gameData, player);
                         updateSpriteSquare(player);
+                        
+						x = position.getX();
+						y = position.getY();
+						player.add(new Position(x, y));
+						position.process(gameData, player);
+						pp.getTest();
 						//updateSpriteCircle(player);
 	//		gameKeys.keyPress();
 //			move.setDown(gameKeys.keyPress());

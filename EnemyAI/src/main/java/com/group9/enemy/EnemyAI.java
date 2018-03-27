@@ -17,7 +17,7 @@ import services.iEntityProcessingService;
  */
 @ServiceProvider(service = iEntityProcessingService.class)
 
-public class EnemyAI implements iEntityProcessingService {
+public class EnemyAI implements iEntityProcessingService{
 	@Override
 	public void process(GameData gameData, World world)
 	{
@@ -27,22 +27,22 @@ public class EnemyAI implements iEntityProcessingService {
 			move.process(gameData, enemy);
 			position.process(gameData, enemy);
 			updateSprite(enemy);
-			enemyPositionX(enemy);
-			enemyPositionY(enemy);
+//			enemyPositionX(enemy);
+//			enemyPositionY(enemy);
 		}
 		
 	}
 	
-	private float enemyPositionX(MovableEntity movableEntity){
-		Position position = movableEntity.getPart(Position.class);
-		float x = position.getX();
-		return x; 
-	}
-	private float enemyPositionY(MovableEntity movableEntity){
-		Position position = movableEntity.getPart(Position.class);
-		float y = position.getY();
-		return y;
-	}
+//	private float enemyPositionX(MovableEntity movableEntity){
+//		Position position = movableEntity.getPart(Position.class);
+//		float x = position.getX();
+//		return x; 
+//	}
+//	private float enemyPositionY(MovableEntity movableEntity){
+//		Position position = movableEntity.getPart(Position.class);
+//		float y = position.getY();
+//		return y;
+//	}
 	
 	private void updateSprite(MovableEntity movableEntity){
 			
