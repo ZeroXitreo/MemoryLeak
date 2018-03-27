@@ -40,27 +40,27 @@ public class Move implements EntityPart {
 		float y = position.getY();
 		
 		if(left){
-			System.out.println(position.getX() + " x before");
+//			System.out.println(position.getX() + " x before");
 			x--;
-			System.out.println(position.getX());
+//			System.out.println(position.getX());
 		}
 		
 		if(right){
-			System.out.println(position.getX() + " x before");
+//			System.out.println(position.getX() + " x before");
 			x++;
-			System.out.println(position.getX());
+//			System.out.println(position.getX());
 		}
 		
 		if(up){
-                    System.out.println(position.getY() + " y before");
+//                    System.out.println(position.getY() + " y before");
 			y++;
-                    System.out.println(position.getY());
+//                    System.out.println(position.getY());
 		}
 		
 		if(down){
-			System.out.println(position.getY() + " y before");
+//			System.out.println(position.getY() + " y before");
 			y--;
-                    System.out.println(position.getY());
+//                    System.out.println(position.getY());
 		}
 		
 		if(x > gameData.getDisplayWidth()){

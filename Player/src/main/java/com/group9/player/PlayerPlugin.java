@@ -8,6 +8,7 @@ package com.group9.player;
 import data.GameData;
 import data.MovableEntity;
 import data.World;
+import movableentityparts.HealthPart;
 import movableentityparts.Move;
 import movableentityparts.Position;
 import org.openide.util.lookup.ServiceProvider;
@@ -45,6 +46,7 @@ public class PlayerPlugin implements iGamePluginServices
 		playerCharacter.setRadius(20);
 		playerCharacter.add(new Move(maxSpeed));
 		playerCharacter.add(new Position(x, y));
+                playerCharacter.add(new HealthPart(10));
 		return playerCharacter;
 	}
 

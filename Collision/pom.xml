@@ -6,7 +6,7 @@
         <artifactId>MemoryLeak-parent</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <artifactId>HealthSystem</artifactId>
+    <artifactId>Collision</artifactId>
     <packaging>nbm</packaging>
     <build>
         <plugins>

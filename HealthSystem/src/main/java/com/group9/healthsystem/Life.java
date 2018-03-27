@@ -6,37 +6,37 @@
 package com.group9.healthsystem;
 
 import data.GameData;
+import data.MovableEntity;
 import data.World;
+import movableentityparts.HealthPart;
 import services.iEntityProcessingService;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  *
- * @author Christian
+ * @author Mikkel and Jonas
  */
-public class Life implements iEntityProcessingService
-{
-	private int health;
-	private boolean dead = false;
-	
-	public int getHealth(){
-		return health;
-	}
-	
-	public void setHealth(int health){
-		this.health = health;
-	}
-	
-	public void setDead(boolean dead){
-		this.dead = dead;
-	}
-	
-	public boolean isDead(){
-		return dead;
-	}
+@ServiceProvider(service = iEntityProcessingService.class)
 
-	@Override
-	public void process(GameData gameData, World world)
-	{
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-	}
+public class Life implements iEntityProcessingService {
+
+
+    @Override
+    public void process(GameData gameData, World world) {
+        for (MovableEntity movableEntity : world.getMovableEntities()) {
+            //if(movableEntity)
+            //System.out.println("AM I CALLED????");
+            HealthPart current = movableEntity.getPart(HealthPart.class);
+            if(current.isDead()){
+                System.out.println("AM I DEAD??? HINT: YES");
+                
+                world.removeMovableEntity(movableEntity.getID());
+
+                
+//                movableEntity.remove(partClass);
+//                gameData.
+                
+            }
+        }
+    }
 }

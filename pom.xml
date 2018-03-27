@@ -68,6 +68,7 @@
         <module>MapBuildingBlocks</module>
         <module>HealthSystem</module>
         <module>mavenproject1/SearchAlgorithm</module>
+        <module>Collision</module>
     </modules>
     <properties>
         <netbeans.version>RELEASE82</netbeans.version>
