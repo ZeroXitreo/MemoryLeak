@@ -40,9 +40,10 @@ public class PlayerControlSystem implements iEntityProcessingService
                         move.process(gameData, player);
                         updateSpriteSquare(player);
                         
-						x = position.getX();
-						y = position.getY();
-						player.add(new Position(x, y));
+//						x = position.getX();
+//						y = position.getY();
+//						position.setPosition(x, y);
+						//player.add(new Position(x, y));
 						position.process(gameData, player);
 						pp.getTest();
 						//updateSpriteCircle(player);

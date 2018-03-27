@@ -17,6 +17,7 @@
                 <configuration>
                     <useOSGiDependencies>true</useOSGiDependencies>
                     <publicPackages>
+                        <publicPackage>Search</publicPackage>
                         <publicPackage>data</publicPackage>
                         <publicPackage>events</publicPackage>
                         <publicPackage>movableentityparts</publicPackage>
