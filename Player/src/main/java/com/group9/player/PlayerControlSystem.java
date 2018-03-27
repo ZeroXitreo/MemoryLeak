@@ -34,7 +34,7 @@ public class PlayerControlSystem implements iEntityProcessingService {
             healthPart.process(gameData, player);
             move.process(gameData, player);
             position.process(gameData, player);
-            updateSprite(player);
+            updateSpriteCircle(player);
 
 			
 			
