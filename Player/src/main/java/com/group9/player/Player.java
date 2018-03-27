@@ -16,5 +16,8 @@ import data.MovableEntity;
  */
 public class Player extends MovableEntity 
 {
-	
+    @Override
+    public String getType(){
+        return "player";
+    }
 }

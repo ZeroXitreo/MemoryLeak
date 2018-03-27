@@ -4,6 +4,8 @@ import com.badlogic.gdx.Game;
 import data.GameData;
 import data.World;
 import group9.manager.GameInputProcessor;
+import group9.screens.MenuScreen;
+import group9.screens.ParentScreen;
 import group9.screens.PlayScreen;
 
 /**
@@ -21,17 +23,13 @@ public class MemoryLeak extends Game {
         gip = new GameInputProcessor(gameData);
         gameData.setDisplayHeight(540);
         gameData.setDisplayWidth(960);
-        this.setScreen(new PlayScreen(this, world, gameData, gip));
+        new ParentScreen(this, world, gameData, gip);
+        this.setScreen(new PlayScreen());
     }
 
-//        private void draw(){
-//            for (Entity entity : world.getEntities()){
-//                System.out.println("hej");
-//            }
-//        }
     @Override
     public void resize(int i, int i1) {
-		
+
     }
 
     @Override
