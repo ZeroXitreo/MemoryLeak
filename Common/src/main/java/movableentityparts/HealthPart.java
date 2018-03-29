@@ -7,6 +7,7 @@ package movableentityparts;
 
 import data.GameData;
 import data.MovableEntity;
+import data.World;
 
 /**
  *
@@ -42,21 +43,21 @@ public class HealthPart implements EntityPart {
     }
     
     @Override
-    public void process(GameData gameData, MovableEntity entity) {
+    public void process(GameData gameData, MovableEntity entity, World world) {
         
-        time2 = System.currentTimeMillis();
-        if(time2 - time > 2500){
-            isHit = true;
-            time = System.currentTimeMillis();
-        }
-        
-        if (isHit){
-            health--;
-            isHit = false;
-        }
-        if(health <= 0){
-            dead = true;
-        }
+//        time2 = System.currentTimeMillis();
+//        if(time2 - time > 2500){
+//            isHit = true;
+//            time = System.currentTimeMillis();
+//        }
+//        
+//        if (isHit){
+//            health--;
+//            isHit = false;
+//        }
+//        if(health <= 0){
+//            dead = true;
+//        }
         
     }
 

@@ -33,8 +33,8 @@ public class EnemyPlugin implements iGamePluginServices {
 
         //Spawn location of enemy/enemies
         //float x =100, y=420;
-        float x = gameData.getDisplayWidth() / 2;
-        float y = gameData.getDisplayHeight() / 2;
+        float x = 100;
+        float y = 420;
         float maxSpeed = 4;
         MovableEntity enemyCharacter = new Enemy();
         enemyCharacter.setRadius(10);
