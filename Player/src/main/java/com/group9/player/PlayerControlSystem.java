@@ -31,9 +31,9 @@ public class PlayerControlSystem implements iEntityProcessingService {
             move.setLeft(gameData.getKeys().isDown(A));
             move.setDown(gameData.getKeys().isDown(S));
             move.setRight(gameData.getKeys().isDown(D));
-            healthPart.process(gameData, player, world);
-            move.process(gameData, player, world);
-            position.process(gameData, player, world);
+            healthPart.process(gameData, player);
+            move.process(gameData, player);
+            position.process(gameData, player);
             updateSpriteCircle(player);
 
 			

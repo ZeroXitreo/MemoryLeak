@@ -58,7 +58,7 @@ public class Position implements EntityPart
 	}
 
 	@Override
-	public void process(GameData gameData, MovableEntity entity, World world)
+	public void process(GameData gameData, MovableEntity entity)
 	{
 
 	}

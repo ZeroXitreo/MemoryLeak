@@ -43,7 +43,7 @@ public class HealthPart implements EntityPart {
     }
     
     @Override
-    public void process(GameData gameData, MovableEntity entity, World world) {
+    public void process(GameData gameData, MovableEntity entity) {
         
 //        time2 = System.currentTimeMillis();
 //        if(time2 - time > 2500){

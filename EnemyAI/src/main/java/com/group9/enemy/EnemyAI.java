@@ -40,9 +40,9 @@ public class EnemyAI implements iEntityProcessingService
 			if(enemy.getType().equalsIgnoreCase("enemy"))
 			{
 				Move move = enemy.getPart(Move.class);
-				move.process(gameData, enemy, world);
+				move.process(gameData, enemy);
 				HealthPart health = enemy.getPart(HealthPart.class);
-				health.process(gameData, enemy, world);
+				health.process(gameData, enemy);
 				updateSprite(enemy);
 				enemyX = position.getX();
 				enemyY = position.getY();
@@ -78,7 +78,7 @@ public class EnemyAI implements iEntityProcessingService
 				
 
 			}
-			position.process(gameData, enemy, world);
+			position.process(gameData, enemy);
 		}
 
 	}
@@ -107,21 +107,4 @@ public class EnemyAI implements iEntityProcessingService
 		movableEntity.setShapeX(shapeX);
 		movableEntity.setShapeY(shapeY);
 	}
-//	
-//	private void move(GameData gameData, MovableEntity movableEntity,  World world){
-//		
-//		
-//		Move move = movableEntity.getPart(Move.class);
-//		Position position = movableEntity.getPart(Position.class);
-//		float enemyX = position.getEnemyX(world);
-//		float playerX = position.getPlayerX(world);
-//		System.out.println(enemyX + " " + playerX);
-//			if(enemyX < playerX){
-//				move.setRight(true);
-//			}
-//			else{
-//				move.setRight(false);
-//			}
-//				
-//	}
 }

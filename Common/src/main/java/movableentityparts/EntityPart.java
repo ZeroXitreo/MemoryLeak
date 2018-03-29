@@ -13,6 +13,6 @@ import data.World;
  */
 public interface EntityPart {
 	
-	public void process(GameData gameData, MovableEntity entity, World world);
+	public void process(GameData gameData, MovableEntity entity);
 
 }
