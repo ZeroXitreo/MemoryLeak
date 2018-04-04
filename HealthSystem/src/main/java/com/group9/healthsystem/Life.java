@@ -26,7 +26,7 @@ public class Life implements iEntityProcessingService {
         for (MovableEntity movableEntity : world.getMovableEntities()) {
             HealthPart current = movableEntity.getPart(HealthPart.class);
             if(current.isDead()){
-                System.out.println("AM I DEAD??? HINT: YES");
+               // System.out.println("AM I DEAD??? HINT: YES");
                 world.removeMovableEntity(movableEntity.getID());
             }
         }

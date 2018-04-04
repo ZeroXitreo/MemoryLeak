@@ -7,6 +7,7 @@ package movableentityparts;
 
 import data.GameData;
 import data.MovableEntity;
+import data.World;
 
 /**
  *
@@ -16,9 +17,6 @@ public class HealthPart implements EntityPart {
     
     private int health;
     private boolean dead = false;
-//    private boolean isHit = false;
-//    long time = System.currentTimeMillis();
-//    long time2;
 
     public HealthPart(int health) {
         this.health = health;
@@ -43,13 +41,6 @@ public class HealthPart implements EntityPart {
     
     @Override
     public void process(GameData gameData, MovableEntity entity) {
-        
-        //time2 = System.currentTimeMillis();
-        //if(time2 - time > 2500){
-        //    isHit = true;
-        //    time = System.currentTimeMillis();
-        //}
-        
         
         if (entity.getHit()){
             health--;

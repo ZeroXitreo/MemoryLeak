@@ -37,7 +37,7 @@ public class Collision implements iPostEntityProcessingService {
         Collection<MovableEntity> entities = world.getMovableEntities();
         for (MovableEntity entity : entities) {
             if (movEntity.equals(entity)) {
-                System.out.println("no");
+                //System.out.println("no");
                 continue;
             }
 
@@ -54,7 +54,7 @@ public class Collision implements iPostEntityProcessingService {
             if (true) //if (movableEl['isCircle'] && solidEl['isCircle']) // is both circles?
             {
                 float totalRadius = movEntity.getRadius() + entity.getRadius();
-                System.out.println(totalRadius);
+              //  System.out.println(totalRadius);
                 CircleCollisionPush(movEntity, entity, totalRadius);
             }
 
