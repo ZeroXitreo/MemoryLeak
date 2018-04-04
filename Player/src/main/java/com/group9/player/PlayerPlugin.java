@@ -46,7 +46,7 @@ public class PlayerPlugin implements iGamePluginServices
 		playerCharacter.setRadius(20);
 		playerCharacter.add(new Move(maxSpeed));
 		playerCharacter.add(new Position(x, y));
-                playerCharacter.add(new HealthPart(10));
+                playerCharacter.add(new HealthPart(4));
 		return playerCharacter;
 	}
 

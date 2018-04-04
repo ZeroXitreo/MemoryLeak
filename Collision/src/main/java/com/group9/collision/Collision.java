@@ -18,7 +18,7 @@ import services.iPostEntityProcessingService;
  *
  * @author ZeroXitreo
  */
-    @ServiceProvider (service = iPostEntityProcessingService.class)
+@ServiceProvider(service = iPostEntityProcessingService.class)
 public class Collision implements iPostEntityProcessingService {
 
     public Collision() {
@@ -33,7 +33,7 @@ public class Collision implements iPostEntityProcessingService {
         }
     }
 
-    public void CheckSingleCollision(Entity movEntity, World world) {
+    public void CheckSingleCollision(MovableEntity movEntity, World world) {
         Collection<MovableEntity> entities = world.getMovableEntities();
         for (MovableEntity entity : entities) {
             if (movEntity.equals(entity)) {
@@ -131,20 +131,19 @@ public class Collision implements iPostEntityProcessingService {
         }
     }
 
-    private void CircleCollisionPush(Entity pushedElement, Entity solidElement, float totalRadius) {
+    private void CircleCollisionPush(MovableEntity pushedElement, Entity solidElement, float totalRadius) {
         CircleCollisionPush(pushedElement, solidElement, totalRadius, 0, 0);
     }
 
-    private void CircleCollisionPush(Entity pushedElement, Entity solidElement, float totalRadius, float solidOffsetX, float solidOffsetY) {
+    private void CircleCollisionPush(MovableEntity pushedElement, Entity solidElement, float totalRadius, float solidOffsetX, float solidOffsetY) {
         CircleCollisionPush(pushedElement, solidElement, totalRadius, solidOffsetX, solidOffsetY, true);
     }
 
-    private void CircleCollisionPush(Entity movEntity, Entity entity, float totalRadius, float solidOffsetX, float solidOffsetY, boolean reverseOffset) {
+    private void CircleCollisionPush(MovableEntity movEntity, Entity entity, float totalRadius, float solidOffsetX, float solidOffsetY, boolean reverseOffset) {
         Position movEntityPos = movEntity.getPart(Position.class);
         Position entityPos = entity.getPart(Position.class);
-        
-        if(movEntityPos.getX() == entityPos.getX() && movEntityPos.getY() == entityPos.getY())
-        {
+
+        if (movEntityPos.getX() == entityPos.getX() && movEntityPos.getY() == entityPos.getY()) {
             return;
         }
 
@@ -166,6 +165,14 @@ public class Collision implements iPostEntityProcessingService {
 
         float disPoints = (float) Math.sqrt(Math.pow(disX, 2) + Math.pow(disY, 2));
         if (totalRadius > disPoints) {
+            if (movEntity.getType().equalsIgnoreCase("Enemy")) { //change to bullet when made
+                entity.setHit(true);
+                movEntity.setHit(true);
+            }
+            else if (entity.getType().equalsIgnoreCase("Enemy")) { //change to bullet when made
+                entity.setHit(true);
+                movEntity.setHit(true);
+            }
             float angle_B = (float) Math.atan(disY / disX);
 //            if(angle_B <=0){
 //                angle_B = 1f;

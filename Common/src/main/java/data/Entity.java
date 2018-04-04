@@ -14,7 +14,7 @@ public abstract class Entity implements Serializable {
 
     private final UUID ID = UUID.randomUUID();
     private Map<Class, EntityPart> parts;
-
+    private boolean isHit = false;
     private float[] shapeX = new float[4];
     private float[] shapeY = new float[4];
     private float radius;
@@ -61,6 +61,18 @@ public abstract class Entity implements Serializable {
 
     public void setShapeY(float[] shapeY) {
         this.shapeY = shapeY;
+    }
+
+    public String getType() {
+        return "";
+    }
+
+    public void setHit(boolean hit) {
+        isHit = hit;
+    }
+
+    public boolean getHit() {
+        return isHit;
     }
 
 }
