@@ -9,6 +9,7 @@ public class MovableEntity extends Entity {
     private float direction = 0;
     private boolean onlyOneWeapon;
     private boolean shoot;
+    private int moveDirection;
 
     public float getDirection() {
         return direction;
@@ -34,6 +35,15 @@ public class MovableEntity extends Entity {
         this.shoot = shoot;
     }
     
+    // 0 = left
+    // 1 = stading still
+    // 2 = right
+    public void setMoveDirection(int moveDirection){
+        this.moveDirection = moveDirection;
+    }
     
+    public int getMoveDirection(){
+        return moveDirection;
+    }
     
 }

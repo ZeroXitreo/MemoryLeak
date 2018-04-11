@@ -6,7 +6,7 @@
         <artifactId>MemoryLeak-parent</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <artifactId>Enemy</artifactId>
+    <artifactId>SpaceSlime</artifactId>
     <packaging>nbm</packaging>
     <build>
         <plugins>
@@ -52,4 +52,5 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+    <name>SpaceSlime</name>
 </project>

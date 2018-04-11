@@ -47,7 +47,7 @@ public class ParentScreen {
     private Image menuBackground;
     private Skin buttonSkin;
     private TextureAtlas lava;
-    private TextureAtlas walls;
+    private TextureAtlas memoryLeakPack;
     private BitmapFont font;
     private String assetPath;
     private String mainmenuPath;
@@ -82,11 +82,11 @@ public class ParentScreen {
         am.load(fontPath, BitmapFont.class);
         am.finishLoading();
 
-        //instanciate the image, button, lava, walls and font.
+        //instanciate the image, button, lava, memoryLeakPack and font.
         menuBackground = new Image(am.get(mainmenuPath, Texture.class));
         buttonSkin = am.get(skinPath, Skin.class);
         lava = am.get(lavaPath, TextureAtlas.class);
-        walls = am.get(memoryleakGraphicPath, TextureAtlas.class);
+        memoryLeakPack = am.get(memoryleakGraphicPath, TextureAtlas.class);
         font = am.get(fontPath, BitmapFont.class);
     }
 
@@ -242,8 +242,8 @@ public class ParentScreen {
         return lava;
     }
 
-    public TextureAtlas getWalls() {
-        return walls;
+    public TextureAtlas getMemoryLeakPack() {
+        return memoryLeakPack;
     }
 
     public Skin getButtonSkin() {

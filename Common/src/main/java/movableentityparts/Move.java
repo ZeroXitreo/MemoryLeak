@@ -48,11 +48,16 @@ public class Move implements EntityPart {
     @Override
     public void process(GameData gameData, MovableEntity entity) {
 
+        entity.setMoveDirection(1);
         Position position = entity.getPart(Position.class);
         float x = position.getX();
         float y = position.getY();
         if (useDirection) {
-
+            if (direction >= 3.14f / 2 && direction <= (3 * 3.14f) / 2) {
+                entity.setMoveDirection(0);
+            } else if (direction > 0 && direction < 3.14f / 2 || direction > (3 * 3.14f / 2)) {
+                entity.setMoveDirection(2);
+            }
             x += (float) cos(direction) * maxSpeed;
             y += (float) sin(direction) * maxSpeed;
 
@@ -60,10 +65,12 @@ public class Move implements EntityPart {
 
             if (left) {
                 x -= maxSpeed;
+                entity.setMoveDirection(0);
             }
 
             if (right) {
                 x += maxSpeed;
+                entity.setMoveDirection(2);
             }
 
             if (up) {

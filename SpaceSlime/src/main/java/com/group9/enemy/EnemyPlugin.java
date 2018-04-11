@@ -39,7 +39,7 @@ public class EnemyPlugin implements iGamePluginServices {
         float y = 420;
         float maxSpeed = 1;
         MovableEntity enemyCharacter = new Enemy();
-        enemyCharacter.setRadius(10);
+        enemyCharacter.setRadius(15);
         Move move = new Move(maxSpeed);
         move.setUseDirection(true);
         enemyCharacter.add(move);

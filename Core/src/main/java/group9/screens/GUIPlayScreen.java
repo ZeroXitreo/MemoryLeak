@@ -26,6 +26,7 @@ import com.sun.javafx.text.GlyphLayout;
 import data.Entity;
 
 import data.MovableEntity;
+import movableentityparts.Position;
 import movableentityparts.iWeapon;
 import services.iEntityProcessingService;
 import services.iPostEntityProcessingService;
@@ -49,8 +50,11 @@ public class GUIPlayScreen implements Screen {
     private TiledDrawable wallTopRightCorner;
     private TextButton toMenu;
     private TextureAtlas lava;
-    private TextureAtlas walls;
-    private Animation animation;
+    private TextureAtlas memoryLeakPack;
+    private Animation animationLava;
+    private Animation animationSpaceSlime;
+    private Animation animationPlayer;
+    private Animation animationIdlePlayer;
     private int state;
     private BitmapFont font;
     private float time;
@@ -61,6 +65,10 @@ public class GUIPlayScreen implements Screen {
     public static final int GAME_OVER = 0;
     private boolean alive;
     private boolean stageClear;
+    private TextureRegion lavaRegion;
+    private TextureRegion spaceSlimeRegion;
+    private TextureRegion playerRegion;
+    private TextureRegion playerIdleRegion;
 
     public GUIPlayScreen() {
         parentScreen = ParentScreen.getInstance();
@@ -72,22 +80,25 @@ public class GUIPlayScreen implements Screen {
         batch = new SpriteBatch();
 
         lava = parentScreen.getLava();
-        walls = parentScreen.getWalls();
+        memoryLeakPack = parentScreen.getMemoryLeakPack();
         font = parentScreen.getFont();
 
-        //create the animation of lava
-        animation = new Animation(1 / 11f, lava.findRegions("lava"), PlayMode.LOOP);
+        //create the animation of entities
+        animationLava = new Animation(1 / 11f, lava.findRegions("lava"), PlayMode.LOOP);
+        animationSpaceSlime = new Animation(1 / 5f, memoryLeakPack.findRegions("SpaceSlime"), PlayMode.LOOP);
+        animationPlayer = new Animation(1 / 6f, memoryLeakPack.findRegions("player"), PlayMode.LOOP);
+        animationIdlePlayer = new Animation(1 / 7f, memoryLeakPack.findRegions("playeridle"), PlayMode.LOOP);
 
         //instanciate the wall blocks
-        bottomWall = new TiledDrawable(walls.findRegion("wall_bottom"));
-        topWall = new TiledDrawable(walls.findRegion("wall_top"));
-        leftWall = new TiledDrawable(walls.findRegion("wall_left"));
-        rightWall = new TiledDrawable(walls.findRegion("wall_right"));
-        centerWall = new TiledDrawable(walls.findRegion("wall_center"));
-        wallBottomLeftCorner = new TiledDrawable(walls.findRegion("wall_bottom_left"));
-        wallTopLeftCorner = new TiledDrawable(walls.findRegion("wall_top_left"));
-        wallBottomRightCorner = new TiledDrawable(walls.findRegion("wall_bottom_right"));
-        wallTopRightCorner = new TiledDrawable(walls.findRegion("wall_top_right"));
+        bottomWall = new TiledDrawable(memoryLeakPack.findRegion("wall_bottom"));
+        topWall = new TiledDrawable(memoryLeakPack.findRegion("wall_top"));
+        leftWall = new TiledDrawable(memoryLeakPack.findRegion("wall_left"));
+        rightWall = new TiledDrawable(memoryLeakPack.findRegion("wall_right"));
+        centerWall = new TiledDrawable(memoryLeakPack.findRegion("wall_center"));
+        wallBottomLeftCorner = new TiledDrawable(memoryLeakPack.findRegion("wall_bottom_left"));
+        wallTopLeftCorner = new TiledDrawable(memoryLeakPack.findRegion("wall_top_left"));
+        wallBottomRightCorner = new TiledDrawable(memoryLeakPack.findRegion("wall_bottom_right"));
+        wallTopRightCorner = new TiledDrawable(memoryLeakPack.findRegion("wall_top_right"));
 
         //create the toMenu button
         toMenu = new TextButton("To Menu", parentScreen.getButtonSkin(), "default");
@@ -129,7 +140,7 @@ public class GUIPlayScreen implements Screen {
     public void render(float f) {
         time += f;
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); // Clear screen
-        TextureRegion textureRegion = animation.getKeyFrame(time, true);
+        lavaRegion = animationLava.getKeyFrame(time, true);
 
         alive = false;
         stageClear = true;
@@ -157,7 +168,7 @@ public class GUIPlayScreen implements Screen {
                 batch.begin();
                 for (int x = 0; x < 960; x += 124) {
                     for (int y = 0; y < 540; y += 124) {
-                        batch.draw(textureRegion, x, y);
+                        batch.draw(lavaRegion, x, y);
                     }
                 }
                 centerWall.draw(batch, 80, 64, 800, 412);
@@ -171,13 +182,13 @@ public class GUIPlayScreen implements Screen {
                 wallBottomRightCorner.draw(batch, 864, 32, 32, 32);
                 wallTopRightCorner.draw(batch, 864, 476, 32, 32);
                 batch.end();
-                drawEntities();
+                drawEntities(time);
                 break;
             case GAME_OVER:
                 batch.begin();
                 for (int x = 0; x < 960; x += 124) {
                     for (int y = 0; y < 540; y += 124) {
-                        batch.draw(textureRegion, x, y);
+                        batch.draw(lavaRegion, x, y);
                     }
                 }
                 centerWall.draw(batch, 80, 64, 800, 412);
@@ -193,7 +204,7 @@ public class GUIPlayScreen implements Screen {
 
                 font.draw(batch, "YOU DIED", ParentScreen.getGameData().getDisplayWidth() / 3 + 60, ParentScreen.getGameData().getDisplayHeight() / 2);
                 batch.end();
-                drawEntities();
+                drawEntities(time);
 
                 stage.addActor(toMenu); //Add the button to the stage. 
                 break;
@@ -201,7 +212,7 @@ public class GUIPlayScreen implements Screen {
                 batch.begin();
                 for (int x = 0; x < 960; x += 124) {
                     for (int y = 0; y < 540; y += 124) {
-                        batch.draw(textureRegion, x, y);
+                        batch.draw(lavaRegion, x, y);
                     }
                 }
                 centerWall.draw(batch, 80, 64, 800, 412);
@@ -217,21 +228,46 @@ public class GUIPlayScreen implements Screen {
 
                 font.draw(batch, "YOU WIN... THIS ROUND", ParentScreen.getGameData().getDisplayWidth() / 4, ParentScreen.getGameData().getDisplayHeight() / 2);
                 batch.end();
-                drawEntities();
+                drawEntities(time);
                 stage.addActor(toMenu); //Add the button to the stage. 
                 break;
         }
         stage.draw();
     }
 
-    private void drawEntities() {
+    private void drawEntities(float time) {
         for (MovableEntity movableEntity : ParentScreen.getWorld().getMovableEntities()) {
             if (movableEntity.getType().equalsIgnoreCase("player")) {
+                batch.begin();
+                Position pos = movableEntity.getPart(Position.class);
+                playerRegion = animationPlayer.getKeyFrame(2 * time, true);
+                playerIdleRegion = animationIdlePlayer.getKeyFrame(2 * time, true);
+                if (movableEntity.getMoveDirection() == 1) {
+                    batch.draw(playerIdleRegion, pos.getX() - 16, pos.getY() - 16, 32, 32);
+                } else if (movableEntity.getMoveDirection() == 0) {
+                    batch.draw(playerRegion, pos.getX() + 16, pos.getY() - 16, -32, 32);
+                } else {
+                    batch.draw(playerRegion, pos.getX() - 16, pos.getY() - 16, 32, 32);
+                }
+                batch.end();
                 sr.setColor(1, 1, 1, 1);
             } else if (movableEntity.getType().equalsIgnoreCase("friendlyBullet") || movableEntity.getType().equalsIgnoreCase("enemyBullet")) {
                 sr.setColor(1, 0, 0, 1);
-            } else {
+            } else if (movableEntity.getType().equalsIgnoreCase("enemy")) {
+                spaceSlimeRegion = animationSpaceSlime.getKeyFrame(time, true);
+                Position pos = movableEntity.getPart(Position.class);
+                batch.begin();
+                if (movableEntity.getMoveDirection() == 1) {
+                    batch.draw(spaceSlimeRegion, pos.getX() - 16, pos.getY() - 16, 32, 32);
+                } else if (movableEntity.getMoveDirection() == 0) {
+                    batch.draw(spaceSlimeRegion, pos.getX() + 16, pos.getY() - 16, -32, 32);
+                } else {
+                    batch.draw(spaceSlimeRegion, pos.getX() - 16, pos.getY() - 16, 32, 32);
+                }
+                batch.end();
                 sr.setColor(0, 1, 0, 1);
+            } else {
+                sr.setColor(1, 1, 0, 0);
             }
             sr.begin(ShapeRenderer.ShapeType.Line);
             float[] shapeX = movableEntity.getShapeX();
