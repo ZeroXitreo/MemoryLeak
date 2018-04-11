@@ -35,10 +35,7 @@ import services.iPostEntityProcessingService;
  */
 public class PlayScreen implements Screen {
 
-//    private GameData gamedata;
     private Stage stage;
-//    private World world;
-//    private GameInputProcessor gip;
     private ShapeRenderer sr;
     public static final int GAME_WON = 2;
     public static final int GAME_RUNNING = 1;
@@ -50,25 +47,11 @@ public class PlayScreen implements Screen {
     private boolean stageClear;
     private ParentScreen parentScreen;
 
-    //public PlayScreen(Game game, World world, GameData gameData, GameInputProcessor gip) {
-//        super.game = game;
-//        super.world = world;
-//        super.gameData = gameData;
-//        super.gip = gip;
     public PlayScreen() {
         parentScreen = ParentScreen.getInstance();
         stage = new Stage(new ScreenViewport());
         sr = new ShapeRenderer();
-
-//        result = lookup.lookupResult(iGamePluginServices.class);
-//        result.addLookupListener(lookupListener);
-//        result.allItems();
-//        for (iGamePluginServices plugin : result.allInstances()) {
-//            plugin.start(super.gameData, world);
-//            gamePlugin.add(plugin);
-//        }
         parentScreen.setResult();
-
         state = 1;
         batch = new SpriteBatch();
         font = new BitmapFont();
@@ -142,8 +125,7 @@ public class PlayScreen implements Screen {
         //stage.draw();
         //stage.clear();
     }
-
-    private void draw() {
+private void draw() {
         for (MovableEntity movableEntity : ParentScreen.getWorld().getMovableEntities()) {
             if (movableEntity.getType().equalsIgnoreCase("player")) {
                 sr.setColor(1, 1, 1, 1);
@@ -161,6 +143,7 @@ public class PlayScreen implements Screen {
             }
             sr.end();
         }
+    
 
     }
 

@@ -18,6 +18,8 @@ public abstract class Entity implements Serializable {
     private float[] shapeX = new float[4];
     private float[] shapeY = new float[4];
     private float radius;
+    private double x;
+    private double y;
 
     public Entity() {
         parts = new ConcurrentHashMap<>();
@@ -75,4 +77,6 @@ public abstract class Entity implements Serializable {
         return isHit;
     }
 
+    
+    
 }

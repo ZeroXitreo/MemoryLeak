@@ -7,9 +7,18 @@ package group9.screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import data.GameData;
 import data.World;
 import group9.manager.GameInputProcessor;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -34,12 +43,51 @@ public class ParentScreen {
     private Lookup lookup = Lookup.getDefault();
     private Lookup.Result<iGamePluginServices> result;
     private List<iGamePluginServices> gamePlugin = new ArrayList<>();
+    private AssetManager am;
+    private Image menuBackground;
+    private Skin buttonSkin;
+    private TextureAtlas lava;
+    private TextureAtlas walls;
+    private BitmapFont font;
+    private String assetPath;
+    private String mainmenuPath;
+    private String skinPath;
+    private String lavaPath;
+    private String memoryleakGraphicPath;
+    private String fontPath;
 
     public ParentScreen(Game game, World world, GameData gameData, GameInputProcessor gip) {
         this.game = game;
         this.world = world;
         this.gameData = gameData;
         this.gip = gip;
+        am = new AssetManager();
+
+        //where we wanna go (example):   C:\\Users\jonas\OneDrive\Dokumenter\MemoryLeak\Core\target
+        String path = new File("").getAbsolutePath(); //C:\Users\jonas\OneDrive\Dokumenter\MemoryLeak\application\target\memoryleak
+        assetPath = getAssetPath(path);
+
+        //The right paths
+        mainmenuPath = assetPath + "/background/mainmenu.png";
+        skinPath = assetPath + "/skin/memoryleakTextButton.json";
+        lavaPath = assetPath + "/sprites/lava.pack";
+        memoryleakGraphicPath = assetPath + "/sprites/memoryleak.pack";
+        fontPath = assetPath + "/skin/MemoryLeakFont.fnt";
+
+        //Load to assetManager
+        am.load(mainmenuPath, Texture.class);
+        am.load(skinPath, Skin.class);
+        am.load(lavaPath, TextureAtlas.class);
+        am.load(memoryleakGraphicPath, TextureAtlas.class);
+        am.load(fontPath, BitmapFont.class);
+        am.finishLoading();
+
+        //instanciate the image, button, lava, walls and font.
+        menuBackground = new Image(am.get(mainmenuPath, Texture.class));
+        buttonSkin = am.get(skinPath, Skin.class);
+        lava = am.get(lavaPath, TextureAtlas.class);
+        walls = am.get(memoryleakGraphicPath, TextureAtlas.class);
+        font = am.get(fontPath, BitmapFont.class);
     }
 
     public static ParentScreen getInstance() {
@@ -184,6 +232,45 @@ public class ParentScreen {
      */
     public void setGamePlugin(List<iGamePluginServices> gamePlugin) {
         this.gamePlugin = gamePlugin;
+    }
+
+    public Image getMenuBackground() {
+        return menuBackground;
+    }
+
+    public TextureAtlas getLava() {
+        return lava;
+    }
+
+    public TextureAtlas getWalls() {
+        return walls;
+    }
+
+    public Skin getButtonSkin() {
+        return buttonSkin;
+    }
+
+    public BitmapFont getFont() {
+        return font;
+    }
+
+    public String getAssetPath(String path) {
+        int stopHere = 0;
+        String[] section = path.split("\\\\");
+        for (int i = 0; i < section.length; i++) {
+            System.out.println(section[i]);
+            if (section[i].equalsIgnoreCase("MemoryLeak")) {
+                stopHere = i;
+                break;
+            }
+        }
+        String truePath = "";
+        for (int i = 0; i <= stopHere; i++) {
+            truePath += section[i] + "/";
+        }
+        truePath += "Core/src/main/resources/assets";
+
+        return truePath;
     }
 
 }

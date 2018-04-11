@@ -24,7 +24,7 @@ public class MemoryLeak extends Game {
         gameData.setDisplayHeight(540);
         gameData.setDisplayWidth(960);
         new ParentScreen(this, world, gameData, gip);
-        this.setScreen(new PlayScreen());
+        this.setScreen(new MenuScreen());
     }
 
     @Override

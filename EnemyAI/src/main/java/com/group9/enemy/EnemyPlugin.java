@@ -1,13 +1,16 @@
 package com.group9.enemy;
 
+import com.group9.commonenemy.Enemy;
 import data.GameData;
 import data.MovableEntity;
 import data.World;
 import java.util.ArrayList;
 import java.util.List;
+import movableentityparts.Attack;
 import movableentityparts.HealthPart;
 import movableentityparts.Move;
 import movableentityparts.Position;
+import movableentityparts.WeaponPart;
 import org.openide.util.lookup.ServiceProvider;
 import services.iGamePluginServices;
 
@@ -32,15 +35,21 @@ public class EnemyPlugin implements iGamePluginServices {
     private MovableEntity createEnemy(GameData gameData) {
 
         //Spawn location of enemy/enemies
-        //float x =100, y=420;
         float x = 100;
         float y = 420;
-        float maxSpeed = 4;
+        float maxSpeed = 1;
         MovableEntity enemyCharacter = new Enemy();
         enemyCharacter.setRadius(10);
-        enemyCharacter.add(new Move(maxSpeed));
+        Move move = new Move(maxSpeed);
+        move.setUseDirection(true);
+        enemyCharacter.add(move);
         enemyCharacter.add(new Position(x, y));
         enemyCharacter.add(new HealthPart(1));
+        enemyCharacter.add(new WeaponPart());
+        
+        enemyCharacter.add(new Attack());
+        
+        enemyCharacter.setHasWeapon(false);
         return enemyCharacter;
     }
 

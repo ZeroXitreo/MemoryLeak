@@ -5,15 +5,19 @@
  */
 package com.group9.player;
 
+import com.group9.commonplayer.Player;
 import data.GameData;
 import static data.GameKeys.*;
 import data.MovableEntity;
 import data.World;
+import movableentityparts.Attack;
+import movableentityparts.WeaponPart;
 import movableentityparts.HealthPart;
 import movableentityparts.Move;
 import services.iEntityProcessingService;
 import movableentityparts.Position;
 import org.openide.util.lookup.ServiceProvider;
+import movableentityparts.iWeapon;
 
 /**
  *
@@ -22,20 +26,36 @@ import org.openide.util.lookup.ServiceProvider;
 @ServiceProvider(service = iEntityProcessingService.class)
 public class PlayerControlSystem implements iEntityProcessingService {
 
+    private iWeapon weapon;
+
     @Override
     public void process(GameData gameData, World world) {
         for (MovableEntity player : world.getMovableEntities(Player.class)) {
             Position position = player.getPart(Position.class);
             HealthPart healthPart = player.getPart(HealthPart.class);
+            Attack direction = player.getPart(Attack.class);
             Move move = player.getPart(Move.class);
             move.setUp(gameData.getKeys().isDown(W));
             move.setLeft(gameData.getKeys().isDown(A));
             move.setDown(gameData.getKeys().isDown(S));
             move.setRight(gameData.getKeys().isDown(D));
+            WeaponPart gun = player.getPart(WeaponPart.class);
+            if (!player.hasWeapon() && world.getWeapons() != null) {
+                for (iWeapon currentWeapon : world.getWeapons()) {
+                    if (currentWeapon.getType().equalsIgnoreCase("sword")) {
+                        this.weapon = currentWeapon;
+                        player.setHasWeapon(true);
+                        break;
+                    }
+                }
+                gun.setWeapon(weapon);
+            }
             healthPart.process(gameData, player);
             move.process(gameData, player);
             position.process(gameData, player);
             updateSpriteCircle(player);
+            direction.process(gameData, player);
+            gun.process(gameData, player);
         }
     }
 
@@ -87,5 +107,4 @@ public class PlayerControlSystem implements iEntityProcessingService {
         entity.setShapeX(shapeX);
         entity.setShapeY(shapeY);
     }
-
 }

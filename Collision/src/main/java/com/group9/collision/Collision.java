@@ -54,7 +54,7 @@ public class Collision implements iPostEntityProcessingService {
             if (true) //if (movableEl['isCircle'] && solidEl['isCircle']) // is both circles?
             {
                 float totalRadius = movEntity.getRadius() + entity.getRadius();
-              //  System.out.println(totalRadius);
+                //  System.out.println(totalRadius);
                 CircleCollisionPush(movEntity, entity, totalRadius);
             }
 
@@ -165,14 +165,7 @@ public class Collision implements iPostEntityProcessingService {
 
         float disPoints = (float) Math.sqrt(Math.pow(disX, 2) + Math.pow(disY, 2));
         if (totalRadius > disPoints) {
-            if (movEntity.getType().equalsIgnoreCase("Enemy")) { //change to bullet when made
-                entity.setHit(true);
-                movEntity.setHit(true);
-            }
-            else if (entity.getType().equalsIgnoreCase("Enemy")) { //change to bullet when made
-                entity.setHit(true);
-                movEntity.setHit(true);
-            }
+            collisionDMG(movEntity, entity);
             float angle_B = (float) Math.atan(disY / disX);
 //            if(angle_B <=0){
 //                angle_B = 1f;
@@ -182,6 +175,61 @@ public class Collision implements iPostEntityProcessingService {
 
             movEntityPos.setX(movEntityPos.getX() + (movablePosX < solidPosX ? -pushPos_a : pushPos_a));
             movEntityPos.setY(movEntityPos.getY() + (movablePosX < solidPosX ? -pushPos_b : pushPos_b));
+        }
+    }
+
+    /**
+     * *
+     *
+     * @param entity1
+     * @param entity2
+     */
+    private void collisionDMG(MovableEntity entity1, Entity entity2) {
+        //if one of the entities is an enemy and the other one isn't an enemy
+        //or an enemyBullet.
+        if (entity1.getType().equalsIgnoreCase("Enemy")
+                && !entity2.getType().equalsIgnoreCase("Enemy")
+                && !entity2.getType().equalsIgnoreCase("enemyBullet")) {
+            entity2.setHit(true);
+        } else if (entity2.getType().equalsIgnoreCase("Enemy")
+                && !entity1.getType().equalsIgnoreCase("Enemy")
+                && !entity1.getType().equalsIgnoreCase("enemyBullet")) {
+            entity1.setHit(true);
+        }
+        //if one of the entities is a friendlyBullet and the other one
+        //isn't a player or a bullet.
+        if (entity1.getType().equalsIgnoreCase("friendlyBullet")
+                && !entity2.getType().equalsIgnoreCase("friendlyBullet")
+                && !entity2.getType().equalsIgnoreCase("player")
+                && !entity2.getType().equalsIgnoreCase("enemyBullet")) {
+            entity2.setHit(true);
+        } else if (entity2.getType().equalsIgnoreCase("friendlyBullet")
+                && !entity1.getType().equalsIgnoreCase("friendlyBullet")
+                && !entity1.getType().equalsIgnoreCase("player")
+                && !entity1.getType().equalsIgnoreCase("enemyBullet")) {
+            entity1.setHit(true);
+        }
+        //if one of the entities is an enemyBullet and the other one is player.
+        //if one of the entities is a bullet and the other one
+        //isn't an enemy or a bullet.
+        if (entity1.getType().equalsIgnoreCase("enemyBullet")
+                && entity2.getType().equalsIgnoreCase("player")) {
+            entity1.setHit(true);
+            entity2.setHit(true);
+        } else if (entity2.getType().equalsIgnoreCase("enemyBullet")
+                && entity1.getType().equalsIgnoreCase("player")){
+            entity1.setHit(true);
+            entity2.setHit(true);
+        } else if (entity1.getType().equalsIgnoreCase("enemyBullet")
+                && !entity2.getType().equalsIgnoreCase("enemyBullet")
+                && !entity2.getType().equalsIgnoreCase("enemy")
+                && !entity2.getType().equalsIgnoreCase("friendlyBullet")) {
+            entity2.setHit(true);
+        } else if (entity2.getType().equalsIgnoreCase("enemyBullet")
+                && !entity1.getType().equalsIgnoreCase("enemyBullet")
+                && !entity1.getType().equalsIgnoreCase("enemy")
+                && !entity1.getType().equalsIgnoreCase("friendlyBullet")) {
+            entity1.setHit(true);
         }
     }
 }

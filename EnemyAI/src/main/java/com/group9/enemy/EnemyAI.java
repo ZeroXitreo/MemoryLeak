@@ -1,12 +1,16 @@
 package com.group9.enemy;
 
+import com.group9.commonenemy.Enemy;
 import data.Entity;
 import data.GameData;
 import data.MovableEntity;
 import data.World;
+import movableentityparts.Attack;
 import movableentityparts.HealthPart;
 import movableentityparts.Move;
 import movableentityparts.Position;
+import movableentityparts.WeaponPart;
+import movableentityparts.iWeapon;
 import org.openide.util.lookup.ServiceProvider;
 import services.iEntityProcessingService;
 
@@ -16,95 +20,68 @@ import services.iEntityProcessingService;
  */
 @ServiceProvider(service = iEntityProcessingService.class)
 
-public class EnemyAI implements iEntityProcessingService
+public class EnemyAI implements iEntityProcessingService {
 
-{
-	private float playerX;
-	private float playerY;
-	private float enemyX;
-	private float enemyY;
+    private float playerX;
+    private float playerY;
+    private float enemyX;
+    private float enemyY;
+    private iWeapon weapon;
 
-	@Override
-	public void process(GameData gameData, World world)
-	{
-		//playerX = gameData.getDisplayWidth() / 2;
-		for(MovableEntity enemy : world.getMovableEntities())
-		{
-			//move(gameData, enemy, world);
-			Position position = enemy.getPart(Position.class);
-			if(enemy.getType().equalsIgnoreCase("player"))
-			{
-				playerX = position.getX();
-				playerY = position.getY();
-			}
-			if(enemy.getType().equalsIgnoreCase("enemy"))
-			{
-				Move move = enemy.getPart(Move.class);
-				move.process(gameData, enemy);
-				HealthPart health = enemy.getPart(HealthPart.class);
-				health.process(gameData, enemy);
-				updateSprite(enemy);
-				enemyX = position.getX();
-				enemyY = position.getY();
-				
-				if(enemyX < playerX)
-				{
-					move.setLeft(false);
-					move.setRight(true);
+    @Override
+    public void process(GameData gameData, World world) {
+        //playerX = gameData.getDisplayWidth() / 2;
+        for (MovableEntity movableEntity : world.getMovableEntities(Enemy.class)) {
 
-				}
-				else if(enemyX > playerX)
-				{
-					move.setRight(false);
-					move.setLeft(true);
-				}
-				else{
-					move.setLeft(false);
-					move.setRight(false);
-				}
-				
-				if(enemyY < playerY){
-					move.setUp(true);
-					move.setDown(false);
-				}
-				else if(enemyY > playerY){
-					move.setDown(true);
-					move.setUp(false);
-				}
-				else{
-					move.setDown(false);
-					move.setUp(false);
-				}
-				
+            Move move = movableEntity.getPart(Move.class);
+            move.setDirection(movableEntity.getDirection());
+            HealthPart health = movableEntity.getPart(HealthPart.class);
+            Attack direction = movableEntity.getPart(Attack.class);
+            Position position = movableEntity.getPart(Position.class);
+            WeaponPart weaponPart = movableEntity.getPart(WeaponPart.class);
+            if (!movableEntity.hasWeapon() && world.getWeapons() != null) {
+                for (iWeapon currentWeapon : world.getWeapons()) {
+                    if (currentWeapon.getType().equalsIgnoreCase("projectile")) {
+                        this.weapon = currentWeapon;
+                        movableEntity.setHasWeapon(true);
+                        break;
+                    }
+                }
+                weaponPart.setWeapon(weapon);
+            }
 
-			}
-			position.process(gameData, enemy);
-		}
+            updateSprite(movableEntity);
 
-	}
+            health.process(gameData, movableEntity);
+            direction.process(gameData, movableEntity);
+            move.process(gameData, movableEntity);
+            position.process(gameData, movableEntity);
+            weaponPart.process(gameData, movableEntity);
 
-	private void updateSprite(MovableEntity movableEntity)
-	{
+        }
 
-		int numPoints = 12;
-		float[] shapeX = new float[numPoints];
-		float[] shapeY = new float[numPoints];
+    }
 
-		Position position = movableEntity.getPart(Position.class);
-		float radians = position.getRadians();
-		float radius = movableEntity.getRadius();
-		float x = position.getX();
-		float y = position.getY();
+    private void updateSprite(MovableEntity movableEntity) {
 
-		float angle = 0;
+        int numPoints = 12;
+        float[] shapeX = new float[numPoints];
+        float[] shapeY = new float[numPoints];
 
-		for(int i = 0; i < numPoints; i++)
-		{
-			shapeX[i] = x + (float) Math.cos(angle + radians) * radius;
-			shapeY[i] = y + (float) Math.sin(angle + radians) * radius;
-			angle += 2 * 3.1415f / numPoints;
-		}
-		movableEntity.setShapeX(shapeX);
-		movableEntity.setShapeY(shapeY);
-	}
+        Position position = movableEntity.getPart(Position.class);
+        float radians = position.getRadians();
+        float radius = movableEntity.getRadius();
+        float x = position.getX();
+        float y = position.getY();
+
+        float angle = 0;
+
+        for (int i = 0; i < numPoints; i++) {
+            shapeX[i] = x + (float) Math.cos(angle + radians) * radius;
+            shapeY[i] = y + (float) Math.sin(angle + radians) * radius;
+            angle += 2 * 3.1415f / numPoints;
+        }
+        movableEntity.setShapeX(shapeX);
+        movableEntity.setShapeY(shapeY);
+    }
 }

@@ -69,6 +69,11 @@
         <module>HealthSystem</module>
         <module>mavenproject1/SearchAlgorithm</module>
         <module>Collision</module>
+        <module>Bullet</module>
+        <module>Sword</module>
+        <module>CommonEnemy</module>
+        <module>CommonPlayer</module>
+        <module>EnemyRadar</module>
     </modules>
     <properties>
         <netbeans.version>RELEASE82</netbeans.version>

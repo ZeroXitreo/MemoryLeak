@@ -20,15 +20,17 @@ import org.openide.util.lookup.ServiceProvider;
 
 public class Life implements iEntityProcessingService {
 
-
     @Override
     public void process(GameData gameData, World world) {
         for (MovableEntity movableEntity : world.getMovableEntities()) {
-            HealthPart current = movableEntity.getPart(HealthPart.class);
-            if(current.isDead()){
-               // System.out.println("AM I DEAD??? HINT: YES");
-                world.removeMovableEntity(movableEntity.getID());
+            if (movableEntity.getPart(HealthPart.class) != null) {
+                HealthPart current = movableEntity.getPart(HealthPart.class);
+                if (current.isDead()) {
+                    // System.out.println("AM I DEAD??? HINT: YES");
+                    world.removeMovableEntity(movableEntity.getID());
+                }
             }
+
         }
     }
 }
