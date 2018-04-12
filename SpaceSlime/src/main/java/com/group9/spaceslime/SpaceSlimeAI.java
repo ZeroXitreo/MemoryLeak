@@ -1,6 +1,6 @@
-package com.group9.enemy;
+package com.group9.spaceslime;
 
-import com.group9.commonenemy.Enemy;
+import com.group9.commonspaceslime.SpaceSlime;
 import data.Entity;
 import data.GameData;
 import data.MovableEntity;
@@ -20,7 +20,7 @@ import services.iEntityProcessingService;
  */
 @ServiceProvider(service = iEntityProcessingService.class)
 
-public class EnemyAI implements iEntityProcessingService {
+public class SpaceSlimeAI implements iEntityProcessingService {
 
     private float playerX;
     private float playerY;
@@ -31,7 +31,7 @@ public class EnemyAI implements iEntityProcessingService {
     @Override
     public void process(GameData gameData, World world) {
         //playerX = gameData.getDisplayWidth() / 2;
-        for (MovableEntity movableEntity : world.getMovableEntities(Enemy.class)) {
+        for (MovableEntity movableEntity : world.getMovableEntities(SpaceSlime.class)) {
 
             Move move = movableEntity.getPart(Move.class);
             move.setDirection(movableEntity.getDirection());

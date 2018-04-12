@@ -17,7 +17,7 @@
                 <configuration>
                     <useOSGiDependencies>true</useOSGiDependencies>
                     <publicPackages>
-                        <publicPackage>com.group9.commonenemy</publicPackage>
+                        <publicPackage>com.group9.commonspaceslime</publicPackage>
                     </publicPackages>
                 </configuration>
             </plugin>

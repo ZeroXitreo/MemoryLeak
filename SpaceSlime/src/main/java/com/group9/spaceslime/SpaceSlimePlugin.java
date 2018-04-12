@@ -1,6 +1,6 @@
-package com.group9.enemy;
+package com.group9.spaceslime;
 
-import com.group9.commonenemy.Enemy;
+import com.group9.commonspaceslime.SpaceSlime;
 import data.GameData;
 import data.MovableEntity;
 import data.World;
@@ -20,7 +20,7 @@ import services.iGamePluginServices;
  */
 @ServiceProvider(service = iGamePluginServices.class)
 
-public class EnemyPlugin implements iGamePluginServices {
+public class SpaceSlimePlugin implements iGamePluginServices {
 
     private MovableEntity enemy;
     private List<String> coordinateList = new ArrayList<>();
@@ -38,7 +38,7 @@ public class EnemyPlugin implements iGamePluginServices {
         float x = 100;
         float y = 420;
         float maxSpeed = 1;
-        MovableEntity enemyCharacter = new Enemy();
+        MovableEntity enemyCharacter = new SpaceSlime();
         enemyCharacter.setRadius(15);
         Move move = new Move(maxSpeed);
         move.setUseDirection(true);

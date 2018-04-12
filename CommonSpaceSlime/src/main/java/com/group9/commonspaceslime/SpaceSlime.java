@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.group9.commonenemy;
+package com.group9.commonspaceslime;
 
 import data.MovableEntity;
 
@@ -11,7 +11,7 @@ import data.MovableEntity;
  *
  * @author jonas
  */
-public class Enemy extends MovableEntity{
+public class SpaceSlime extends MovableEntity{
     @Override
     public String getType() {
         return "enemy";

@@ -256,12 +256,17 @@ public class ParentScreen {
 
     public String getAssetPath(String path) {
         int stopHere = 0;
+        boolean oneMore = false;
+        System.out.println(path);
         String[] section = path.split("\\\\");
-        for (int i = 0; i < section.length; i++) {
+        for (int i = section.length -1; i >= 0; i--) {
             System.out.println(section[i]);
             if (section[i].equalsIgnoreCase("MemoryLeak")) {
-                stopHere = i;
-                break;
+                if (oneMore) {
+                    stopHere = i;
+                    break;
+                }
+                oneMore = true;
             }
         }
         String truePath = "";
