@@ -17,11 +17,16 @@ public class HealthPart implements EntityPart {
     
     private int health;
     private boolean dead = false;
+    private int maxHealth;
 
     public HealthPart(int health) {
         this.health = health;
+        this.maxHealth = health;
     }
 
+    public int getMaxHealth() {
+        return maxHealth;
+    }
 
     public int getHealth() {
         return health;

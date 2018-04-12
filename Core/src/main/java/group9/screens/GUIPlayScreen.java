@@ -26,6 +26,7 @@ import com.sun.javafx.text.GlyphLayout;
 import data.Entity;
 
 import data.MovableEntity;
+import movableentityparts.HealthPart;
 import movableentityparts.Position;
 import movableentityparts.iWeapon;
 import services.iEntityProcessingService;
@@ -48,6 +49,8 @@ public class GUIPlayScreen implements Screen {
     private TiledDrawable wallTopLeftCorner;
     private TiledDrawable wallBottomRightCorner;
     private TiledDrawable wallTopRightCorner;
+    private TiledDrawable emptyHeart;
+    private TiledDrawable fullHeart;
     private TextButton toMenu;
     private TextureAtlas lava;
     private TextureAtlas memoryLeakPack;
@@ -56,6 +59,8 @@ public class GUIPlayScreen implements Screen {
     private Animation animationPlayer;
     private Animation animationIdlePlayer;
     private Animation animationProjectile;
+    private HealthPart playerhp;
+    private Position pos;
     private int state;
     private BitmapFont font;
     private float time;
@@ -102,6 +107,8 @@ public class GUIPlayScreen implements Screen {
         wallTopLeftCorner = new TiledDrawable(memoryLeakPack.findRegion("wall_top_left"));
         wallBottomRightCorner = new TiledDrawable(memoryLeakPack.findRegion("wall_bottom_right"));
         wallTopRightCorner = new TiledDrawable(memoryLeakPack.findRegion("wall_top_right"));
+        fullHeart = new TiledDrawable(memoryLeakPack.findRegion("heart_full"));
+        emptyHeart = new TiledDrawable(memoryLeakPack.findRegion("heart_loss"));
 
         //create the toMenu button
         toMenu = new TextButton("To Menu", parentScreen.getButtonSkin(), "default");
@@ -242,7 +249,14 @@ public class GUIPlayScreen implements Screen {
         for (MovableEntity movableEntity : ParentScreen.getWorld().getMovableEntities()) {
             if (movableEntity.getType().equalsIgnoreCase("player")) {
                 batch.begin();
-                Position pos = movableEntity.getPart(Position.class);
+                playerhp = movableEntity.getPart(HealthPart.class);
+                for (int i = 0; i < playerhp.getMaxHealth(); i++) {
+                    emptyHeart.draw(batch, 8 + (i*(32+8)), ParentScreen.getGameData().getDisplayHeight() - 40, 32, 32);
+                }
+                for (int i = 0; i < playerhp.getHealth(); i++) {
+                    fullHeart.draw(batch, 8 + (i*(32+8)), ParentScreen.getGameData().getDisplayHeight() - 40, 32, 32);
+                }                
+                pos = movableEntity.getPart(Position.class);
                 playerRegion = animationPlayer.getKeyFrame(2 * time, true);
                 playerIdleRegion = animationIdlePlayer.getKeyFrame(2 * time, true);
                 if (movableEntity.getMoveDirection() == 1) {
