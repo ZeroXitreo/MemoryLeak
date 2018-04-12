@@ -72,11 +72,6 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>Enemy</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
             <artifactId>HealthSystem</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -98,11 +93,6 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>CommonPlayer</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>CommonEnemy</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

@@ -45,7 +45,7 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>CommonEnemy</artifactId>
+            <artifactId>CommonSpaceSlime</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>
