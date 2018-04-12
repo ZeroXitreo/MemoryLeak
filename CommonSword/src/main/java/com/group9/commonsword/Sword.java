@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.group9.projectile;
+package com.group9.commonsword;
 
 import data.MovableEntity;
 
@@ -11,11 +11,11 @@ import data.MovableEntity;
  *
  * @author jonas
  */
-public class Projectile extends MovableEntity {
+public class Sword extends MovableEntity{
 
     private String type;
 
-    public Projectile(Boolean friendly) {
+    public Sword(Boolean friendly) {
         if (friendly) {
             type = "friendlyBullet";
         } else {
@@ -27,4 +27,5 @@ public class Projectile extends MovableEntity {
     public String getType() {
         return type;
     }
+
 }

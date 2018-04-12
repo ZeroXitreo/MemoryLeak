@@ -5,6 +5,7 @@
  */
 package com.group9.sword;
 
+import com.group9.commonsword.Sword;
 import data.GameData;
 import data.MovableEntity;
 import data.World;
@@ -26,11 +27,15 @@ public class SwordControlSystem implements iEntityProcessingService{
         for (MovableEntity sword : world.getMovableEntities(Sword.class)) {
             Position position = sword.getPart(Position.class);
             Timer timer = sword.getPart(Timer.class);
+            HealthPart health = sword.getPart(HealthPart.class);
+            Move move = sword.getPart(Move.class);
             timer.process(gameData, sword);
             if(timer.isRemove()){
                 world.removeMovableEntity(sword);
             }
+            health.process(gameData, sword);
             position.process(gameData, sword);
+            move.process(gameData, sword);
             updateSpriteCircle(sword);
         }
     }

@@ -55,6 +55,7 @@ public class GUIPlayScreen implements Screen {
     private Animation animationSpaceSlime;
     private Animation animationPlayer;
     private Animation animationIdlePlayer;
+    private Animation animationProjectile;
     private int state;
     private BitmapFont font;
     private float time;
@@ -69,6 +70,7 @@ public class GUIPlayScreen implements Screen {
     private TextureRegion spaceSlimeRegion;
     private TextureRegion playerRegion;
     private TextureRegion playerIdleRegion;
+    private TextureRegion projectileRegion;
 
     public GUIPlayScreen() {
         parentScreen = ParentScreen.getInstance();
@@ -88,6 +90,7 @@ public class GUIPlayScreen implements Screen {
         animationSpaceSlime = new Animation(1 / 5f, memoryLeakPack.findRegions("SpaceSlime"), PlayMode.LOOP);
         animationPlayer = new Animation(1 / 6f, memoryLeakPack.findRegions("player"), PlayMode.LOOP);
         animationIdlePlayer = new Animation(1 / 7f, memoryLeakPack.findRegions("playeridle"), PlayMode.LOOP);
+        animationProjectile = new Animation(1 / 4f, memoryLeakPack.findRegions("fireball"), PlayMode.LOOP);
 
         //instanciate the wall blocks
         bottomWall = new TiledDrawable(memoryLeakPack.findRegion("wall_bottom"));
@@ -252,6 +255,18 @@ public class GUIPlayScreen implements Screen {
                 batch.end();
                 sr.setColor(1, 1, 1, 1);
             } else if (movableEntity.getType().equalsIgnoreCase("friendlyBullet") || movableEntity.getType().equalsIgnoreCase("enemyBullet")) {
+                batch.begin();
+                Position pos = movableEntity.getPart(Position.class);
+                projectileRegion = animationProjectile.getKeyFrame(time, true);
+                projectileRegion = animationProjectile.getKeyFrame(time, true);
+                if (movableEntity.getMoveDirection() == 1) {
+                    batch.draw(projectileRegion, pos.getX() - 8, pos.getY() - 8, 16, 16);
+                } else if (movableEntity.getMoveDirection() == 0) {
+                    batch.draw(projectileRegion, pos.getX() + 8, pos.getY() - 8, -16, 16);
+                } else {
+                    batch.draw(projectileRegion, pos.getX() - 8, pos.getY() - 8, 16, 16);
+                }
+                batch.end();
                 sr.setColor(1, 0, 0, 1);
             } else if (movableEntity.getType().equalsIgnoreCase("enemy")) {
                 spaceSlimeRegion = animationSpaceSlime.getKeyFrame(time, true);

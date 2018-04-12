@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.group9.projectile;
+package com.group9.fireball;
 
+import com.group9.commonfireball.Fireball;
 import data.GameData;
 import data.MovableEntity;
 import data.World;
@@ -23,7 +24,7 @@ import movableentityparts.iWeapon;
  * @author jonas
  */
 @ServiceProvider(service = iGamePluginServices.class)
-public class ProjectilePlugin implements iWeapon, iGamePluginServices {
+public class FireballPlugin implements iWeapon, iGamePluginServices {
 
     private MovableEntity bullet;
     private long cooldown = 500;
@@ -48,8 +49,8 @@ public class ProjectilePlugin implements iWeapon, iGamePluginServices {
         float radians = shooter.getDirection();
         float speed = 3;
 
-        bullet = new Projectile(shooter.getType().equalsIgnoreCase("player"));
-        bullet.setRadius(3);
+        bullet = new Fireball(shooter.getType().equalsIgnoreCase("player"));
+        bullet.setRadius(6);
         bullet.setDirection(radians);
 
         float bulletX = (float) cos(radians) * (shooter.getRadius() + bullet.getRadius());

@@ -1,10 +1,7 @@
 package movableentityparts;
 
-import data.Entity;
 import data.GameData;
-import static data.GameKeys.D;
 import data.MovableEntity;
-import data.World;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 
@@ -45,6 +42,10 @@ public class Move implements EntityPart {
         this.direction = direction;
     }
 
+    public float getMaxSpeed() {
+        return maxSpeed;
+    }
+
     @Override
     public void process(GameData gameData, MovableEntity entity) {
 
@@ -63,6 +64,16 @@ public class Move implements EntityPart {
 
         } else {
 
+            if (up) {
+                y += maxSpeed;
+                entity.setMoveDirection(0);
+            }
+
+            if (down) {
+                y -= maxSpeed;
+                entity.setMoveDirection(2);
+            }
+
             if (left) {
                 x -= maxSpeed;
                 entity.setMoveDirection(0);
@@ -73,26 +84,18 @@ public class Move implements EntityPart {
                 entity.setMoveDirection(2);
             }
 
-            if (up) {
-                y += maxSpeed;
-            }
-
-            if (down) {
-                y -= maxSpeed;
-            }
-
         }
 
-        if (x > gameData.getDisplayWidth()) {
-            x = gameData.getDisplayWidth();
-        } else if (x < 0) {
-            x = 0;
+        if (x > gameData.getDisplayWidth() - 85) {
+            x = gameData.getDisplayWidth() - 85;
+        } else if (x < 68) {
+            x = 68;
         }
 
-        if (y > gameData.getDisplayHeight()) {
-            y = gameData.getDisplayHeight();
-        } else if (y < 0) {
-            y = 0;
+        if (y > gameData.getDisplayHeight() - 45) {
+            y = gameData.getDisplayHeight() - 45;
+        } else if (y < 64) {
+            y = 64;
         }
 
         position.setX(x);

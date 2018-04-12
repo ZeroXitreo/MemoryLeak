@@ -68,12 +68,14 @@
         <module>HealthSystem</module>
         <module>mavenproject1/SearchAlgorithm</module>
         <module>Collision</module>
-        <module>Bullet</module>
         <module>Sword</module>
         <module>CommonPlayer</module>
         <module>EnemyRadar</module>
         <module>CommonSpaceSlime</module>
         <module>SpaceSlime</module>
+        <module>CommonFireball</module>
+        <module>Fireball</module>
+        <module>CommonSword</module>
     </modules>
     <properties>
         <netbeans.version>RELEASE82</netbeans.version>

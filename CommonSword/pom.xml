@@ -6,7 +6,7 @@
         <artifactId>MemoryLeak-parent</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <artifactId>Sword</artifactId>
+    <artifactId>CommonSword</artifactId>
     <packaging>nbm</packaging>
     <build>
         <plugins>
@@ -16,6 +16,9 @@
                 <extensions>true</extensions>
                 <configuration>
                     <useOSGiDependencies>true</useOSGiDependencies>
+                    <publicPackages>
+                        <publicPackage>com.group9.commonsword</publicPackage>
+                    </publicPackages>
                 </configuration>
             </plugin>
             <plugin>
@@ -34,18 +37,8 @@
             <version>${netbeans.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.netbeans.api</groupId>
-            <artifactId>org-openide-util-lookup</artifactId>
-            <version>RELEASE82</version>
-        </dependency>
-        <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>Common</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>CommonSword</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

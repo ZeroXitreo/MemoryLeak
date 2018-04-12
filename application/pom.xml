@@ -87,11 +87,6 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>Projectile</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
             <artifactId>Sword</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -108,6 +103,21 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>CommonEnemy</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>CommonSword</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>CommonFireball</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>Fireball</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

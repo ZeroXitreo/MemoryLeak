@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.group9.sword;
+package com.group9.commonfireball;
 
 import data.MovableEntity;
 
@@ -11,11 +11,11 @@ import data.MovableEntity;
  *
  * @author jonas
  */
-public class Sword extends MovableEntity {
+public class Fireball extends MovableEntity {
 
     private String type;
 
-    public Sword(Boolean friendly) {
+    public Fireball(Boolean friendly) {
         if (friendly) {
             type = "friendlyBullet";
         } else {

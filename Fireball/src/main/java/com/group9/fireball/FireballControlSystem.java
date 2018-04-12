@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.group9.projectile;
+package com.group9.fireball;
 
+import com.group9.commonfireball.Fireball;
 import data.GameData;
 import data.MovableEntity;
 import data.World;
@@ -20,11 +21,11 @@ import org.openide.util.lookup.ServiceProvider;
  * @author jonas
  */
 @ServiceProvider(service = iEntityProcessingService.class)
-public class ProjectileControlSystem implements iEntityProcessingService {
+public class FireballControlSystem implements iEntityProcessingService {
 
     @Override
     public void process(GameData gameData, World world) {
-        for (MovableEntity bullet : world.getMovableEntities(Projectile.class)) {
+        for (MovableEntity bullet : world.getMovableEntities(Fireball.class)) {
             Position position = bullet.getPart(Position.class);
             HealthPart healthPart = bullet.getPart(HealthPart.class);
             Timer timer = bullet.getPart(Timer.class);

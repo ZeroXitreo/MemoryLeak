@@ -227,3 +227,31 @@ wall_top_right_inverted
   orig: 32, 32
   offset: 0, 0
   index: -1
+fireball
+  rotate: false
+  xy: 161, 13
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 0
+fireball
+  rotate: false
+  xy: 749, 47
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 1
+fireball
+  rotate: false
+  xy: 749, 47
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 3
+fireball
+  rotate: false
+  xy: 179, 13
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 2

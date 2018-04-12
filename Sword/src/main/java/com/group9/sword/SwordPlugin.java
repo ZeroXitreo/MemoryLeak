@@ -5,6 +5,7 @@
  */
 package com.group9.sword;
 
+import com.group9.commonsword.Sword;
 import data.GameData;
 import data.MovableEntity;
 import data.World;
@@ -45,6 +46,8 @@ public class SwordPlugin implements iWeapon, iGamePluginServices {
         sword.add(new Timer(0.1f));
         sword.add(new HealthPart(2));
         sword.add(new Position(bulletX + shooterX, bulletY + shooterY));
+        Move move = shooter.getPart(Move.class);
+        sword.add(move);
         sword.setShapeX(new float[2]);
         sword.setShapeY(new float[2]);
         world.addMovableEntity(sword);

@@ -6,7 +6,7 @@
         <artifactId>MemoryLeak-parent</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <artifactId>Projectile</artifactId>
+    <artifactId>Fireball</artifactId>
     <packaging>nbm</packaging>
     <build>
         <plugins>
@@ -53,8 +53,14 @@
             <artifactId>org-openide-util-ui</artifactId>
             <version>${netbeans.version}</version>
         </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>CommonFireball</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+    <name>Fireball</name>
 </project>
