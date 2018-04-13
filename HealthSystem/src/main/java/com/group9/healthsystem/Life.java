@@ -9,16 +9,16 @@ import data.GameData;
 import data.MovableEntity;
 import data.World;
 import movableentityparts.HealthPart;
-import services.iEntityProcessingService;
+import services.iPostEntityProcessingService;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
  *
  * @author Mikkel and Jonas
  */
-@ServiceProvider(service = iEntityProcessingService.class)
+@ServiceProvider(service = iPostEntityProcessingService.class)
 
-public class Life implements iEntityProcessingService {
+public class Life implements iPostEntityProcessingService {
 
     @Override
     public void process(GameData gameData, World world) {
@@ -26,7 +26,6 @@ public class Life implements iEntityProcessingService {
             if (movableEntity.getPart(HealthPart.class) != null) {
                 HealthPart current = movableEntity.getPart(HealthPart.class);
                 if (current.isDead()) {
-                    // System.out.println("AM I DEAD??? HINT: YES");
                     world.removeMovableEntity(movableEntity.getID());
                 }
             }
