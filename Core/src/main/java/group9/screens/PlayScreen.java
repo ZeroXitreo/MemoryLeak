@@ -5,7 +5,6 @@
  */
 package group9.screens;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -15,18 +14,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import data.GameData;
 import data.MovableEntity;
-import data.World;
-import group9.manager.GameInputProcessor;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import org.openide.util.Lookup;
-import org.openide.util.LookupEvent;
-import org.openide.util.LookupListener;
 import services.iEntityProcessingService;
-import services.iGamePluginServices;
 import services.iPostEntityProcessingService;
 
 /**

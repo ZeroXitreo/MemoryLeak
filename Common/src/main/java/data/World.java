@@ -15,8 +15,8 @@ public class World {
 
     private final Map<String, Entity> entityMap = new ConcurrentHashMap<>();
     private final Map<String, MovableEntity> mEntityMap = new ConcurrentHashMap<>();
-    private final Map<String, iWeapon> weaponMap = new ConcurrentHashMap<>();
-
+    //private final Map<String, iWeapon> weaponMap = new ConcurrentHashMap<>();
+    private final ArrayList<iWeapon> weapons = new ArrayList<>(); 
     public String addEntity(Entity entity) {
         entityMap.put(entity.getID(), entity);
         return entity.getID();
@@ -27,8 +27,12 @@ public class World {
         return entity.getID();
     }
 
-    public void addWeapon(String name, iWeapon weapon) {
-        weaponMap.put(name, weapon);
+//    public void addWeapon(String name, iWeapon weapon) {
+//        weaponMap.put(name, weapon);
+//    }
+    
+    public void addWeapon(iWeapon weapon) {
+        weapons.add(weapon);
     }
 
     public void removeEntity(String entityID) {
@@ -39,9 +43,9 @@ public class World {
         mEntityMap.remove(entityID);
     }
 
-    public void removeWeapon(String entityID) {
-        weaponMap.remove(entityID);
-    }
+//    public void removeWeapon(String entityID) {
+//        weaponMap.remove(entityID);
+//    }
 
     public void removeEntity(Entity entity) {
         entityMap.remove(entity.getID());
@@ -59,8 +63,12 @@ public class World {
         return mEntityMap.values();
     }
 
-    public Collection<iWeapon> getWeapons() {
-        return weaponMap.values();
+//    public Collection<iWeapon> getWeapons() {
+//        return weaponMap.values();
+//    }
+    
+    public ArrayList<iWeapon> getWeapons(){
+        return weapons;
     }
 
     public <E extends Entity> List<Entity> getEntities(Class<E>... entityTypes) {

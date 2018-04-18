@@ -6,15 +6,15 @@
 package group9.screens;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.List.ListStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import data.GameData;
 import data.World;
 import group9.manager.GameInputProcessor;
@@ -46,12 +46,17 @@ public class ParentScreen {
     private AssetManager am;
     private Image menuBackground;
     private Skin buttonSkin;
+    private Skin listSkin;
+    private TextureAtlas listAtlas;
     private TextureAtlas lava;
     private TextureAtlas memoryLeakPack;
+    private ListStyle listStyle;
     private BitmapFont font;
+    private String atlasSkinPath;
+    private String skinListPath;
     private String assetPath;
     private String mainmenuPath;
-    private String skinPath;
+    private String skinButtonPath;
     private String lavaPath;
     private String memoryleakGraphicPath;
     private String fontPath;
@@ -69,25 +74,37 @@ public class ParentScreen {
 
         //The right paths
         mainmenuPath = assetPath + "/background/mainmenu.png";
-        skinPath = assetPath + "/skin/memoryleakTextButton.json";
+        skinButtonPath = assetPath + "/skin/memoryleakTextButton.json";
+        skinListPath = assetPath + "/skin/listskin.json";
         lavaPath = assetPath + "/sprites/lava.pack";
         memoryleakGraphicPath = assetPath + "/sprites/memoryleak.pack";
         fontPath = assetPath + "/skin/MemoryLeakFont.fnt";
+        atlasSkinPath = assetPath + "/skin/listskin.atlas";
 
         //Load to assetManager
         am.load(mainmenuPath, Texture.class);
-        am.load(skinPath, Skin.class);
+        am.load(skinButtonPath, Skin.class);
+        am.load(skinListPath, Skin.class);
         am.load(lavaPath, TextureAtlas.class);
         am.load(memoryleakGraphicPath, TextureAtlas.class);
         am.load(fontPath, BitmapFont.class);
+        am.load(atlasSkinPath, TextureAtlas.class);
         am.finishLoading();
 
         //instanciate the image, button, lava, memoryLeakPack and font.
         menuBackground = new Image(am.get(mainmenuPath, Texture.class));
-        buttonSkin = am.get(skinPath, Skin.class);
+        buttonSkin = am.get(skinButtonPath, Skin.class);
         lava = am.get(lavaPath, TextureAtlas.class);
         memoryLeakPack = am.get(memoryleakGraphicPath, TextureAtlas.class);
         font = am.get(fontPath, BitmapFont.class);
+        listAtlas = am.get(atlasSkinPath, TextureAtlas.class);
+        listSkin = am.get(skinListPath, Skin.class);
+        listSkin.addRegions(listAtlas);
+
+//        listStyle = new ListStyle(font, Color.CLEAR, Color.ORANGE, (Drawable) );
+//        Skin poop = new Skin();
+//        poop = am.get(skinListPath, Skin.class);
+//        listSkin = new Skin(poop, listAtlas);
     }
 
     public static ParentScreen getInstance() {
@@ -254,12 +271,24 @@ public class ParentScreen {
         return font;
     }
 
+    public Skin getListSkin() {
+        return listSkin;
+    }
+
+    public TextureAtlas getListAtlas() {
+        return listAtlas;
+    }
+
+    public ListStyle getListStyle() {
+        return listStyle;
+    }
+
     public String getAssetPath(String path) {
         int stopHere = 0;
         boolean oneMore = false;
         System.out.println(path);
         String[] section = path.split("\\\\");
-        for (int i = section.length -1; i >= 0; i--) {
+        for (int i = section.length - 1; i >= 0; i--) {
             System.out.println(section[i]);
             if (section[i].equalsIgnoreCase("MemoryLeak")) {
                 if (oneMore) {

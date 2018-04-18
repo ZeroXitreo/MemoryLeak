@@ -28,8 +28,12 @@ public class SpaceSlimePlugin implements iGamePluginServices {
 
     @Override
     public void start(GameData gameData, World world) {
-        enemy = createEnemy(gameData);
-        world.addMovableEntity(enemy);
+        for(int i = 0; i < 10; i++){
+            enemy = createEnemy(gameData);
+            world.addMovableEntity(enemy);
+        }
+        
+        
     }
 
     private MovableEntity createEnemy(GameData gameData) {

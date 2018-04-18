@@ -32,13 +32,13 @@ public class FireballPlugin implements iWeapon, iGamePluginServices {
 
     @Override
     public void start(GameData gameData, World world) {
-        world.addWeapon(getType(), this);
+        world.addWeapon(this);
         this.world = world;
     }
 
     @Override
     public void stop(GameData gameData, World world) {
-        world.removeWeapon(getType());
+        
     }
 
     @Override

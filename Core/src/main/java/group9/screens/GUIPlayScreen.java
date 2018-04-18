@@ -7,7 +7,6 @@ package group9.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
@@ -22,13 +21,11 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.sun.javafx.text.GlyphLayout;
 import data.Entity;
 
 import data.MovableEntity;
 import movableentityparts.HealthPart;
 import movableentityparts.Position;
-import movableentityparts.iWeapon;
 import services.iEntityProcessingService;
 import services.iPostEntityProcessingService;
 
@@ -82,7 +79,6 @@ public class GUIPlayScreen implements Screen {
         stage = new Stage(new ScreenViewport());
         batch = new SpriteBatch();
         sr = new ShapeRenderer();
-        parentScreen.setResult();
         state = 1;
         batch = new SpriteBatch();
 
