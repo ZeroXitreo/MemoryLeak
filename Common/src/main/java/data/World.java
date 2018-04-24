@@ -18,6 +18,7 @@ public class World {
     private final Map<String, iWeapon> weaponMap = new ConcurrentHashMap<>();
     private final Map<String, MovableEntity> enemyMap = new ConcurrentHashMap<>();
 
+
     public String addEntity(Entity entity) {
         entityMap.put(entity.getID(), entity);
         return entity.getID();
@@ -28,8 +29,12 @@ public class World {
         return entity.getID();
     }
 
-    public void addWeapon(String name, iWeapon weapon) {
-        weaponMap.put(name, weapon);
+//    public void addWeapon(String name, iWeapon weapon) {
+//        weaponMap.put(name, weapon);
+//    }
+    
+    public void addWeapon(iWeapon weapon) {
+        weaponMap.put(weapon.getWeaponName(), weapon);
     }
 
     public void addEnemyEntity(MovableEntity entity){

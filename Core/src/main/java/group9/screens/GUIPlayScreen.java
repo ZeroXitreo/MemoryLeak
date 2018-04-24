@@ -80,7 +80,6 @@ public class GUIPlayScreen implements Screen {
         stage = new Stage(new ScreenViewport());
         batch = new SpriteBatch();
         sr = new ShapeRenderer();
-        parentScreen.setResult();
         state = 1;
         batch = new SpriteBatch();
 

@@ -65,7 +65,7 @@ public class SwordPlugin implements iWeapon, iGamePluginServices {
 
     @Override
     public void start(GameData gameData, World world) {
-        world.addWeapon(getWeaponName(), this);
+        world.addWeapon(this);
         this.world = world;
     }
 
