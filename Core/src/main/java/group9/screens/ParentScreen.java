@@ -229,6 +229,7 @@ public class ParentScreen {
      * finds all the iGamePluginServices and starts them.
      */
     public void setResult() {
+        System.out.println("NIGGA");
         result = lookup.lookupResult(iGamePluginServices.class);
         result.addLookupListener(lookupListener);
         result.allItems();

@@ -9,7 +9,6 @@ import com.group9.commonslime.Slime;
 import data.GameData;
 import data.MovableEntity;
 import data.World;
-import movableentityparts.Attack;
 import movableentityparts.HealthPart;
 import movableentityparts.Move;
 import movableentityparts.Position;
