@@ -28,10 +28,6 @@ public class World {
         mEntityMap.put(entity.getID(), entity);
         return entity.getID();
     }
-
-//    public void addWeapon(String name, iWeapon weapon) {
-//        weaponMap.put(name, weapon);
-//    }
     
     public void addWeapon(iWeapon weapon) {
         weaponMap.put(weapon.getWeaponName(), weapon);
