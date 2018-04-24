@@ -3,7 +3,6 @@ package movableentityparts;
 import data.Entity;
 import data.GameData;
 import data.MovableEntity;
-import data.World;
 
 /**
  *

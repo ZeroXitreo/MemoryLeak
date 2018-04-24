@@ -27,6 +27,7 @@ import movableentityparts.iWeapon;
 public class PlayerControlSystem implements iEntityProcessingService {
 
     private iWeapon weapon;
+    private double pi = Math.PI;
 
     @Override
     public void process(GameData gameData, World world) {
@@ -39,23 +40,23 @@ public class PlayerControlSystem implements iEntityProcessingService {
             move.setLeft(gameData.getKeys().isDown(A));
             move.setDown(gameData.getKeys().isDown(S));
             move.setRight(gameData.getKeys().isDown(D));
-            WeaponPart gun = player.getPart(WeaponPart.class);
+            WeaponPart weaponPart = player.getPart(WeaponPart.class);
             if (!player.hasWeapon() && world.getWeapons() != null) {
                 for (iWeapon currentWeapon : world.getWeapons()) {
-                    if (currentWeapon.getType().equalsIgnoreCase("sword")) {
+                    if (currentWeapon.getWeaponName().equalsIgnoreCase("fireball")) {
                         this.weapon = currentWeapon;
                         player.setHasWeapon(true);
                         break;
                     }
                 }
-                gun.setWeapon(weapon);
+                weaponPart.setWeapon(weapon);
             }
             healthPart.process(gameData, player);
             move.process(gameData, player);
             position.process(gameData, player);
             updateSpriteCircle(player);
             direction.process(gameData, player);
-            gun.process(gameData, player);
+            weaponPart.process(gameData, player);
         }
     }
 
@@ -75,7 +76,7 @@ public class PlayerControlSystem implements iEntityProcessingService {
         for (int i = 0; i < numPoints; i++) {
             shapeX[i] = x + (float) Math.cos(angle + radians) * radius;
             shapeY[i] = y + (float) Math.sin(angle + radians) * radius;
-            angle += 2 * 3.1415f / numPoints;
+            angle += 2 * pi / numPoints;
         }
         entity.setShapeX(shapeX);
         entity.setShapeY(shapeY);
@@ -87,7 +88,7 @@ public class PlayerControlSystem implements iEntityProcessingService {
 
         Position position = entity.getPart(Position.class);
         float radians = position.getRadians();
-        double pi = Math.PI;
+        
         //float radius = entity.getRadius();
         float x = position.getX();
         float y = position.getY();

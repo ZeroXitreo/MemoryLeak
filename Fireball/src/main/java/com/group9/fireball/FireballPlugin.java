@@ -26,19 +26,19 @@ import movableentityparts.iWeapon;
 @ServiceProvider(service = iGamePluginServices.class)
 public class FireballPlugin implements iWeapon, iGamePluginServices {
 
-    private MovableEntity bullet;
+    private MovableEntity fireball;
     private long cooldown = 500;
     private World world;
 
     @Override
     public void start(GameData gameData, World world) {
-        world.addWeapon(getType(), this);
+        world.addWeapon(getWeaponName(), this);
         this.world = world;
     }
 
     @Override
     public void stop(GameData gameData, World world) {
-        world.removeWeapon(getType());
+        world.removeWeapon(getWeaponName());
     }
 
     @Override
@@ -49,21 +49,21 @@ public class FireballPlugin implements iWeapon, iGamePluginServices {
         float radians = shooter.getDirection();
         float speed = 3;
 
-        bullet = new Fireball(shooter.getType().equalsIgnoreCase("player"));
-        bullet.setRadius(6);
-        bullet.setDirection(radians);
+        fireball = new Fireball(shooter.getType().equalsIgnoreCase("player"));
+        fireball.setRadius(6);
+        fireball.setDirection(radians);
 
-        float bulletX = (float) cos(radians) * (shooter.getRadius() + bullet.getRadius());
-        float bulletY = (float) sin(radians) * (shooter.getRadius() + bullet.getRadius());
+        float bulletX = (float) cos(radians) * (shooter.getRadius() + fireball.getRadius());
+        float bulletY = (float) sin(radians) * (shooter.getRadius() + fireball.getRadius());
 
-        bullet.add(new Position(bulletX + shooterX + 4, bulletY + shooterY + 4));
-        bullet.add(new Timer(1.5f));
-        bullet.add(new HealthPart(1));
-        bullet.add(new Move(speed));
-        bullet.setShapeX(new float[2]);
-        bullet.setShapeY(new float[2]);
-        bullet.setDirection(radians);
-        world.addMovableEntity(bullet);
+        fireball.add(new Position(bulletX + shooterX + 4, bulletY + shooterY + 4));
+        fireball.add(new Timer(1.5f));
+        fireball.add(new HealthPart(1));
+        fireball.add(new Move(speed));
+        fireball.setShapeX(new float[2]);
+        fireball.setShapeY(new float[2]);
+        fireball.setDirection(radians);
+        world.addMovableEntity(fireball);
     }
 
     @Override
@@ -72,8 +72,8 @@ public class FireballPlugin implements iWeapon, iGamePluginServices {
     }
 
     @Override
-    public String getType() {
-        return "projectile";
+    public String getWeaponName() {
+        return "fireball";
     }
 
 }

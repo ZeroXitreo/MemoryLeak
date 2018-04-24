@@ -6,8 +6,8 @@
 package com.group9.searchalgorithm;
 
 
-import Search.Edge;
-import Search.Node;
+import search.Edge;
+import search.Node;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;

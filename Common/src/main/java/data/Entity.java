@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import movableentityparts.EntityPart;
+import movableentityparts.Name;
+import movableentityparts.Type;
 
 /**
  *
@@ -18,6 +20,8 @@ public abstract class Entity implements Serializable {
     private float[] shapeX = new float[4];
     private float[] shapeY = new float[4];
     private float radius;
+    protected Type type;
+    protected Name name;
     private double x;
     private double y;
 
@@ -66,7 +70,11 @@ public abstract class Entity implements Serializable {
     }
 
     public String getType() {
-        return "";
+        return type.getType();
+    }
+    
+    public String getName(){
+        return name.getName();
     }
 
     public void setHit(boolean hit) {

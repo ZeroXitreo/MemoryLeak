@@ -20,6 +20,7 @@ public class Attack implements EntityPart {
 
     private float direction;
     private boolean newDirection;
+    private double pi = Math.PI;
 
     @Override
     public void process(GameData gameData, MovableEntity entity) {
@@ -30,7 +31,7 @@ public class Attack implements EntityPart {
         if (entity.getType().equalsIgnoreCase("player")) {
             direction = 0;
             if (gameData.getKeys().isDown(LEFT)) {
-                direction = 3.14f;
+                direction = (float)pi;
                 entity.setShoot(true);
                 newDirection = true;
             }
@@ -40,38 +41,38 @@ public class Attack implements EntityPart {
                 newDirection = true;
             }
             if (gameData.getKeys().isDown(UP)) {
-                direction = 3.14f / 2;
+                direction = (float)pi / 2;
                 entity.setShoot(true);
                 newDirection = true;
             }
             if (gameData.getKeys().isDown(DOWN)) {
-                direction = 3.14f + 3.14f / 2;
+                direction = (float) pi + (float) pi / 2;
                 entity.setShoot(true);
                 newDirection = true;
             }
-            
+
             if (gameData.getKeys().isDown(LEFT) && gameData.getKeys().isDown(UP)) {
-                direction = (3 * 3.14f)/4;
+                direction = (float)(3 * pi) / 4;
                 entity.setShoot(true);
                 newDirection = true;
             }
             if (gameData.getKeys().isDown(LEFT) && gameData.getKeys().isDown(DOWN)) {
-                direction = (4 * 3.14f)/3;
+                direction = (float)(4 * pi) / 3;
                 entity.setShoot(true);
                 newDirection = true;
             }
             if (gameData.getKeys().isDown(RIGHT) && gameData.getKeys().isDown(UP)) {
-                direction = 3.14f /4;
+                direction = (float)pi / 4;
                 entity.setShoot(true);
                 newDirection = true;
             }
             if (gameData.getKeys().isDown(RIGHT) && gameData.getKeys().isDown(DOWN)) {
-                direction = (7* 3.14f)/4;
+                direction = (float)(7 * pi) / 4;
                 entity.setShoot(true);
                 newDirection = true;
             }
-            
-            if(newDirection){
+
+            if (newDirection) {
                 entity.setDirection(direction);
                 newDirection = false;
             }

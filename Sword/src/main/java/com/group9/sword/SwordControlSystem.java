@@ -22,7 +22,7 @@ import services.iEntityProcessingService;
  */
 @ServiceProvider(service = iEntityProcessingService.class)
 public class SwordControlSystem implements iEntityProcessingService{
-
+    private double pi = Math.PI;
     public void process(GameData gameData, World world) {
         for (MovableEntity sword : world.getMovableEntities(Sword.class)) {
             Position position = sword.getPart(Position.class);
@@ -56,7 +56,7 @@ public class SwordControlSystem implements iEntityProcessingService{
         for (int i = 0; i < numPoints; i++) {
             shapeX[i] = x + (float) Math.cos(angle + radians) * radius;
             shapeY[i] = y + (float) Math.sin(angle + radians) * radius;
-            angle += 2 * 3.1415f / numPoints;
+            angle += 2 * pi / numPoints;
         }
         movableEntity.setShapeX(shapeX);
         movableEntity.setShapeY(shapeY);

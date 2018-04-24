@@ -40,7 +40,6 @@ public class WeaponPart implements EntityPart {
     }
 
     public void setWeapon(iWeapon weapon) {
-        System.out.println("Weapon chosen: " + weapon.getType());
         this.weapon = weapon;
     }
 

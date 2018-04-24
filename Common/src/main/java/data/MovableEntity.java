@@ -7,7 +7,7 @@ package data;
 public class MovableEntity extends Entity {
 
     private float direction = 0;
-    private boolean onlyOneWeapon;
+    private boolean onlyOneWeapon = false;
     private boolean shoot;
     private int moveDirection;
 

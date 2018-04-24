@@ -1,7 +1,6 @@
 package com.group9.spaceslime;
 
 import com.group9.commonspaceslime.SpaceSlime;
-import data.Entity;
 import data.GameData;
 import data.MovableEntity;
 import data.World;
@@ -22,17 +21,12 @@ import services.iEntityProcessingService;
 
 public class SpaceSlimeAI implements iEntityProcessingService {
 
-    private float playerX;
-    private float playerY;
-    private float enemyX;
-    private float enemyY;
     private iWeapon weapon;
+    private double pi = Math.PI;
 
     @Override
     public void process(GameData gameData, World world) {
-        //playerX = gameData.getDisplayWidth() / 2;
         for (MovableEntity movableEntity : world.getMovableEntities(SpaceSlime.class)) {
-
             Move move = movableEntity.getPart(Move.class);
             move.setDirection(movableEntity.getDirection());
             HealthPart health = movableEntity.getPart(HealthPart.class);
@@ -41,7 +35,7 @@ public class SpaceSlimeAI implements iEntityProcessingService {
             WeaponPart weaponPart = movableEntity.getPart(WeaponPart.class);
             if (!movableEntity.hasWeapon() && world.getWeapons() != null) {
                 for (iWeapon currentWeapon : world.getWeapons()) {
-                    if (currentWeapon.getType().equalsIgnoreCase("projectile")) {
+                    if (currentWeapon.getWeaponName().equalsIgnoreCase("fireball")) {
                         this.weapon = currentWeapon;
                         movableEntity.setHasWeapon(true);
                         break;
@@ -79,7 +73,7 @@ public class SpaceSlimeAI implements iEntityProcessingService {
         for (int i = 0; i < numPoints; i++) {
             shapeX[i] = x + (float) Math.cos(angle + radians) * radius;
             shapeY[i] = y + (float) Math.sin(angle + radians) * radius;
-            angle += 2 * 3.1415f / numPoints;
+            angle += 2 * pi / numPoints;
         }
         movableEntity.setShapeX(shapeX);
         movableEntity.setShapeY(shapeY);

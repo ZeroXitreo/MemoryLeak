@@ -71,11 +71,13 @@
         <module>Sword</module>
         <module>CommonPlayer</module>
         <module>EnemyRadar</module>
-        <module>CommonSpaceSlime</module>
         <module>SpaceSlime</module>
         <module>CommonFireball</module>
         <module>Fireball</module>
         <module>CommonSword</module>
+        <module>Slime</module>
+        <module>CommonSpaceSlime</module>
+        <module>CommonSlime</module>
     </modules>
     <properties>
         <netbeans.version>RELEASE82</netbeans.version>

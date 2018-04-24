@@ -4,8 +4,6 @@ import com.group9.commonspaceslime.SpaceSlime;
 import data.GameData;
 import data.MovableEntity;
 import data.World;
-import java.util.ArrayList;
-import java.util.List;
 import movableentityparts.Attack;
 import movableentityparts.HealthPart;
 import movableentityparts.Move;
@@ -23,17 +21,14 @@ import services.iGamePluginServices;
 public class SpaceSlimePlugin implements iGamePluginServices {
 
     private MovableEntity enemy;
-    private List<String> coordinateList = new ArrayList<>();
-    private String coordinate;
 
     @Override
     public void start(GameData gameData, World world) {
-        enemy = createEnemy(gameData);
-        world.addMovableEntity(enemy);
+        enemy = createEnemy();
+        world.addEnemyEntity(enemy);
     }
 
-    private MovableEntity createEnemy(GameData gameData) {
-
+    private MovableEntity createEnemy() {
         //Spawn location of enemy/enemies
         float x = 100;
         float y = 420;
@@ -46,24 +41,12 @@ public class SpaceSlimePlugin implements iGamePluginServices {
         enemyCharacter.add(new Position(x, y));
         enemyCharacter.add(new HealthPart(1));
         enemyCharacter.add(new WeaponPart());
-        
         enemyCharacter.add(new Attack());
-        
-        enemyCharacter.setHasWeapon(false);
         return enemyCharacter;
     }
 
     @Override
     public void stop(GameData gameData, World world) {
-        world.removeEntity(enemy);
+        world.removeMovableEntity(enemy);
     }
-
-//	private void createCoordinates(float x, float y){
-//		coordinateList.add(coordinate);
-//		String[] tempCoordinate = coordinate.split(";");
-//		String xCoordinate = tempCoordinate[0];
-//		String yCoordinate = tempCoordinate[1];
-//		x = Float.parseFloat(xCoordinate);
-//		y = Float.parseFloat(yCoordinate);
-//	}
 }

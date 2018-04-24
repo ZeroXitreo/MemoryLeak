@@ -16,6 +16,7 @@ public class World {
     private final Map<String, Entity> entityMap = new ConcurrentHashMap<>();
     private final Map<String, MovableEntity> mEntityMap = new ConcurrentHashMap<>();
     private final Map<String, iWeapon> weaponMap = new ConcurrentHashMap<>();
+    private final Map<String, MovableEntity> enemyMap = new ConcurrentHashMap<>();
 
     public String addEntity(Entity entity) {
         entityMap.put(entity.getID(), entity);
@@ -31,6 +32,11 @@ public class World {
         weaponMap.put(name, weapon);
     }
 
+    public void addEnemyEntity(MovableEntity entity){
+        addMovableEntity(entity);
+        enemyMap.put(entity.getID(), entity);
+    }
+    
     public void removeEntity(String entityID) {
         entityMap.remove(entityID);
     }
@@ -42,6 +48,10 @@ public class World {
     public void removeWeapon(String entityID) {
         weaponMap.remove(entityID);
     }
+    
+    public void removeEnemyEntity(String entityID){
+        enemyMap.remove(entityID);
+    }
 
     public void removeEntity(Entity entity) {
         entityMap.remove(entity.getID());
@@ -49,6 +59,10 @@ public class World {
 
     public void removeMovableEntity(MovableEntity movableEntity) {
         mEntityMap.remove(movableEntity.getID());
+    }
+    
+    public void removeWeapon(iWeapon weapon){
+        weaponMap.remove(weapon);
     }
 
     public Collection<Entity> getEntities() {
@@ -61,6 +75,10 @@ public class World {
 
     public Collection<iWeapon> getWeapons() {
         return weaponMap.values();
+    }
+    
+    public Collection<MovableEntity> getEnemyEntities(){
+        return enemyMap.values();
     }
 
     public <E extends Entity> List<Entity> getEntities(Class<E>... entityTypes) {

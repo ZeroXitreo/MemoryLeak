@@ -6,6 +6,8 @@
 package com.group9.commonfireball;
 
 import data.MovableEntity;
+import movableentityparts.Name;
+import movableentityparts.Type;
 
 /**
  *
@@ -13,18 +15,15 @@ import data.MovableEntity;
  */
 public class Fireball extends MovableEntity {
 
-    private String type;
-
     public Fireball(Boolean friendly) {
+        super.type = new Type();
+        super.name = new Name();
+        super.name.setNameToFireball();
         if (friendly) {
-            type = "friendlyBullet";
+            super.type.setTypeToFriendlyBullet();
         } else {
-            type = "enemyBullet";
+            super.type.setTypeToEnemyBullet();
         }
     }
 
-    @Override
-    public String getType() {
-        return type;
-    }
 }

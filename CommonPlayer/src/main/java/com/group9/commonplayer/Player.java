@@ -6,6 +6,8 @@
 package com.group9.commonplayer;
 
 import data.MovableEntity;
+import movableentityparts.Name;
+import movableentityparts.Type;
 
 /**
  *
@@ -13,10 +15,11 @@ import data.MovableEntity;
  */
 public class Player extends MovableEntity {
 
-    @Override
-    public String getType() {
-        return "player";
+    public Player() {
+        super.type = new Type();
+        super.name = new Name();
+        super.type.setTypeToPlayer();
+        super.name.setNameToPlayer();
     }
-    
-    
+
 }

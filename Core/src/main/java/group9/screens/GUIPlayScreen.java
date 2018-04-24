@@ -7,7 +7,6 @@ package group9.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
@@ -22,13 +21,10 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.sun.javafx.text.GlyphLayout;
 import data.Entity;
-
 import data.MovableEntity;
 import movableentityparts.HealthPart;
 import movableentityparts.Position;
-import movableentityparts.iWeapon;
 import services.iEntityProcessingService;
 import services.iPostEntityProcessingService;
 
@@ -59,11 +55,12 @@ public class GUIPlayScreen implements Screen {
     private Animation animationPlayer;
     private Animation animationIdlePlayer;
     private Animation animationProjectile;
+    private Animation animationSlime;
     private HealthPart playerhp;
     private Position pos;
     private int state;
     private BitmapFont font;
-    private float time;
+    private float time; //time used to know what picture to show from the GIFs.
     private ParentScreen parentScreen;
     private ShapeRenderer sr;
     public static final int GAME_WON = 2;
@@ -76,6 +73,7 @@ public class GUIPlayScreen implements Screen {
     private TextureRegion playerRegion;
     private TextureRegion playerIdleRegion;
     private TextureRegion projectileRegion;
+    private TextureRegion slimeRegion;
 
     public GUIPlayScreen() {
         parentScreen = ParentScreen.getInstance();
@@ -96,8 +94,9 @@ public class GUIPlayScreen implements Screen {
         animationPlayer = new Animation(1 / 6f, memoryLeakPack.findRegions("player"), PlayMode.LOOP);
         animationIdlePlayer = new Animation(1 / 7f, memoryLeakPack.findRegions("playeridle"), PlayMode.LOOP);
         animationProjectile = new Animation(1 / 4f, memoryLeakPack.findRegions("fireball"), PlayMode.LOOP);
+        animationSlime = new Animation(1 / 7f, memoryLeakPack.findRegions("Slime"), PlayMode.LOOP);
 
-        //instanciate the wall blocks
+        //instanciate the wall blocks' graphic
         bottomWall = new TiledDrawable(memoryLeakPack.findRegion("wall_bottom"));
         topWall = new TiledDrawable(memoryLeakPack.findRegion("wall_top"));
         leftWall = new TiledDrawable(memoryLeakPack.findRegion("wall_left"));
@@ -107,6 +106,8 @@ public class GUIPlayScreen implements Screen {
         wallTopLeftCorner = new TiledDrawable(memoryLeakPack.findRegion("wall_top_left"));
         wallBottomRightCorner = new TiledDrawable(memoryLeakPack.findRegion("wall_bottom_right"));
         wallTopRightCorner = new TiledDrawable(memoryLeakPack.findRegion("wall_top_right"));
+
+        //instanciate the hearts' graphic
         fullHeart = new TiledDrawable(memoryLeakPack.findRegion("heart_full"));
         emptyHeart = new TiledDrawable(memoryLeakPack.findRegion("heart_loss"));
 
@@ -122,20 +123,19 @@ public class GUIPlayScreen implements Screen {
         toMenu.addListener(new InputListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("CLICK");
+                //Remove entities and movable entities from the game
                 for (Entity entity : ParentScreen.getWorld().getEntities()) {
                     ParentScreen.getWorld().removeEntity(entity);
                 }
                 for (MovableEntity entity : ParentScreen.getWorld().getMovableEntities()) {
                     ParentScreen.getWorld().removeMovableEntity(entity);
                 }
-
+                //Return to the menu screen
                 ParentScreen.getGame().setScreen(new MenuScreen());
             }
 
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("CLICKY");
                 return true;
             }
         });
@@ -162,6 +162,8 @@ public class GUIPlayScreen implements Screen {
                 stageClear = false;
             }
         }
+
+        //which state the game is in
         if (alive) {
             state = GAME_RUNNING;
         } else {
@@ -171,71 +173,39 @@ public class GUIPlayScreen implements Screen {
             state = GAME_WON;
         }
 
+        //draw map
+        batch.begin();
+        for (int x = 0; x < 960; x += 124) {
+            for (int y = 0; y < 540; y += 124) {
+                batch.draw(lavaRegion, x, y);
+            }
+        }
+        centerWall.draw(batch, 80, 64, 800, 412);
+        bottomWall.draw(batch, 80, 32, 800, 32);
+        topWall.draw(batch, 80, 476, 800, 32);
+        leftWall.draw(batch, 48, 64, 32, 412);
+        rightWall.draw(batch, 864, 64, 32, 416);
+        wallBottomLeftCorner.draw(batch, 48, 32, 32, 32);
+        wallTopLeftCorner.draw(batch, 48, 476, 32, 32);
+        wallBottomRightCorner.draw(batch, 864, 32, 32, 32);
+        wallTopRightCorner.draw(batch, 864, 476, 32, 32);
+        batch.end();
+
         switch (state) {
             case GAME_RUNNING:
                 update();
                 ParentScreen.getGip().keyPress();
-                batch.begin();
-                for (int x = 0; x < 960; x += 124) {
-                    for (int y = 0; y < 540; y += 124) {
-                        batch.draw(lavaRegion, x, y);
-                    }
-                }
-                centerWall.draw(batch, 80, 64, 800, 412);
-                bottomWall.draw(batch, 80, 32, 800, 32);
-                topWall.draw(batch, 80, 476, 800, 32);
-                leftWall.draw(batch, 48, 64, 32, 412);
-                rightWall.draw(batch, 864, 64, 32, 416);
-
-                wallBottomLeftCorner.draw(batch, 48, 32, 32, 32);
-                wallTopLeftCorner.draw(batch, 48, 476, 32, 32);
-                wallBottomRightCorner.draw(batch, 864, 32, 32, 32);
-                wallTopRightCorner.draw(batch, 864, 476, 32, 32);
-                batch.end();
                 drawEntities(time);
                 break;
             case GAME_OVER:
                 batch.begin();
-                for (int x = 0; x < 960; x += 124) {
-                    for (int y = 0; y < 540; y += 124) {
-                        batch.draw(lavaRegion, x, y);
-                    }
-                }
-                centerWall.draw(batch, 80, 64, 800, 412);
-                bottomWall.draw(batch, 80, 32, 800, 32);
-                topWall.draw(batch, 80, 476, 800, 32);
-                leftWall.draw(batch, 48, 64, 32, 412);
-                rightWall.draw(batch, 864, 64, 32, 416);
-
-                wallBottomLeftCorner.draw(batch, 48, 32, 32, 32);
-                wallTopLeftCorner.draw(batch, 48, 476, 32, 32);
-                wallBottomRightCorner.draw(batch, 864, 32, 32, 32);
-                wallTopRightCorner.draw(batch, 864, 476, 32, 32);
-
                 font.draw(batch, "YOU DIED", ParentScreen.getGameData().getDisplayWidth() / 3 + 60, ParentScreen.getGameData().getDisplayHeight() / 2);
                 batch.end();
                 drawEntities(time);
-
                 stage.addActor(toMenu); //Add the button to the stage. 
                 break;
             case GAME_WON:
                 batch.begin();
-                for (int x = 0; x < 960; x += 124) {
-                    for (int y = 0; y < 540; y += 124) {
-                        batch.draw(lavaRegion, x, y);
-                    }
-                }
-                centerWall.draw(batch, 80, 64, 800, 412);
-                bottomWall.draw(batch, 80, 32, 800, 32);
-                topWall.draw(batch, 80, 476, 800, 32);
-                leftWall.draw(batch, 48, 64, 32, 412);
-                rightWall.draw(batch, 864, 64, 32, 416);
-
-                wallBottomLeftCorner.draw(batch, 48, 32, 32, 32);
-                wallTopLeftCorner.draw(batch, 48, 476, 32, 32);
-                wallBottomRightCorner.draw(batch, 864, 32, 32, 32);
-                wallTopRightCorner.draw(batch, 864, 476, 32, 32);
-
                 font.draw(batch, "YOU WIN... THIS ROUND", ParentScreen.getGameData().getDisplayWidth() / 4, ParentScreen.getGameData().getDisplayHeight() / 2);
                 batch.end();
                 drawEntities(time);
@@ -246,16 +216,17 @@ public class GUIPlayScreen implements Screen {
     }
 
     private void drawEntities(float time) {
+        //Show the animation of the different entities.
         for (MovableEntity movableEntity : ParentScreen.getWorld().getMovableEntities()) {
-            if (movableEntity.getType().equalsIgnoreCase("player")) {
+            if (movableEntity.getName().equalsIgnoreCase("player")) {
                 batch.begin();
                 playerhp = movableEntity.getPart(HealthPart.class);
                 for (int i = 0; i < playerhp.getMaxHealth(); i++) {
-                    emptyHeart.draw(batch, 8 + (i*(32+8)), ParentScreen.getGameData().getDisplayHeight() - 40, 32, 32);
+                    emptyHeart.draw(batch, 8 + (i * (32 + 8)), ParentScreen.getGameData().getDisplayHeight() - 40, 32, 32);
                 }
                 for (int i = 0; i < playerhp.getHealth(); i++) {
-                    fullHeart.draw(batch, 8 + (i*(32+8)), ParentScreen.getGameData().getDisplayHeight() - 40, 32, 32);
-                }                
+                    fullHeart.draw(batch, 8 + (i * (32 + 8)), ParentScreen.getGameData().getDisplayHeight() - 40, 32, 32);
+                }
                 pos = movableEntity.getPart(Position.class);
                 playerRegion = animationPlayer.getKeyFrame(2 * time, true);
                 playerIdleRegion = animationIdlePlayer.getKeyFrame(2 * time, true);
@@ -268,7 +239,7 @@ public class GUIPlayScreen implements Screen {
                 }
                 batch.end();
                 sr.setColor(1, 1, 1, 1);
-            } else if (movableEntity.getType().equalsIgnoreCase("friendlyBullet") || movableEntity.getType().equalsIgnoreCase("enemyBullet")) {
+            } else if (movableEntity.getName().equalsIgnoreCase("fireball") || movableEntity.getName().equalsIgnoreCase("sword")) {
                 batch.begin();
                 Position pos = movableEntity.getPart(Position.class);
                 projectileRegion = animationProjectile.getKeyFrame(time, true);
@@ -282,7 +253,7 @@ public class GUIPlayScreen implements Screen {
                 }
                 batch.end();
                 sr.setColor(1, 0, 0, 1);
-            } else if (movableEntity.getType().equalsIgnoreCase("enemy")) {
+            } else if (movableEntity.getName().equalsIgnoreCase("spaceSlime")) {
                 spaceSlimeRegion = animationSpaceSlime.getKeyFrame(time, true);
                 Position pos = movableEntity.getPart(Position.class);
                 batch.begin();
@@ -292,6 +263,19 @@ public class GUIPlayScreen implements Screen {
                     batch.draw(spaceSlimeRegion, pos.getX() + 16, pos.getY() - 16, -32, 32);
                 } else {
                     batch.draw(spaceSlimeRegion, pos.getX() - 16, pos.getY() - 16, 32, 32);
+                }
+                batch.end();
+                sr.setColor(0, 1, 0, 1);
+            } else if (movableEntity.getName().equalsIgnoreCase("Slime")) {
+                slimeRegion = animationSlime.getKeyFrame(time, true);
+                Position pos = movableEntity.getPart(Position.class);
+                batch.begin();
+                if (movableEntity.getMoveDirection() == 1) {
+                    batch.draw(slimeRegion, pos.getX() + 12, pos.getY() - 12, -32, 32);
+                } else if (movableEntity.getMoveDirection() == 0) {
+                    batch.draw(slimeRegion, pos.getX() - 12, pos.getY() - 12, 32, 32);
+                } else {
+                    batch.draw(slimeRegion, pos.getX() + 12, pos.getY() - 12, -32, 32);
                 }
                 batch.end();
                 sr.setColor(0, 1, 0, 1);
@@ -332,6 +316,9 @@ public class GUIPlayScreen implements Screen {
         stage.dispose();
     }
 
+    /**
+     * Calls the process on the different entity parts.
+     */
     private void update() {
         for (iEntityProcessingService entityProcessor : parentScreen.getEntityProcessingServices()) {
             entityProcessor.process(ParentScreen.getGameData(), ParentScreen.getWorld());

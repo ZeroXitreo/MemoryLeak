@@ -23,6 +23,8 @@ import org.openide.util.lookup.ServiceProvider;
 @ServiceProvider(service = iEntityProcessingService.class)
 public class FireballControlSystem implements iEntityProcessingService {
 
+    private double pi = Math.PI;
+
     @Override
     public void process(GameData gameData, World world) {
         for (MovableEntity bullet : world.getMovableEntities(Fireball.class)) {
@@ -35,7 +37,7 @@ public class FireballControlSystem implements iEntityProcessingService {
             move.process(gameData, bullet);
             healthPart.process(gameData, bullet);
             timer.process(gameData, bullet);
-            if(timer.isRemove()){
+            if (timer.isRemove()) {
                 world.removeMovableEntity(bullet);
             }
             position.process(gameData, bullet);
@@ -59,7 +61,7 @@ public class FireballControlSystem implements iEntityProcessingService {
         for (int i = 0; i < numPoints; i++) {
             shapeX[i] = x + (float) Math.cos(angle + radians) * radius;
             shapeY[i] = y + (float) Math.sin(angle + radians) * radius;
-            angle += 2 * 3.1415f / numPoints;
+            angle += 2 * pi / numPoints;
         }
         movableEntity.setShapeX(shapeX);
         movableEntity.setShapeY(shapeY);

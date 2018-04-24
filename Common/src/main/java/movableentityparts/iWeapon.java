@@ -15,5 +15,5 @@ import data.MovableEntity;
 public interface iWeapon {
     void createProjectile(MovableEntity shooter);
     long getCooldown();
-    String getType();
+    String getWeaponName();
 }
