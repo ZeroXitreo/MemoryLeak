@@ -43,7 +43,7 @@ public class MenuScreen implements Screen {
         playButton.addListener(new InputListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                ParentScreen.getGame().setScreen(new GUIPlayScreen());
+                ParentScreen.getGame().setScreen(new SetupScreen());
             }
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {

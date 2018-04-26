@@ -41,16 +41,16 @@ public class PlayerControlSystem implements iEntityProcessingService {
             move.setDown(gameData.getKeys().isDown(S));
             move.setRight(gameData.getKeys().isDown(D));
             WeaponPart weaponPart = player.getPart(WeaponPart.class);
-            if (!player.hasWeapon() && world.getWeapons() != null) {
-                for (iWeapon currentWeapon : world.getWeapons()) {
-                    if (currentWeapon.getWeaponName().equalsIgnoreCase("fireball")) {
-                        this.weapon = currentWeapon;
-                        player.setHasWeapon(true);
-                        break;
-                    }
-                }
-                weaponPart.setWeapon(weapon);
-            }
+//            if (!player.hasWeapon() && world.getWeapons() != null) {
+//                for (iWeapon currentWeapon : world.getWeapons()) {
+//                    if (currentWeapon.getWeaponName().equalsIgnoreCase("fireball")) {
+//                        this.weapon = currentWeapon;
+//                        player.setHasWeapon(true);
+//                        break;
+//                    }
+//                }
+//                weaponPart.setWeapon(weapon);
+//            }
             healthPart.process(gameData, player);
             move.process(gameData, player);
             position.process(gameData, player);

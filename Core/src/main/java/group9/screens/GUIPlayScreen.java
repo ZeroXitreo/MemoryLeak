@@ -77,9 +77,8 @@ public class GUIPlayScreen implements Screen {
 
     public GUIPlayScreen() {
         parentScreen = ParentScreen.getInstance();
-        parentScreen.setResult();
+        //parentScreen.setResult();
         stage = new Stage(new ScreenViewport());
-        batch = new SpriteBatch();
         sr = new ShapeRenderer();
         state = 1;
         batch = new SpriteBatch();
@@ -131,7 +130,7 @@ public class GUIPlayScreen implements Screen {
                     ParentScreen.getWorld().removeMovableEntity(entity);
                 }
                 //Return to the menu screen
-                ParentScreen.getGame().setScreen(new MenuScreen());
+                ParentScreen.getGame().setScreen(new SetupScreen());
             }
 
             @Override
