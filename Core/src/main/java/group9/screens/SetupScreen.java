@@ -16,7 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import data.MovableEntity;
 import java.util.ArrayList;
-import movableentityparts.iWeapon;
+import java.util.TreeMap;
 
 /**
  *
@@ -28,46 +28,40 @@ public class SetupScreen implements Screen {
     private ParentScreen parentScreen;
     private ScrollPane scrollPane;
     private List<String> list;
-    private Skin skin;
     private SpriteBatch batch;
     private float width;
     private float height;
-    private int size;
     private ArrayList<MovableEntity> enemies;
-    //private ArrayList<iWeapon> weapons;
+    private TreeMap<String, MovableEntity> entityMap;
+    private String[] entityArray;
 
     public SetupScreen() {
         parentScreen = ParentScreen.getInstance();
         parentScreen.setResult();
         enemies = new ArrayList<>();
-        //weapons = ParentScreen.getWorld().getWeapons();
-        skin = parentScreen.getListSkin();
         width = ParentScreen.getGameData().getDisplayWidth();
         height = ParentScreen.getGameData().getDisplayHeight();
         stage = new Stage(new ScreenViewport());
         batch = new SpriteBatch();
-        list = new List<String>(skin);
-        for (MovableEntity entity : ParentScreen.getWorld().getMovableEntities()) {
-            System.out.println(entity.getType());
-            enemies.add(entity);
+        list = new List<>(parentScreen.getListSkin());
+        width = ParentScreen.getGameData().getDisplayWidth();
+        height = ParentScreen.getGameData().getDisplayHeight();
+        entityMap = new TreeMap<>();
+
+        for (MovableEntity entity : ParentScreen.getWorld().getEnemyEntities()) {
+            entityMap.put(entity.getName(), entity);
         }
-        System.out.println(enemies.size());
-        String[] strings = new String[enemies.size()];
-        for (int i = 0, k = 0; i < strings.length; i++) {
-            strings[k++] = "Enemy: " + enemies.get(i).getType();
+        entityArray = new String[entityMap.size()];
+        int i = 0;
+        for (String s : entityMap.keySet()) {
+            System.out.println(s);
+            entityArray[i] = s;
+            i++;
         }
-        list.setItems(strings);
-        list.setPosition(width / 2, height + 100);
-        scrollPane = new ScrollPane(list, skin);
-        scrollPane = new ScrollPane(list, skin);
-        scrollPane.setBounds(0, 0, width - 500, height + 100);
-        scrollPane.setSmoothScrolling(false);
-        scrollPane.setPosition(width / 2 - scrollPane.getWidth() / 4,
-                height / 2 - scrollPane.getHeight() / 4);
-        scrollPane.setTransform(true);
-        scrollPane.setScale(0.5f);
-        
-        stage.addActor(scrollPane);
+        list.setItems(entityArray);
+        list.setBounds(0, 0, 100, 100);
+        list.setPosition(0, 0);
+        stage.addActor(list); //Add list to the stage.
     }
 
     @Override
@@ -80,8 +74,6 @@ public class SetupScreen implements Screen {
     public void render(float f) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); // Clear screen
         Gdx.gl.glClearColor(25 / 255f, 24 / 255f, 27 / 255f, 0); // Clear screen
-        System.out.println(list.getSelected());
-
         stage.act(f);
         stage.draw();
     }
