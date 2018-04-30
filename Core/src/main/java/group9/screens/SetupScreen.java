@@ -61,6 +61,9 @@ public class SetupScreen implements Screen {
         createRemoveEnemyButton();
         createClassButton();
         createClassButtonGroup();
+        
+        //Don't let user start without picking a class
+        startButton.setVisible(false);
 
         Gdx.input.setInputProcessor(stage);
     }
@@ -73,6 +76,11 @@ public class SetupScreen implements Screen {
         batch.begin();
         font.draw(batch, "SELECT WEAPON", ParentScreen.getGameData().getDisplayWidth() / 2 - 204, ParentScreen.getGameData().getDisplayHeight() / 2 + 110);
         batch.end();
+        
+        //If a class is selected let the user start.
+        if(classMage.isPressed() || classMelee.isPressed()) {
+            startButton.setVisible(true);
+        }
 
         stage.act(f);
         stage.draw();
@@ -180,11 +188,8 @@ public class SetupScreen implements Screen {
         classMage.addListener(new InputListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("MAGE");
                 for (MovableEntity entity : parentScreen.getWorld().getMovableEntities()) {
                     if (entity instanceof Player) {
-                        System.out.println("Something is happening (MAGE)");
-                        WeaponPart weapon = entity.getPart(WeaponPart.class);
                         for (iWeapon wep : parentScreen.getWorld().getWeapons()) {
                             if (wep.getWeaponName().equalsIgnoreCase("fireball")) {
                                 WeaponPart temp = entity.getPart(WeaponPart.class);
@@ -207,12 +212,9 @@ public class SetupScreen implements Screen {
         classMelee.addListener(new InputListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("MELEE");
-
                 for (MovableEntity entity : parentScreen.getWorld().getMovableEntities()) {
                     if (entity instanceof Player) {
-                        System.out.println("Something is happening (MELEE)");
-                        WeaponPart weapon = entity.getPart(WeaponPart.class);
+                        //WeaponPart weapon = entity.getPart(WeaponPart.class);
                         for (iWeapon wep : parentScreen.getWorld().getWeapons()) {
                             if (wep.getWeaponName().equalsIgnoreCase("sword")) {
                                 WeaponPart temp = entity.getPart(WeaponPart.class);
@@ -222,13 +224,12 @@ public class SetupScreen implements Screen {
                     }
                 }
             }
-
+            
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 return true;
             }
         });
-
         stage.addActor(classMage);
         stage.addActor(classMelee);
     }
