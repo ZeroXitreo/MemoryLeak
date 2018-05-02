@@ -78,6 +78,7 @@
         <module>Slime</module>
         <module>CommonSpaceSlime</module>
         <module>CommonSlime</module>
+        <module>SearchAlgorithm</module>
     </modules>
     <properties>
         <netbeans.version>RELEASE82</netbeans.version>
