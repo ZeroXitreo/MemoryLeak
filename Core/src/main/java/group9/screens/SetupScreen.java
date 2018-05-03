@@ -71,6 +71,10 @@ public class SetupScreen implements Screen {
         createClassButton();
         createClassButtonGroup();
         showAddableEntities();
+
+        //Don't let user start without picking a class
+        startButton.setVisible(false);
+
         Gdx.input.setInputProcessor(stage);
     }
 
@@ -82,6 +86,11 @@ public class SetupScreen implements Screen {
         font.draw(batch, "SELECT WEAPON", ParentScreen.getGameData().getDisplayWidth() / 2 - 170, ParentScreen.getGameData().getDisplayHeight() / 2 + 200);
         font.draw(batch, messageToUser, ParentScreen.getGameData().getDisplayWidth() / 2 - 170, ParentScreen.getGameData().getDisplayHeight() / 2 - 50);
         batch.end();
+
+        //If a class is selected let the user start.
+        if (classMage.isPressed() || classMelee.isPressed()) {
+            startButton.setVisible(true);
+        }
         stage.act(f);
         stage.draw();
     }
@@ -235,12 +244,11 @@ public class SetupScreen implements Screen {
                 }
             }
 
-            @Override            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 return true;
             }
         });
-
         stage.addActor(classMage);
         stage.addActor(classMelee);
     }
