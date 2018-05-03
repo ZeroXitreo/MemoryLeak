@@ -17,7 +17,6 @@ import movableentityparts.Move;
 import services.iEntityProcessingService;
 import movableentityparts.Position;
 import org.openide.util.lookup.ServiceProvider;
-import movableentityparts.iWeapon;
 
 /**
  *
@@ -26,12 +25,11 @@ import movableentityparts.iWeapon;
 @ServiceProvider(service = iEntityProcessingService.class)
 public class PlayerControlSystem implements iEntityProcessingService {
 
-    private iWeapon weapon;
     private double pi = Math.PI;
 
     @Override
     public void process(GameData gameData, World world) {
-        for (MovableEntity player : world.getMovableEntities(Player.class)) {
+        for (MovableEntity player : world.getGameMovableEntities(Player.class)) {
             Position position = player.getPart(Position.class);
             HealthPart healthPart = player.getPart(HealthPart.class);
             Attack direction = player.getPart(Attack.class);
@@ -41,16 +39,6 @@ public class PlayerControlSystem implements iEntityProcessingService {
             move.setDown(gameData.getKeys().isDown(S));
             move.setRight(gameData.getKeys().isDown(D));
             WeaponPart weaponPart = player.getPart(WeaponPart.class);
-            if (!player.hasWeapon() && world.getWeapons() != null) {
-                for (iWeapon currentWeapon : world.getWeapons()) {
-                    if (currentWeapon.getWeaponName().equalsIgnoreCase("fireball")) {
-                        this.weapon = currentWeapon;
-                        player.setHasWeapon(true);
-                        break;
-                    }
-                }
-                weaponPart.setWeapon(weapon);
-            }
             healthPart.process(gameData, player);
             move.process(gameData, player);
             position.process(gameData, player);

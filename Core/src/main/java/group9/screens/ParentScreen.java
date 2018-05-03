@@ -46,12 +46,15 @@ public class ParentScreen {
     private Image menuBackground;
     private Skin buttonSkin;
     private Skin listSkin;
+    private Skin scrollPaneSkin;
     private TextureAtlas listAtlas;
     private TextureAtlas lava;
     private TextureAtlas memoryLeakPack;
+    private TextureAtlas scrollAtlas;
     private ListStyle listStyle;
     private BitmapFont font;
-    private String atlasSkinPath;
+    private String scrollPaneSkinPath;
+    private String atlasListSkinPath;
     private String skinListPath;
     private String assetPath;
     private String mainmenuPath;
@@ -60,6 +63,7 @@ public class ParentScreen {
     private String memoryleakGraphicPath;
     private String fontPath;
     private String soundPath;
+    private String scrollAtlasPath;
     private Music music;
     private Boolean musicOnOff = false;
 
@@ -81,8 +85,10 @@ public class ParentScreen {
         lavaPath = assetPath + "/sprites/lava.pack";
         memoryleakGraphicPath = assetPath + "/sprites/memoryleak.pack";
         fontPath = assetPath + "/skin/MemoryLeakFont.fnt";
-        atlasSkinPath = assetPath + "/skin/listskin.atlas";
+        atlasListSkinPath = assetPath + "/skin/listskin.atlas";
         soundPath = assetPath + "/sound/sound.mp3";
+        scrollPaneSkinPath = assetPath + "/skin/srollpaneskin.json";
+        scrollAtlasPath = assetPath + "/skin/srollpaneskin.atlas";
 
         //Load to assetManager
         am.load(mainmenuPath, Texture.class);
@@ -91,8 +97,10 @@ public class ParentScreen {
         am.load(lavaPath, TextureAtlas.class);
         am.load(memoryleakGraphicPath, TextureAtlas.class);
         am.load(fontPath, BitmapFont.class);
-        am.load(atlasSkinPath, TextureAtlas.class);
+        am.load(atlasListSkinPath, TextureAtlas.class);
         am.load(soundPath, Music.class);
+        am.load(scrollPaneSkinPath, Skin.class);
+        am.load(scrollAtlasPath, TextureAtlas.class);
         am.finishLoading();
 
         //instanciate the image, button, lava, memoryLeakPack and font.
@@ -101,12 +109,14 @@ public class ParentScreen {
         lava = am.get(lavaPath, TextureAtlas.class);
         memoryLeakPack = am.get(memoryleakGraphicPath, TextureAtlas.class);
         font = am.get(fontPath, BitmapFont.class);
-        listAtlas = am.get(atlasSkinPath, TextureAtlas.class);
+        listAtlas = am.get(atlasListSkinPath, TextureAtlas.class);
         listSkin = am.get(skinListPath, Skin.class);
         listSkin.addRegions(listAtlas);
         music = am.get(soundPath, Music.class);
         music.setVolume(0.3f);
         music.setLooping(true);
+        scrollPaneSkin = am.get(scrollPaneSkinPath, Skin.class);
+        scrollAtlas = am.get(scrollAtlasPath, TextureAtlas.class);
     }
 
     public static ParentScreen getInstance() {
@@ -291,6 +301,10 @@ public class ParentScreen {
 
     public ListStyle getListStyle() {
         return listStyle;
+    }
+
+    public Skin getScrollPaneSkin() {
+        return scrollPaneSkin;
     }
 
     public String getAssetPath(String path) {

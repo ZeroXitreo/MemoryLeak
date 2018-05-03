@@ -27,7 +27,7 @@ public class FireballControlSystem implements iEntityProcessingService {
 
     @Override
     public void process(GameData gameData, World world) {
-        for (MovableEntity bullet : world.getMovableEntities(Fireball.class)) {
+        for (MovableEntity bullet : world.getGameMovableEntities(Fireball.class)) {
             Position position = bullet.getPart(Position.class);
             HealthPart healthPart = bullet.getPart(HealthPart.class);
             Timer timer = bullet.getPart(Timer.class);
@@ -38,7 +38,7 @@ public class FireballControlSystem implements iEntityProcessingService {
             healthPart.process(gameData, bullet);
             timer.process(gameData, bullet);
             if (timer.isRemove()) {
-                world.removeMovableEntity(bullet);
+                world.removeGameMovableEntity(bullet);
             }
             position.process(gameData, bullet);
             updateSpriteCircle(bullet);

@@ -19,13 +19,13 @@ public class MapBuildingBlocksPlugin implements iGamePluginServices {
 	public void start(GameData gameData, World world)
 	{
 		buildingBlocks = createBuildingBlocks(gameData);
-		world.addEntity(buildingBlocks);
+		world.addImmovableEntity(buildingBlocks);
 	}
 
 	@Override
 	public void stop(GameData gameData, World world)
 	{
-		world.removeEntity(buildingBlocks);
+		world.removeImmovableEntity(buildingBlocks);
 	}
 
 	private ImmovableEntity createBuildingBlocks(GameData gameData)

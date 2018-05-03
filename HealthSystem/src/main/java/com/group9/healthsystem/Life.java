@@ -22,11 +22,11 @@ public class Life implements iPostEntityProcessingService {
 
     @Override
     public void process(GameData gameData, World world) {
-        for (MovableEntity movableEntity : world.getMovableEntities()) {
+        for (MovableEntity movableEntity : world.getGameMovableEntities()) {
             if (movableEntity.getPart(HealthPart.class) != null) {
                 HealthPart current = movableEntity.getPart(HealthPart.class);
                 if (current.isDead()) {
-                    world.removeMovableEntity(movableEntity.getID());
+                    world.removeGameMovableEntity(movableEntity);
                 }
             }
 

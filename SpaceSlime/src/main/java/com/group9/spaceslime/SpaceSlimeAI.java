@@ -26,15 +26,15 @@ public class SpaceSlimeAI implements iEntityProcessingService {
 
     @Override
     public void process(GameData gameData, World world) {
-        for (MovableEntity movableEntity : world.getMovableEntities(SpaceSlime.class)) {
+        for (MovableEntity movableEntity : world.getGameMovableEntities(SpaceSlime.class)) {
             Move move = movableEntity.getPart(Move.class);
             move.setDirection(movableEntity.getDirection());
             HealthPart health = movableEntity.getPart(HealthPart.class);
             Attack direction = movableEntity.getPart(Attack.class);
             Position position = movableEntity.getPart(Position.class);
             WeaponPart weaponPart = movableEntity.getPart(WeaponPart.class);
-            if (!movableEntity.hasWeapon() && world.getWeapons() != null) {
-                for (iWeapon currentWeapon : world.getWeapons()) {
+            if (!movableEntity.hasWeapon() && world.getWeaponEntities() != null) {
+                for (iWeapon currentWeapon : world.getWeaponEntities()) {
                     if (currentWeapon.getWeaponName().equalsIgnoreCase("fireball")) {
                         this.weapon = currentWeapon;
                         movableEntity.setHasWeapon(true);

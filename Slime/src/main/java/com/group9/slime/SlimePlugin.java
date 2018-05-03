@@ -27,16 +27,17 @@ public class SlimePlugin implements iGamePluginServices {
     @Override
     public void start(GameData gameData, World world) {
         enemy = createEnemy();
-        world.addEnemyEntity(enemy);
+        world.addMovableEntity(enemy);
     }
 
     @Override
     public void stop(GameData gameData, World world) {
         world.removeMovableEntity(enemy);
+        world.removeGameMovableEntity(enemy);
     }
 
-    private MovableEntity createEnemy(){
-        //Spawn location of enemy/enemies
+    private MovableEntity createEnemy() {
+        //Spawn location
         float x = 100;
         float y = 100;
         float maxSpeed = 1;

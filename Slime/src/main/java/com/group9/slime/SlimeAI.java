@@ -9,12 +9,9 @@ import com.group9.commonslime.Slime;
 import data.GameData;
 import data.MovableEntity;
 import data.World;
-import movableentityparts.Attack;
 import movableentityparts.HealthPart;
 import movableentityparts.Move;
 import movableentityparts.Position;
-import movableentityparts.WeaponPart;
-import movableentityparts.iWeapon;
 import org.openide.util.lookup.ServiceProvider;
 import services.iEntityProcessingService;
 
@@ -29,7 +26,7 @@ public class SlimeAI implements iEntityProcessingService {
 
     @Override
     public void process(GameData gameData, World world) {
-        for (MovableEntity movableEntity : world.getMovableEntities(Slime.class)) {
+        for (MovableEntity movableEntity : world.getGameMovableEntities(Slime.class)) {
             Move move = movableEntity.getPart(Move.class);
             move.setDirection(movableEntity.getDirection());
             HealthPart health = movableEntity.getPart(HealthPart.class);

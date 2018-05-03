@@ -22,8 +22,6 @@ public abstract class Entity implements Serializable {
     private float radius;
     protected Type type;
     protected Name name;
-    private double x;
-    private double y;
 
     public Entity() {
         parts = new ConcurrentHashMap<>();
@@ -69,12 +67,12 @@ public abstract class Entity implements Serializable {
         this.shapeY = shapeY;
     }
 
-    public String getType() {
-        return type.getType();
+    public Type getType() {
+        return type;
     }
     
-    public String getName(){
-        return name.getName();
+    public Name getNameInstance(){
+        return name;
     }
 
     public void setHit(boolean hit) {

@@ -38,7 +38,8 @@ public class FireballPlugin implements iWeapon, iGamePluginServices {
 
     @Override
     public void stop(GameData gameData, World world) {
-        world.removeWeapon(getWeaponName());
+        world.removeWeapon(fireball);
+        world.removeGameMovableEntity(fireball);
     }
 
     @Override
@@ -49,7 +50,7 @@ public class FireballPlugin implements iWeapon, iGamePluginServices {
         float radians = shooter.getDirection();
         float speed = 3;
 
-        fireball = new Fireball(shooter.getType().equalsIgnoreCase("player"));
+        fireball = new Fireball(shooter.getType().equalsPlayer());
         fireball.setRadius(6);
         fireball.setDirection(radians);
 
@@ -63,7 +64,7 @@ public class FireballPlugin implements iWeapon, iGamePluginServices {
         fireball.setShapeX(new float[2]);
         fireball.setShapeY(new float[2]);
         fireball.setDirection(radians);
-        world.addMovableEntity(fireball);
+        world.addGameMovableEntity(fireball);
     }
 
     @Override
