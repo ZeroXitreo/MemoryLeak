@@ -6,7 +6,6 @@ import data.World;
 import group9.manager.GameInputProcessor;
 import group9.screens.MenuScreen;
 import group9.screens.ParentScreen;
-import group9.screens.PlayScreen;
 
 /**
  *
@@ -23,6 +22,10 @@ public class MemoryLeak extends Game {
         gip = new GameInputProcessor(gameData);
         gameData.setDisplayHeight(540);
         gameData.setDisplayWidth(960);
+        gameData.setMoveAreaWidthMax(gameData.getDisplayWidth() - 85);
+        gameData.setMoveAreaWidthMin(68);
+        gameData.setMoveAreaHeightMin(64);
+        gameData.setMoveAreaHeightMax(gameData.getDisplayHeight() - 45);
         new ParentScreen(this, world, gameData, gip);
         this.setScreen(new MenuScreen());
     }

@@ -7,6 +7,7 @@ package com.group9.collision;
 
 import data.Entity;
 import data.GameData;
+import data.ImmovableEntity;
 import data.MovableEntity;
 import data.World;
 import java.util.Collection;
@@ -27,17 +28,17 @@ public class Collision implements iPostEntityProcessingService {
     // public void Collision()
     @Override
     public void process(GameData gameData, World world) {
-        Collection<MovableEntity> movEntities = world.getMovableEntities();
+        Collection<MovableEntity> movEntities = world.getGameMovableEntities();
         for (MovableEntity movEntity : movEntities) {
-            CheckSingleCollision(movEntity, world);
+            checkSingleCollision(movEntity, world);
         }
     }
 
-    public void CheckSingleCollision(MovableEntity movEntity, World world) {
-        Collection<MovableEntity> entities = world.getMovableEntities();
-        for (MovableEntity entity : entities) {
+    public void checkSingleCollision(MovableEntity movEntity, World world) {
+        Collection<MovableEntity> movableEntities = world.getGameMovableEntities();
+        Collection<ImmovableEntity> immovableEntities = world.getGameImmovableEntities();
+        for (MovableEntity entity : movableEntities) {
             if (movEntity.equals(entity)) {
-                //System.out.println("no");
                 continue;
             }
 
@@ -55,7 +56,7 @@ public class Collision implements iPostEntityProcessingService {
             {
                 float totalRadius = movEntity.getRadius() + entity.getRadius();
                 //  System.out.println(totalRadius);
-                CircleCollisionPush(movEntity, entity, totalRadius);
+                circleCollisionPush(movEntity, entity, totalRadius);
             }
 
             /*if (movableEl['isCircle'] && !solidEl['isCircle'])
@@ -100,6 +101,13 @@ public class Collision implements iPostEntityProcessingService {
 					}
 				}/**/
         }
+        for(ImmovableEntity immovableEntity : immovableEntities){
+            if (true) //if (movableEl['isCircle'] && solidEl['isCircle']) // is both circles?
+            {
+                float totalRadius = movEntity.getRadius() + immovableEntity.getRadius();
+                circleCollisionPush(movEntity, immovableEntity, totalRadius);
+            }
+        }
     }
 
     private float getAverage(float x, float y) // Heh, why did I make this into a function?
@@ -107,7 +115,7 @@ public class Collision implements iPostEntityProcessingService {
         return (x + y) / 2;
     }
 
-    private void SquareCollisionPush(Entity movEntity, Entity entity, float averageWidth, float averageHeight) {
+    private void squareCollisionPush(Entity movEntity, Entity entity, float averageWidth, float averageHeight) {
         Position movEntityPos = movEntity.getPart(Position.class);
         Position entityPos = movEntity.getPart(Position.class);
 
@@ -131,15 +139,15 @@ public class Collision implements iPostEntityProcessingService {
         }
     }
 
-    private void CircleCollisionPush(MovableEntity pushedElement, Entity solidElement, float totalRadius) {
-        CircleCollisionPush(pushedElement, solidElement, totalRadius, 0, 0);
+    private void circleCollisionPush(MovableEntity pushedElement, Entity solidElement, float totalRadius) {
+        circleCollisionPush(pushedElement, solidElement, totalRadius, 0, 0);
     }
 
-    private void CircleCollisionPush(MovableEntity pushedElement, Entity solidElement, float totalRadius, float solidOffsetX, float solidOffsetY) {
-        CircleCollisionPush(pushedElement, solidElement, totalRadius, solidOffsetX, solidOffsetY, true);
+    private void circleCollisionPush(MovableEntity pushedElement, Entity solidElement, float totalRadius, float solidOffsetX, float solidOffsetY) {
+        circleCollisionPush(pushedElement, solidElement, totalRadius, solidOffsetX, solidOffsetY, true);
     }
 
-    private void CircleCollisionPush(MovableEntity movEntity, Entity entity, float totalRadius, float solidOffsetX, float solidOffsetY, boolean reverseOffset) {
+    private void circleCollisionPush(MovableEntity movEntity, Entity entity, float totalRadius, float solidOffsetX, float solidOffsetY, boolean reverseOffset) {
         Position movEntityPos = movEntity.getPart(Position.class);
         Position entityPos = entity.getPart(Position.class);
 
@@ -187,48 +195,48 @@ public class Collision implements iPostEntityProcessingService {
     private void collisionDMG(MovableEntity entity1, Entity entity2) {
         //if one of the entities is an enemy and the other one isn't an enemy
         //or an enemyBullet.
-        if (entity1.getType().equalsIgnoreCase("Enemy")
-                && !entity2.getType().equalsIgnoreCase("Enemy")
-                && !entity2.getType().equalsIgnoreCase("enemyBullet")) {
+        if (entity1.getType().equalsEnemy()
+                && !entity2.getType().equalsEnemy()
+                && !entity2.getType().equalsEnemyBullet()) {
             entity2.setHit(true);
-        } else if (entity2.getType().equalsIgnoreCase("Enemy")
-                && !entity1.getType().equalsIgnoreCase("Enemy")
-                && !entity1.getType().equalsIgnoreCase("enemyBullet")) {
+        } else if (entity2.getType().equalsEnemy()
+                && !entity1.getType().equalsEnemy()
+                && !entity1.getType().equalsEnemyBullet()) {
             entity1.setHit(true);
         }
         //if one of the entities is a friendlyBullet and the other one
         //isn't a player or a bullet.
-        if (entity1.getType().equalsIgnoreCase("friendlyBullet")
-                && !entity2.getType().equalsIgnoreCase("friendlyBullet")
-                && !entity2.getType().equalsIgnoreCase("player")
-                && !entity2.getType().equalsIgnoreCase("enemyBullet")) {
+        if (entity1.getType().equalsFriendlyBullet()
+                && !entity2.getType().equalsFriendlyBullet()
+                && !entity2.getType().equalsPlayer()
+                && !entity2.getType().equalsEnemyBullet()) {
             entity2.setHit(true);
-        } else if (entity2.getType().equalsIgnoreCase("friendlyBullet")
-                && !entity1.getType().equalsIgnoreCase("friendlyBullet")
-                && !entity1.getType().equalsIgnoreCase("player")
-                && !entity1.getType().equalsIgnoreCase("enemyBullet")) {
+        } else if (entity2.getType().equalsFriendlyBullet()
+                && !entity1.getType().equalsFriendlyBullet()
+                && !entity1.getType().equalsPlayer()
+                && !entity1.getType().equalsEnemyBullet()) {
             entity1.setHit(true);
         }
         //if one of the entities is an enemyBullet and the other one is player.
         //if one of the entities is a bullet and the other one
         //isn't an enemy or a bullet.
-        if (entity1.getType().equalsIgnoreCase("enemyBullet")
-                && entity2.getType().equalsIgnoreCase("player")) {
+        if (entity1.getType().equalsEnemyBullet()
+                && entity2.getType().equalsPlayer()) {
             entity1.setHit(true);
             entity2.setHit(true);
-        } else if (entity2.getType().equalsIgnoreCase("enemyBullet")
-                && entity1.getType().equalsIgnoreCase("player")){
+        } else if (entity2.getType().equalsEnemyBullet()
+                && entity1.getType().equalsPlayer()){
             entity1.setHit(true);
             entity2.setHit(true);
-        } else if (entity1.getType().equalsIgnoreCase("enemyBullet")
-                && !entity2.getType().equalsIgnoreCase("enemyBullet")
-                && !entity2.getType().equalsIgnoreCase("enemy")
-                && !entity2.getType().equalsIgnoreCase("friendlyBullet")) {
+        } else if (entity1.getType().equalsEnemyBullet()
+                && !entity2.getType().equalsEnemyBullet()
+                && !entity2.getType().equalsEnemy()
+                && !entity2.getType().equalsFriendlyBullet()) {
             entity2.setHit(true);
-        } else if (entity2.getType().equalsIgnoreCase("enemyBullet")
-                && !entity1.getType().equalsIgnoreCase("enemyBullet")
-                && !entity1.getType().equalsIgnoreCase("enemy")
-                && !entity1.getType().equalsIgnoreCase("friendlyBullet")) {
+        } else if (entity2.getType().equalsEnemyBullet()
+                && !entity1.getType().equalsEnemyBullet()
+                && !entity1.getType().equalsEnemy()
+                && !entity1.getType().equalsFriendlyBullet()) {
             entity1.setHit(true);
         }
     }

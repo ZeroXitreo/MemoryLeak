@@ -24,11 +24,11 @@ public class Attack implements EntityPart {
 
     @Override
     public void process(GameData gameData, MovableEntity entity) {
-        if (entity.getType().equalsIgnoreCase("enemy")) {
+        if (entity.getType().equalsEnemy()) {
             entity.setShoot(true);
         }
 
-        if (entity.getType().equalsIgnoreCase("player")) {
+        if (entity.getType().equalsPlayer()) {
             direction = 0;
             if (gameData.getKeys().isDown(LEFT)) {
                 direction = (float)pi;

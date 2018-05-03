@@ -78,6 +78,8 @@
         <module>Slime</module>
         <module>CommonSpaceSlime</module>
         <module>CommonSlime</module>
+        <module>Wall</module>
+        <module>CommonWall</module>
     </modules>
     <properties>
         <netbeans.version>RELEASE82</netbeans.version>

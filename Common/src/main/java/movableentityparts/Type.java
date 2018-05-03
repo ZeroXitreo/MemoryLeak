@@ -5,38 +5,77 @@
  */
 package movableentityparts;
 
-import data.GameData;
-import data.MovableEntity;
-
 /**
  *
  * @author jonas
  */
 public class Type {
-    private String theType;
-    
-    public void setTypeToPlayer(){
-        theType = "player";
-    }
-    
-    public void setTypeToFriendlyBullet(){
-        theType = "friendlyBullet";
-    }
-    
-    public void setTypeToEnemy(){
-        theType = "enemy";
-    }
-    
-    public void setTypeToEnemyBullet(){
-        theType = "enemyBullet";
-    }
-    
-    public void setTypeToWall(){
-        theType = "wall";
-    }
-    
-    public String getType(){
-        return theType;
+
+    private String theTypeString;
+
+    public void setTypeToPlayer() {
+        theTypeString = "player";
     }
 
+    public void setTypeToFriendlyBullet() {
+        theTypeString = "friendlyBullet";
+    }
+
+    public void setTypeToEnemy() {
+        theTypeString = "enemy";
+    }
+
+    public void setTypeToEnemyBullet() {
+        theTypeString = "enemyBullet";
+    }
+
+    public void setTypeToWall() {
+        theTypeString = "wall";
+    }
+
+    public String getType() {
+        return theTypeString;
+    }
+
+    public boolean equals(Type anotherType) {
+        if (anotherType.getType().equals(theTypeString)) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean equalsEnemy() {
+        if (theTypeString.equals("enemy")) {
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean equalsEnemyBullet(){
+        if (theTypeString.equals("enemyBullet")) {
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean equalsFriendlyBullet(){
+        if (theTypeString.equals("friendlyBullet")) {
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean equalsPlayer(){
+        if (theTypeString.equals("player")) {
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean equalsWalls(){
+        if (theTypeString.equals("wall")) {
+            return true;
+        }
+        return false;
+    }
 }

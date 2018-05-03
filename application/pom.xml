@@ -147,6 +147,16 @@
             <artifactId>Player</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>Wall</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>CommonWall</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

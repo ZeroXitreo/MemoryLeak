@@ -24,8 +24,8 @@ public class SpaceSlimePlugin implements iGamePluginServices {
 
     @Override
     public void start(GameData gameData, World world) {
-        enemy = createEnemy();
-        world.addEnemyEntity(enemy);
+            enemy = createEnemy();
+            world.addMovableEntity(enemy);
     }
 
     private MovableEntity createEnemy() {
@@ -48,5 +48,6 @@ public class SpaceSlimePlugin implements iGamePluginServices {
     @Override
     public void stop(GameData gameData, World world) {
         world.removeMovableEntity(enemy);
+        world.removeGameMovableEntity(enemy);
     }
 }

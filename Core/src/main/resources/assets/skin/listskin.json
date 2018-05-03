@@ -5,14 +5,14 @@ com.badlogic.gdx.graphics.g2d.BitmapFont: {
 	}
 },
 com.badlogic.gdx.graphics.Color: {
-	RGBA_124_124_124_255: {
-		r: 0.49,
-		g: 0.49,
-		b: 0.49,
+	RGBA_22_0_255_255: {
+		r: 0.088611126,
+		g: 0,
+		b: 1,
 		a: 1
 	},
-	RGBA_85_0_0_255: {
-		r: 0.33333337,
+	RGBA_255_0_0_255: {
+		r: 1,
 		g: 0,
 		b: 0,
 		a: 1
@@ -21,9 +21,10 @@ com.badlogic.gdx.graphics.Color: {
 com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle: {
 	default: {
 		font: MemoryLeakFont,
-		fontColorSelected: RGBA_85_0_0_255,
-		fontColorUnselected: RGBA_124_124_124_255,
-		selection: ButtonNotPressed
+		fontColorSelected: RGBA_255_0_0_255,
+		fontColorUnselected: RGBA_22_0_255_255,
+		selection: ButtonPressed,
+		background: ButtonNotPressed
 	}
 }
 }

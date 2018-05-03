@@ -18,7 +18,7 @@ public class Sword extends MovableEntity {
     public Sword(Boolean friendly) {
         super.type = new Type();
         super.name = new Name();
-        super.name.setNameToSword();
+        super.name.setNameToFlail();
         if (friendly) {
             super.type.setTypeToFriendlyBullet();
         } else {

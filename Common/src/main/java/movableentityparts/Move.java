@@ -115,16 +115,16 @@ public class Move implements EntityPart {
 
         }
 
-        if (x > gameData.getDisplayWidth() - 85) {
-            x = gameData.getDisplayWidth() - 85;
-        } else if (x < 68) {
-            x = 68;
+        if (x > gameData.getMoveAreaWidthMax()) {
+            x = gameData.getMoveAreaWidthMax();
+        } else if (x < gameData.getMoveAreaWidthMin()) {
+            x = gameData.getMoveAreaWidthMin();
         }
 
-        if (y > gameData.getDisplayHeight() - 45) {
-            y = gameData.getDisplayHeight() - 45;
-        } else if (y < 64) {
-            y = 64;
+        if (y > gameData.getMoveAreaHeightMax()) {
+            y = gameData.getMoveAreaHeightMax();
+        } else if (y < gameData.getMoveAreaHeightMin()) {
+            y = gameData.getMoveAreaHeightMin();
         }
 
         position.setX(x);

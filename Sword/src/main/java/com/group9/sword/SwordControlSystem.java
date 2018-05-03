@@ -24,14 +24,14 @@ import services.iEntityProcessingService;
 public class SwordControlSystem implements iEntityProcessingService{
     private double pi = Math.PI;
     public void process(GameData gameData, World world) {
-        for (MovableEntity sword : world.getMovableEntities(Sword.class)) {
+        for (MovableEntity sword : world.getGameMovableEntities(Sword.class)) {
             Position position = sword.getPart(Position.class);
             Timer timer = sword.getPart(Timer.class);
             HealthPart health = sword.getPart(HealthPart.class);
             Move move = sword.getPart(Move.class);
             timer.process(gameData, sword);
             if(timer.isRemove()){
-                world.removeMovableEntity(sword);
+                world.removeGameMovableEntity(sword);
             }
             health.process(gameData, sword);
             position.process(gameData, sword);

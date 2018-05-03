@@ -13,78 +13,89 @@ import movableentityparts.iWeapon;
  */
 public class World {
 
-    private final Map<String, Entity> entityMap = new ConcurrentHashMap<>();
-    private final Map<String, MovableEntity> mEntityMap = new ConcurrentHashMap<>();
+    private final Map<String, ImmovableEntity> immovableEntityMap = new ConcurrentHashMap<>();
+    private final Map<String, MovableEntity> movableEntityMap = new ConcurrentHashMap<>();
     private final Map<String, iWeapon> weaponMap = new ConcurrentHashMap<>();
-    private final Map<String, MovableEntity> enemyMap = new ConcurrentHashMap<>();
+    private final Map<String, MovableEntity> gameMovableEntities = new ConcurrentHashMap<>();
+    private final Map<String, ImmovableEntity> gameImmovableEntities = new ConcurrentHashMap<>();
 
-
-    public String addEntity(Entity entity) {
-        entityMap.put(entity.getID(), entity);
-        return entity.getID();
+    //Add entities to the different maps
+    public void addImmovableEntity(ImmovableEntity entity) {
+        immovableEntityMap.put(entity.getID(), entity);
     }
 
-    public String addMovableEntity(MovableEntity entity) {
-        mEntityMap.put(entity.getID(), entity);
-        return entity.getID();
+    public void addMovableEntity(MovableEntity entity) {
+        movableEntityMap.put(entity.getID(), entity);
     }
-    
+
     public void addWeapon(iWeapon weapon) {
         weaponMap.put(weapon.getWeaponName(), weapon);
     }
 
-    public void addEnemyEntity(MovableEntity entity){
-        addMovableEntity(entity);
-        enemyMap.put(entity.getID(), entity);
-    }
-    
-    public void removeEntity(String entityID) {
-        entityMap.remove(entityID);
+    public void addGameMovableEntity(MovableEntity entity) {
+        gameMovableEntities.put(entity.getID(), entity);
     }
 
-    public void removeMovableEntity(String entityID) {
-        mEntityMap.remove(entityID);
+    public void addGameImmovableEntity(ImmovableEntity entity) {
+        gameImmovableEntities.put(entity.getID(), entity);
     }
 
-    public void removeWeapon(String entityID) {
-        weaponMap.remove(entityID);
-    }
-    
-    public void removeEnemyEntity(String entityID){
-        enemyMap.remove(entityID);
-    }
-
-    public void removeEntity(Entity entity) {
-        entityMap.remove(entity.getID());
+//    public void removeImmovableEntity(String entityID) {
+//        entityMap.remove(entityID);
+//    }
+//
+//    public void removeMovableEntity(String entityID) {
+//        mEntityMap.remove(entityID);
+//    }
+//    public void removeGameMovableEntity(String entityID){
+//        gameEntities.remove(entityID);
+//    }
+    //Remove the Entites from their map
+    public void removeImmovableEntity(ImmovableEntity entity) {
+        immovableEntityMap.remove(entity.getID());
     }
 
     public void removeMovableEntity(MovableEntity movableEntity) {
-        mEntityMap.remove(movableEntity.getID());
-    }
-    
-    public void removeWeapon(iWeapon weapon){
-        weaponMap.remove(weapon);
+        movableEntityMap.remove(movableEntity.getID());
     }
 
-    public Collection<Entity> getEntities() {
-        return entityMap.values();
+    public void removeWeapon(MovableEntity entity) {
+        weaponMap.remove(entity.getID());
+    }
+
+    public void removeGameMovableEntity(MovableEntity entity) {
+        gameMovableEntities.remove(entity.getID());
+    }
+
+    public void removeGameImmovableEntity(ImmovableEntity entity) {
+        gameImmovableEntities.remove(entity.getID());
+    }
+
+    //Get all the entities from their map
+    public Collection<ImmovableEntity> getImmovableEntities() {
+        return immovableEntityMap.values();
     }
 
     public Collection<MovableEntity> getMovableEntities() {
-        return mEntityMap.values();
+        return movableEntityMap.values();
     }
 
-    public Collection<iWeapon> getWeapons() {
+    public Collection<iWeapon> getWeaponEntities() {
         return weaponMap.values();
     }
-    
-    public Collection<MovableEntity> getEnemyEntities(){
-        return enemyMap.values();
+
+    public Collection<MovableEntity> getGameMovableEntities() {
+        return gameMovableEntities.values();
     }
 
-    public <E extends Entity> List<Entity> getEntities(Class<E>... entityTypes) {
-        List<Entity> r = new ArrayList<>();
-        for (Entity e : getEntities()) {
+    public Collection<ImmovableEntity> getGameImmovableEntities() {
+        return gameImmovableEntities.values();
+    }
+
+    //Get all the entities of a specific class from their map
+    public <E extends ImmovableEntity> List<ImmovableEntity> getImmovableEntities(Class<E>... entityTypes) {
+        List<ImmovableEntity> r = new ArrayList<>();
+        for (ImmovableEntity e : World.this.getImmovableEntities()) {
             for (Class<E> entityType : entityTypes) {
                 if (entityType.equals(e.getClass())) {
                     r.add(e);
@@ -105,13 +116,41 @@ public class World {
         }
         return list;
     }
+    
+    public <E extends MovableEntity> List<MovableEntity> getGameMovableEntities(Class<E>... entityTypes) {
+        List<MovableEntity> r = new ArrayList<>();
+        for (MovableEntity e : World.this.getGameMovableEntities()) {
+            for (Class<E> entityType : entityTypes) {
+                if (entityType.equals(e.getClass())) {
+                    r.add(e);
+                }
+            }
+        }
+        return r;
+    }
+    
+    public <E extends ImmovableEntity> List<ImmovableEntity> getGameImmovableEntities(Class<E>... entityTypes) {
+        List<ImmovableEntity> r = new ArrayList<>();
+        for (ImmovableEntity e : World.this.getGameImmovableEntities()) {
+            for (Class<E> entityType : entityTypes) {
+                if (entityType.equals(e.getClass())) {
+                    r.add(e);
+                }
+            }
+        }
+        return r;
+    }
 
-    public Entity getEntity(String ID) {
-        return entityMap.get(ID);
+    //Get entity based on their ID
+    public Entity getImmovableEntity(String ID) {
+        return immovableEntityMap.get(ID);
     }
 
     public MovableEntity getMovableEntity(String ID) {
-        return mEntityMap.get(ID);
+        return movableEntityMap.get(ID);
     }
 
+    public ImmovableEntity getGameImmovableEntity(String ID) {
+        return gameImmovableEntities.get(ID);
+    }
 }
