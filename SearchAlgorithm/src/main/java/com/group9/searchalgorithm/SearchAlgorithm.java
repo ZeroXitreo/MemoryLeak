@@ -22,14 +22,14 @@ public class SearchAlgorithm
 		// Set size of the screen
 		width = 960;
 		height = 540;
-		
+
 		// Add player and enemies
 		player = new Player(width, height);
 		for (int i = 0; i < 1; i++)
 		{
 			enemies.add(new Enemy(width, height));
 		}
-		
+
 		// GenerateMatrix for walls
 		randomlyGenMatrix = createGrid((int) Math.ceil((double) height / gridDensity), (int) Math.ceil((double) width / gridDensity), 0.9);
 	}
