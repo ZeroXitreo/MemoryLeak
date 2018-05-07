@@ -334,15 +334,15 @@ SpaceSlime
   index: 4
 Flail
   rotate: false
-  xy: 55, 17
-  size: 10, 10
-  orig: 10, 10
+  xy: 55, 15
+  size: 12, 12
+  orig: 12, 12
   offset: 0, 0
   index: 0
 Flail
   rotate: false
-  xy: 303, 49
-  size: 10, 10
-  orig: 10, 10
+  xy: 55, 1
+  size: 12, 12
+  orig: 12, 12
   offset: 0, 0
   index: 1

@@ -33,8 +33,8 @@ public class SpaceSlimeAI implements iEntityProcessingService {
             Attack direction = movableEntity.getPart(Attack.class);
             Position position = movableEntity.getPart(Position.class);
             WeaponPart weaponPart = movableEntity.getPart(WeaponPart.class);
-            if (!movableEntity.hasWeapon() && world.getWeaponEntities() != null) {
-                for (iWeapon currentWeapon : world.getWeaponEntities()) {
+            if (!movableEntity.hasWeapon() && world.getWeapons() != null) {
+                for (iWeapon currentWeapon : world.getWeapons()) {
                     if (currentWeapon.getWeaponName().equalsIgnoreCase("fireball")) {
                         this.weapon = currentWeapon;
                         movableEntity.setHasWeapon(true);

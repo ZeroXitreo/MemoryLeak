@@ -31,18 +31,6 @@ public class FireballPlugin implements iWeapon, iGamePluginServices {
     private World world;
 
     @Override
-    public void start(GameData gameData, World world) {
-        world.addWeapon(this);
-        this.world = world;
-    }
-
-    @Override
-    public void stop(GameData gameData, World world) {
-        world.removeWeapon(fireball);
-        world.removeGameMovableEntity(fireball);
-    }
-
-    @Override
     public void createProjectile(MovableEntity shooter) {
         Position shooterPos = shooter.getPart(Position.class);
         float shooterX = shooterPos.getX();
@@ -74,7 +62,20 @@ public class FireballPlugin implements iWeapon, iGamePluginServices {
 
     @Override
     public String getWeaponName() {
-        return "fireball";
+        return "Fireball";
     }
 
+    @Override
+    public void start(GameData gameData, World world) {
+        world.addWeapon(this);
+        this.world = world;
+    }
+
+    @Override
+    public void stop(GameData gameData, World world) {
+        world.removeWeapon(this);
+        for(MovableEntity fireball : world.getGameMovableEntities(Fireball.class)){
+            world.removeMovableEntity(fireball);
+        }
+    }
 }

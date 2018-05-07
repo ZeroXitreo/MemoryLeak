@@ -96,7 +96,7 @@ public class GUIPlayScreen implements Screen {
         animationIdlePlayer = new Animation(1 / 7f, memoryLeakPack.findRegions("playeridle"), PlayMode.LOOP);
         animationProjectile = new Animation(1 / 4f, memoryLeakPack.findRegions("fireball"), PlayMode.LOOP);
         animationSlime = new Animation(1 / 7f, memoryLeakPack.findRegions("Slime"), PlayMode.LOOP);
-        animationFlail = new Animation(1/2f, memoryLeakPack.findRegions("Flail"), PlayMode.LOOP);
+        animationFlail = new Animation(1 / 2f, memoryLeakPack.findRegions("Flail"), PlayMode.LOOP);
 
         //instanciate the wall blocks' graphic
         bottomWall = new TiledDrawable(memoryLeakPack.findRegion("wall_bottom"));
@@ -121,6 +121,11 @@ public class GUIPlayScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
     }
 
+    /**
+     * render the screen
+     *
+     * @param f the difference in time/render
+     */
     @Override
     public void render(float f) {
         time += f;
@@ -138,33 +143,8 @@ public class GUIPlayScreen implements Screen {
             }
         }
 
-        //which state the game is in
-        if (alive) {
-            state = GAME_RUNNING;
-        } else {
-            state = GAME_OVER;
-        }
-        if (stageClear) {
-            state = GAME_WON;
-        }
-
-        //draw map
-        batch.begin();
-        for (int x = 0; x < 960; x += 124) {
-            for (int y = 0; y < 540; y += 124) {
-                batch.draw(lavaRegion, x, y);
-            }
-        }
-        centerWall.draw(batch, 80, 64, 800, 412);
-        bottomWall.draw(batch, 80, 32, 800, 32);
-        topWall.draw(batch, 80, 476, 800, 32);
-        leftWall.draw(batch, 48, 64, 32, 412);
-        rightWall.draw(batch, 864, 64, 32, 416);
-        wallBottomLeftCorner.draw(batch, 48, 32, 32, 32);
-        wallTopLeftCorner.draw(batch, 48, 476, 32, 32);
-        wallBottomRightCorner.draw(batch, 864, 32, 32, 32);
-        wallTopRightCorner.draw(batch, 864, 476, 32, 32);
-        batch.end();
+        checkState();
+        drawMap();
 
         switch (state) {
             case GAME_RUNNING:
@@ -173,25 +153,30 @@ public class GUIPlayScreen implements Screen {
                 drawEntities(time);
                 break;
             case GAME_OVER:
+                drawEntities(time);
                 batch.begin();
                 font.draw(batch, "YOU DIED", ParentScreen.getGameData().getDisplayWidth() / 3 + 60, ParentScreen.getGameData().getDisplayHeight() / 2);
                 batch.end();
-                drawEntities(time);
                 stage.addActor(toMenu); //Add the button to the stage. 
                 break;
             case GAME_WON:
+                drawEntities(time);
                 batch.begin();
                 font.draw(batch, "YOU WIN... THIS ROUND", ParentScreen.getGameData().getDisplayWidth() / 4, ParentScreen.getGameData().getDisplayHeight() / 2);
                 batch.end();
-                drawEntities(time);
                 stage.addActor(toMenu); //Add the button to the stage. 
                 break;
         }
         stage.draw();
     }
 
+    /**
+     * Draw all the entities on the screen.
+     *
+     * @param time used by the animations to clearify what part of the animation
+     * needs to be shown
+     */
     private void drawEntities(float time) {
-        //Show the animation of the different entities.
         for (MovableEntity movableEntity : ParentScreen.getWorld().getGameMovableEntities()) {
             if (movableEntity.getNameInstance().equalsPlayer()) {
                 pos = movableEntity.getPart(Position.class);
@@ -221,7 +206,7 @@ public class GUIPlayScreen implements Screen {
                 batch.draw(fireballRegion, pos.getX() - 8, pos.getY() - 8, 16, 16);
                 batch.end();
                 sr.setColor(1, 0, 0, 1);
-            } else if (movableEntity.getNameInstance().equalsFlail()){
+            } else if (movableEntity.getNameInstance().equalsFlail()) {
                 batch.begin();
                 Position pos = movableEntity.getPart(Position.class);
                 flailRegion = animationFlail.getKeyFrame(time * 2, true);
@@ -267,17 +252,20 @@ public class GUIPlayScreen implements Screen {
             }
             sr.end();
         }
-        for(ImmovableEntity immovableEntity : ParentScreen.getWorld().getGameImmovableEntities()){
+        for (ImmovableEntity immovableEntity : ParentScreen.getWorld().getGameImmovableEntities()) {
             pos = immovableEntity.getPart(Position.class);
-            if(immovableEntity.getType().equalsWalls()){
+            if (immovableEntity.getType().equalsWalls()) {
                 batch.begin();
-                wall.draw(batch, pos.getX()-32, pos.getY()-32, 64, 64);
+                wall.draw(batch, pos.getX() - 32, pos.getY() - 32, 64, 64);
                 batch.end();
             }
         }
 
     }
 
+    /**
+     * Generate the menu button and its functionality
+     */
     private void makeMenuButton() {
         //create the toMenu button
         toMenu = new TextButton("To Menu", parentScreen.getButtonSkin(), "default");
@@ -340,6 +328,42 @@ public class GUIPlayScreen implements Screen {
         for (iPostEntityProcessingService postEntityProcessor : parentScreen.getPostEntityProcessingService()) {
             postEntityProcessor.process(ParentScreen.getGameData(), ParentScreen.getWorld());
         }
+    }
+
+    /**
+     * Checks which state it needs to be in.
+     */
+    private void checkState() {
+        if (alive) {
+            state = GAME_RUNNING;
+        } else {
+            state = GAME_OVER;
+        }
+        if (stageClear) {
+            state = GAME_WON;
+        }
+    }
+
+    /**
+     * Draws the map.
+     */
+    private void drawMap() {
+        batch.begin();
+        for (int x = 0; x < 960; x += 124) {
+            for (int y = 0; y < 540; y += 124) {
+                batch.draw(lavaRegion, x, y);
+            }
+        }
+        centerWall.draw(batch, 80, 64, 800, 412);
+        bottomWall.draw(batch, 80, 32, 800, 32);
+        topWall.draw(batch, 80, 476, 800, 32);
+        leftWall.draw(batch, 48, 64, 32, 412);
+        rightWall.draw(batch, 864, 64, 32, 416);
+        wallBottomLeftCorner.draw(batch, 48, 32, 32, 32);
+        wallTopLeftCorner.draw(batch, 48, 476, 32, 32);
+        wallBottomRightCorner.draw(batch, 864, 32, 32, 32);
+        wallTopRightCorner.draw(batch, 864, 476, 32, 32);
+        batch.end();
     }
 
 }

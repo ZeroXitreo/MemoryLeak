@@ -23,11 +23,13 @@ public class WallPlugin implements iGamePluginServices {
 
     private ImmovableEntity wall;
     private Random random;
+    private int amountOfWalls;
 
     @Override
     public void start(GameData gameData, World world) {
         random = new Random();
-        for (int i = 0; i < 4; i++) {
+        amountOfWalls = 4;
+        for (int i = 0; i < amountOfWalls; i++) {
             wall = createWall(gameData);
             world.addImmovableEntity(wall);
         }
@@ -36,12 +38,15 @@ public class WallPlugin implements iGamePluginServices {
 
     @Override
     public void stop(GameData gameData, World world) {
-        world.removeImmovableEntity(wall);
-        world.removeGameImmovableEntity(wall);
+        for (ImmovableEntity wall : world.getImmovableEntities(Wall.class)) {
+            world.removeImmovableEntity(wall);
+        }
+        for (ImmovableEntity wall : world.getGameImmovableEntities(Wall.class)) {
+            world.removeGameImmovableEntity(wall);
+        }
     }
 
     private ImmovableEntity createWall(GameData gameData) {
-        
         float x = gameData.getMoveAreaWidthMin() + random.nextFloat() * (gameData.getMoveAreaWidthMax() - gameData.getMoveAreaWidthMin());;
         float y = gameData.getMoveAreaHeightMin() + random.nextFloat() * (gameData.getMoveAreaHeightMax() - gameData.getMoveAreaHeightMin());
         ImmovableEntity wallEntity = new Wall();

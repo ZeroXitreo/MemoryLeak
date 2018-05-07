@@ -1,10 +1,12 @@
 package data;
 
+import movableentityparts.Type;
+
 /**
  *
  * @author Jorge Báez Garrido
  */
-public class MovableEntity extends Entity {
+public abstract class MovableEntity extends Entity {
 
     private float direction = 0;
     private boolean onlyOneWeapon = false;
@@ -45,5 +47,5 @@ public class MovableEntity extends Entity {
     public int getMoveDirection(){
         return moveDirection;
     }
-    
+
 }

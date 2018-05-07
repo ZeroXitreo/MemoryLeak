@@ -14,7 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -35,18 +34,20 @@ public class SetupScreen implements Screen {
 
     private Stage stage;
     private ParentScreen parentScreen;
-    private List<String> list;
+    private List<String> entityList;
+    private List<String> weaponList;
     private SpriteBatch batch;
     private TreeMap<String, Entity> entityMap;
+    private TreeMap<String, iWeapon> weaponMap;
     private String[] entityArray;
+    private String[] weaponArray;
     private Button startButton;
     private Button addEnemyButton;
     private Button removeEnemyButton;
-    private Button classMage;
-    private Button classMelee;
-    private ButtonGroup buttonGroup;
+    private Button addWeaponButton;
     private BitmapFont font;
-    private ScrollPane scrollpane;
+    private ScrollPane entityScrollPane;
+    private ScrollPane weaponScrollPane;
     private String messageToUser;
 
     public SetupScreen() {
@@ -55,12 +56,13 @@ public class SetupScreen implements Screen {
         parentScreen.setResult();
         stage = new Stage(new ScreenViewport());
         batch = new SpriteBatch();
-        list = new List<>(parentScreen.getListSkin());
+        entityList = new List<>(parentScreen.getListSkin());
+        weaponList = new List<>(parentScreen.getListSkin());
         entityMap = new TreeMap<>();
+        weaponMap = new TreeMap<>();
         stage = new Stage(new ScreenViewport());
         batch = new SpriteBatch();
         font = parentScreen.getFont();
-        buttonGroup = new ButtonGroup();
     }
 
     @Override
@@ -68,10 +70,9 @@ public class SetupScreen implements Screen {
         createStartButton();
         createAddEnemyButton();
         createRemoveEnemyButton();
-        createClassButton();
-        createClassButtonGroup();
+        createAddWeapon();
         showAddableEntities();
-
+        showWeaponEntities();
         //Don't let user start without picking a class
         startButton.setVisible(false);
 
@@ -84,13 +85,9 @@ public class SetupScreen implements Screen {
         Gdx.gl.glClearColor(25 / 255f, 24 / 255f, 27 / 255f, 0); // Clear screen
         batch.begin();
         font.draw(batch, "SELECT WEAPON", ParentScreen.getGameData().getDisplayWidth() / 2 - 170, ParentScreen.getGameData().getDisplayHeight() / 2 + 200);
-        font.draw(batch, messageToUser, ParentScreen.getGameData().getDisplayWidth() / 2 - 170, ParentScreen.getGameData().getDisplayHeight() / 2 - 50);
+        font.draw(batch, messageToUser, ParentScreen.getGameData().getDisplayWidth() / 2 - 250, ParentScreen.getGameData().getDisplayHeight() / 2 - 60);
         batch.end();
 
-        //If a class is selected let the user start.
-        if (classMage.isPressed() || classMelee.isPressed()) {
-            startButton.setVisible(true);
-        }
         stage.act(f);
         stage.draw();
     }
@@ -146,15 +143,15 @@ public class SetupScreen implements Screen {
     private void createAddEnemyButton() {
         addEnemyButton = new TextButton(" + ", parentScreen.getButtonSkin(), "default");
         addEnemyButton.setSize(40, 30);
-        addEnemyButton.setPosition(Gdx.graphics.getWidth() / 2 + 150, Gdx.graphics.getHeight() / 2 + 50);
+        addEnemyButton.setPosition(Gdx.graphics.getWidth() / 2 + 360, Gdx.graphics.getHeight() / 2 + 50);
         addEnemyButton.addListener(new InputListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                messageToUser = "You added: " + list.getSelected();
-                if (entityMap.get(list.getSelected()) instanceof MovableEntity) {
-                    ParentScreen.getWorld().addGameMovableEntity((MovableEntity) entityMap.get(list.getSelected()));
-                } else if (entityMap.get(list.getSelected()) instanceof ImmovableEntity) {
-                    ParentScreen.getWorld().addGameImmovableEntity((ImmovableEntity) entityMap.get(list.getSelected()));
+                messageToUser = "You added: " + entityList.getSelected();
+                if (entityMap.get(entityList.getSelected()) instanceof MovableEntity) {
+                    ParentScreen.getWorld().addGameMovableEntity((MovableEntity) entityMap.get(entityList.getSelected()));
+                } else if (entityMap.get(entityList.getSelected()) instanceof ImmovableEntity) {
+                    ParentScreen.getWorld().addGameImmovableEntity((ImmovableEntity) entityMap.get(entityList.getSelected()));
                 }
 
             }
@@ -169,20 +166,21 @@ public class SetupScreen implements Screen {
     }
 
     /**
-     * Creates a button that will remove an enemy entity from the game stage.
+     * Creates a button that will remove the selected enemy entity from the game
+     * stage.
      */
     private void createRemoveEnemyButton() {
         removeEnemyButton = new TextButton(" - ", parentScreen.getButtonSkin(), "default");
         removeEnemyButton.setSize(40, 30);
-        removeEnemyButton.setPosition(Gdx.graphics.getWidth() / 2 + 200, Gdx.graphics.getHeight() / 2 + 50);
+        removeEnemyButton.setPosition(Gdx.graphics.getWidth() / 2 + 360, Gdx.graphics.getHeight() / 2 + 10);
         removeEnemyButton.addListener(new InputListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                messageToUser = "You removed: " + list.getSelected();
-                if (entityMap.get(list.getSelected()) instanceof MovableEntity) {
-                    ParentScreen.getWorld().removeGameMovableEntity((MovableEntity) entityMap.get(list.getSelected()));
-                } else if (entityMap.get(list.getSelected()) instanceof ImmovableEntity) {
-                    ParentScreen.getWorld().removeGameImmovableEntity((ImmovableEntity) entityMap.get(list.getSelected()));
+                messageToUser = "You removed: " + entityList.getSelected();
+                if (entityMap.get(entityList.getSelected()) instanceof MovableEntity) {
+                    ParentScreen.getWorld().removeGameMovableEntity((MovableEntity) entityMap.get(entityList.getSelected()));
+                } else if (entityMap.get(entityList.getSelected()) instanceof ImmovableEntity) {
+                    ParentScreen.getWorld().removeGameImmovableEntity((ImmovableEntity) entityMap.get(entityList.getSelected()));
                 }
             }
 
@@ -196,48 +194,23 @@ public class SetupScreen implements Screen {
     }
 
     /**
-     * Creates two buttons that will select a weapon type for the player.
+     * Creates a button that will add a selected weapon to the player
      */
-    private void createClassButton() {
-
-        classMage = new TextButton("Fireball", parentScreen.getButtonSkin(), "default");
-        classMage.setSize(220, 30);
-        classMage.setPosition(Gdx.graphics.getWidth() / 2 - 250, Gdx.graphics.getHeight() / 2 + 150);
-        classMage.addListener(new InputListener() {
+    private void createAddWeapon() {
+        addWeaponButton = new TextButton(" + ", parentScreen.getButtonSkin(), "default");
+        addWeaponButton.setSize(40, 30);
+        addWeaponButton.setPosition(Gdx.graphics.getWidth() / 2 - 70, Gdx.graphics.getHeight() / 2 + 50);
+        addWeaponButton.addListener(new InputListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 for (MovableEntity entity : parentScreen.getWorld().getMovableEntities()) {
                     if (entity instanceof Player) {
-                        for (iWeapon wep : parentScreen.getWorld().getWeaponEntities()) {
-                            if (wep.getWeaponName().equalsIgnoreCase("fireball")) {
+                        for (iWeapon wep : parentScreen.getWorld().getWeapons()) {
+                            if (wep.getWeaponName().equalsIgnoreCase(weaponList.getSelected())) {
                                 WeaponPart temp = entity.getPart(WeaponPart.class);
                                 temp.setWeapon(wep);
-                                messageToUser = "Weapon selected: Fireball";
-                            }
-                        }
-                    }
-                }
-
-            }
-
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                return true;
-            }
-        });
-        classMelee = new TextButton("Flail", parentScreen.getButtonSkin(), "default");
-        classMelee.setSize(220, 30);
-        classMelee.setPosition(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2 + 150);
-        classMelee.addListener(new InputListener() {
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                for (MovableEntity entity : parentScreen.getWorld().getMovableEntities()) {
-                    if (entity instanceof Player) {
-                        for (iWeapon wep : parentScreen.getWorld().getWeaponEntities()) {
-                            if (wep.getWeaponName().equalsIgnoreCase("sword")) {
-                                WeaponPart temp = entity.getPart(WeaponPart.class);
-                                temp.setWeapon(wep);
-                                messageToUser = "Weapon selected: Flail";
+                                messageToUser = "Weapon selected: " + weaponList.getSelected();
+                                startButton.setVisible(true);
                             }
                         }
                     }
@@ -249,22 +222,13 @@ public class SetupScreen implements Screen {
                 return true;
             }
         });
-        stage.addActor(classMage);
-        stage.addActor(classMelee);
+        stage.addActor(addWeaponButton);
     }
 
     /**
-     * Groups the two class buttons together, so the player can only have one
-     * button selected.
+     * Adds all the entities to the libgdx list that is used to let the user
+     * select which of them to add to the game.
      */
-    private void createClassButtonGroup() {
-        buttonGroup.add(classMage);
-        buttonGroup.add(classMelee);
-        buttonGroup.setMaxCheckCount(1);
-        buttonGroup.setMinCheckCount(0);
-        buttonGroup.setUncheckLast(true);
-    }
-
     private void showAddableEntities() {
         int j = 1;
         for (MovableEntity entity : ParentScreen.getWorld().getMovableEntities()) {
@@ -281,9 +245,29 @@ public class SetupScreen implements Screen {
             entityArray[i] = s;
             i++;
         }
-        list.setItems(entityArray);
-        scrollpane = new ScrollPane(list, parentScreen.getScrollPaneSkin());
-        scrollpane.setBounds(ParentScreen.getGameData().getDisplayWidth() / 2 - 180, ParentScreen.getGameData().getDisplayHeight() / 2 - 50, 320, 150);
-        stage.addActor(scrollpane); //Add list to the stage.
+        entityList.setItems(entityArray);
+        entityScrollPane = new ScrollPane(entityList, parentScreen.getScrollPaneSkin());
+        entityScrollPane.setBounds(ParentScreen.getGameData().getDisplayWidth() / 2 + 30, ParentScreen.getGameData().getDisplayHeight() / 2 - 50, 320, 150);
+        stage.addActor(entityScrollPane); //Add list to the stage.
+    }
+
+    /**
+     * Adds all the weapons in the game to a libgdx list that the user selects
+     * their weapon of choice to use in the game.
+     */
+    private void showWeaponEntities() {
+        for (iWeapon weapon : ParentScreen.getWorld().getWeapons()) {
+            weaponMap.put(weapon.getWeaponName(), weapon);
+        }
+        weaponArray = new String[weaponMap.size()];
+        int i = 0;
+        for (String s : weaponMap.keySet()) {
+            weaponArray[i] = s;
+            i++;
+        }
+        weaponList.setItems(weaponArray);
+        weaponScrollPane = new ScrollPane(weaponList, parentScreen.getScrollPaneSkin());
+        weaponScrollPane.setBounds(ParentScreen.getGameData().getDisplayWidth() / 2 - 400, ParentScreen.getGameData().getDisplayHeight() / 2 - 50, 320, 150);
+        stage.addActor(weaponScrollPane);
     }
 }

@@ -42,7 +42,7 @@ public class SwordPlugin implements iWeapon, iGamePluginServices {
 
         float bulletX = (float) cos(radians) * (shooter.getRadius() + sword.getRadius() + 6);
         float bulletY = (float) sin(radians) * (shooter.getRadius() + sword.getRadius() + 6);
-        
+
         sword.add(new Timer(0.1f));
         sword.add(new HealthPart(2));
         sword.add(new Position(bulletX + shooterX, bulletY + shooterY));
@@ -60,7 +60,7 @@ public class SwordPlugin implements iWeapon, iGamePluginServices {
 
     @Override
     public String getWeaponName() {
-        return "sword";
+        return "Flail";
     }
 
     @Override
@@ -71,8 +71,11 @@ public class SwordPlugin implements iWeapon, iGamePluginServices {
 
     @Override
     public void stop(GameData gameData, World world) {
-        world.removeWeapon(sword);
-        world.removeGameMovableEntity(sword);
+        world.removeWeapon(this);
+        for (MovableEntity flail : world.getGameMovableEntities(Sword.class)) {
+            world.removeGameMovableEntity(flail);
+        }
+
     }
 
 }

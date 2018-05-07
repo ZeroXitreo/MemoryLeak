@@ -28,7 +28,6 @@ public class MenuScreen implements Screen {
     private Button musicButton;
     private ParentScreen parentScreen;
 
-
     public MenuScreen() {
         parentScreen = ParentScreen.getInstance();
         stage = new Stage(new ScreenViewport());
@@ -40,7 +39,42 @@ public class MenuScreen implements Screen {
 
     @Override
     public void show() {
-        menuBackground.setPosition(0, 0);
+        menuBackground.setPosition(0, 0); //put the background in the bottom left corner.
+        stage.addActor(menuBackground); //Add background picture.
+        createButtons(); //Creates the buttons.
+        Gdx.input.setInputProcessor(stage); //Enables the things added to stage.
+    }
+
+    @Override
+    public void render(float f) {
+        stage.draw();   //Draw the stage (everything added to the stage).
+    }
+
+    @Override
+    public void resize(int i, int i1) {
+    }
+
+    @Override
+    public void pause() {
+    }
+
+    @Override
+    public void resume() {
+    }
+
+    @Override
+    public void hide() {
+    }
+
+    @Override
+    public void dispose() {
+        stage.dispose();
+    }
+
+    /**
+     * Creates the Play-, Music- and Exit Button.
+     */
+    private void createButtons() {
         playButton.setSize(260, 36);
         playButton.setPosition(Gdx.graphics.getWidth() / 2 - 130, Gdx.graphics.getHeight() / 2 + 50);
         playButton.addListener(new InputListener() {
@@ -80,37 +114,8 @@ public class MenuScreen implements Screen {
                 return true;
             }
         });
-        stage.addActor(menuBackground); //Add background picture.
         stage.addActor(musicButton); //Add the button to the stage.
         stage.addActor(playButton); //Add the button to the stage.  
         stage.addActor(exitButton); //Add the button to the stage.
-        Gdx.input.setInputProcessor(stage); //Enables the things added to stage.
     }
-
-    @Override
-    public void render(float f) {
-        stage.draw();
-    }
-
-    @Override
-    public void resize(int i, int i1) {
-    }
-
-    @Override
-    public void pause() {
-    }
-
-    @Override
-    public void resume() {
-    }
-
-    @Override
-    public void hide() {
-    }
-
-    @Override
-    public void dispose() {
-        stage.dispose();
-    }
-
 }
