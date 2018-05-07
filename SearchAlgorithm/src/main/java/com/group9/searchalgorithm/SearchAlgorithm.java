@@ -19,7 +19,7 @@ public class SearchAlgorithm implements iEntityProcessingService
 {
 	int width;
 	int height;
-	int gridDensity = 4;
+	int gridDensity = 16;
 
 	static ArrayList<MovableEntity> enemies = new ArrayList();
 	static HashMap<MovableEntity, ArrayList<Node>> enemyPaths = new HashMap();
@@ -61,7 +61,6 @@ public class SearchAlgorithm implements iEntityProcessingService
 
 	public void processSearch()
 	{
-		System.out.println(width + ":" + height);
 		enemies.stream().parallel().forEach(e ->
 		{
 			ArrayList<Node> pathList = enemyPaths.get(e);
@@ -75,18 +74,23 @@ public class SearchAlgorithm implements iEntityProcessingService
 					findFirst();
 			Node cell = matchingObject.orElse(null);
 
-			// For movement and beyond (And drawingz)
+			// Direction
 			if (cell != null && pathList.size() >= pathList.indexOf(cell) + 3)
 			{
 				Node nextNode = pathList.get(pathList.indexOf(cell) + 1);
-				
-				float playerX = nextNode.y * gridDensity + gridDensity / 2;
-				float playerY = nextNode.x * gridDensity + gridDensity / 2;
-				double enemyX = enemyPos.getX();
-				double enemyY = enemyPos.getY();
-				double direction = Math.atan2(playerY - enemyY, playerX - enemyX);
-				float directionf = (float) direction;
-				e.setDirection(directionf);
+
+				// Move direction
+				float nodeX = nextNode.y * gridDensity + gridDensity / 2;
+				float nodeY = nextNode.x * gridDensity + gridDensity / 2;
+				float direction = (float) Math.atan2(nodeY - enemyPos.getY(), nodeX - enemyPos.getX());
+				e.setDirection(direction);
+
+				// Shooting direction
+				Position playerPos = player.getPart(Position.class);
+				int playerPosX = (int) playerPos.getX();
+				int playerPosY = (int) playerPos.getY();
+				float shootingDirection = (float) Math.atan2(playerPosY - enemyPos.getY(), playerPosX - enemyPos.getX());
+				e.setShootingDirection(shootingDirection);
 			}
 		});
 	}
@@ -121,7 +125,7 @@ public class SearchAlgorithm implements iEntityProcessingService
 		Stream<Node> filter = pathList.stream().
 				filter(p -> (p.x == playerPosY / gridDensity && p.y == playerPosX / gridDensity) || p.x == enemyPosY / gridDensity && p.y == enemyPosX / gridDensity);
 
-		if (filter.count() != 2) // Does the player and the enemy still operate inside the path generated?
+		if (filter.count() != 2) // Does the player and the enemy still operate inside the path grid generated?
 		{
 			pathList.clear(); // Clear the list
 			generateHValue(randomlyGenMatrix, playerPosY / gridDensity, playerPosX / gridDensity, enemyPosY / gridDensity, enemyPosX / gridDensity, pathList); // Generate new path

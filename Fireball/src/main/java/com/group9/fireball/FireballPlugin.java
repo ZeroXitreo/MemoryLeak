@@ -46,7 +46,7 @@ public class FireballPlugin implements iWeapon, iGamePluginServices {
         Position shooterPos = shooter.getPart(Position.class);
         float shooterX = shooterPos.getX();
         float shooterY = shooterPos.getY();
-        float radians = shooter.getDirection();
+        float radians = shooter.getShootingDirection();
         float speed = 3;
 
         fireball = new Fireball(shooter.getType().equalsIgnoreCase("player"));

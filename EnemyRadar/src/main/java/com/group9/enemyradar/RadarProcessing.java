@@ -24,9 +24,9 @@ public class RadarProcessing implements iEntityProcessingService
 				Position enemyPosition = enemy.getPart(Position.class);
 				double enemyX = enemyPosition.getX();
 				double enemyY = enemyPosition.getY();
-				double direction = Math.atan2(playerY - enemyY, playerX - enemyX);
-				float directionf = (float) direction;
-				enemy.setDirection(directionf);
+				float direction = (float) Math.atan2(playerY - enemyY, playerX - enemyX);
+				enemy.setDirection(direction);
+				enemy.setShootingDirection(direction);
 			}
 		}
 	}
