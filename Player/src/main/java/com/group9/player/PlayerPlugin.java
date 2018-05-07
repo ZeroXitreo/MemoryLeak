@@ -49,7 +49,13 @@ public class PlayerPlugin implements iGamePluginServices {
 
     @Override
     public void stop(GameData gameData, World world) {
-        world.removeEntity(player);
+        for (MovableEntity player : world.getMovableEntities(Player.class)) {
+            world.removeMovableEntity(player);
+        }
+        for (MovableEntity player : world.getGameMovableEntities(Player.class)){
+            world.removeGameMovableEntity(player);
+        }
+
     }
 
 }

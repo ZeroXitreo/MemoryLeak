@@ -4,6 +4,7 @@ import com.group9.commonspaceslime.SpaceSlime;
 import data.GameData;
 import data.MovableEntity;
 import data.World;
+import java.util.Random;
 import movableentityparts.Attack;
 import movableentityparts.HealthPart;
 import movableentityparts.Move;
@@ -21,17 +22,23 @@ import services.iGamePluginServices;
 public class SpaceSlimePlugin implements iGamePluginServices {
 
     private MovableEntity enemy;
+    private Random random;
+    private int amountOfEnemies;
 
     @Override
     public void start(GameData gameData, World world) {
-        enemy = createEnemy();
-        world.addEnemyEntity(enemy);
+        random = new Random();
+        amountOfEnemies = 2;
+        for (int i = 0; i < amountOfEnemies; i++) {
+            enemy = createEnemy();
+            world.addMovableEntity(enemy);
+        }
     }
 
     private MovableEntity createEnemy() {
         //Spawn location of enemy/enemies
-        float x = 100;
-        float y = 420;
+        float x = 100 + random.nextFloat();
+        float y = 420 + random.nextFloat();
         float maxSpeed = 1;
         MovableEntity enemyCharacter = new SpaceSlime();
         enemyCharacter.setRadius(15);
@@ -47,6 +54,13 @@ public class SpaceSlimePlugin implements iGamePluginServices {
 
     @Override
     public void stop(GameData gameData, World world) {
-        world.removeMovableEntity(enemy);
+        for (MovableEntity spaceSlime : world.getMovableEntities(SpaceSlime.class)) {
+            world.removeMovableEntity(spaceSlime);
+        }
+
+        for (MovableEntity spaceSlime : world.getGameMovableEntities(SpaceSlime.class)) {
+            world.removeGameMovableEntity(spaceSlime);
+        }
+
     }
 }

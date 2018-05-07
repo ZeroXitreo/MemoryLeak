@@ -31,17 +31,6 @@ public class FireballPlugin implements iWeapon, iGamePluginServices {
     private World world;
 
     @Override
-    public void start(GameData gameData, World world) {
-        world.addWeapon(this);
-        this.world = world;
-    }
-
-    @Override
-    public void stop(GameData gameData, World world) {
-        world.removeWeapon(getWeaponName());
-    }
-
-    @Override
     public void createProjectile(MovableEntity shooter) {
         Position shooterPos = shooter.getPart(Position.class);
         float shooterX = shooterPos.getX();
@@ -49,7 +38,7 @@ public class FireballPlugin implements iWeapon, iGamePluginServices {
         float radians = shooter.getShootingDirection();
         float speed = 3;
 
-        fireball = new Fireball(shooter.getType().equalsIgnoreCase("player"));
+        fireball = new Fireball(shooter.getType().equalsPlayer());
         fireball.setRadius(6);
         fireball.setDirection(radians);
 
@@ -63,7 +52,7 @@ public class FireballPlugin implements iWeapon, iGamePluginServices {
         fireball.setShapeX(new float[2]);
         fireball.setShapeY(new float[2]);
         fireball.setDirection(radians);
-        world.addMovableEntity(fireball);
+        world.addGameMovableEntity(fireball);
     }
 
     @Override
@@ -73,7 +62,20 @@ public class FireballPlugin implements iWeapon, iGamePluginServices {
 
     @Override
     public String getWeaponName() {
-        return "fireball";
+        return "Fireball";
     }
 
+    @Override
+    public void start(GameData gameData, World world) {
+        world.addWeapon(this);
+        this.world = world;
+    }
+
+    @Override
+    public void stop(GameData gameData, World world) {
+        world.removeWeapon(this);
+        for(MovableEntity fireball : world.getGameMovableEntities(Fireball.class)){
+            world.removeMovableEntity(fireball);
+        }
+    }
 }

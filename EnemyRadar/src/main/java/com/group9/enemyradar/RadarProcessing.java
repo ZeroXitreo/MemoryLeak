@@ -1,6 +1,8 @@
 package com.group9.enemyradar;
 
 import com.group9.commonplayer.Player;
+import com.group9.commonslime.Slime;
+import com.group9.commonspaceslime.SpaceSlime;
 import data.GameData;
 import data.MovableEntity;
 import data.World;
@@ -19,8 +21,12 @@ public class RadarProcessing implements iEntityProcessingService
 			Position playerPosition = player.getPart(Position.class);
 			double playerX = playerPosition.getX();
 			double playerY = playerPosition.getY();
-			for (MovableEntity enemy : world.getEnemyEntities())
+			for (MovableEntity enemy : world.getGameMovableEntities())
 			{
+				if(!enemy.getType().equalsEnemy())
+				{
+					continue;
+				}
 				Position enemyPosition = enemy.getPart(Position.class);
 				double enemyX = enemyPosition.getX();
 				double enemyY = enemyPosition.getY();

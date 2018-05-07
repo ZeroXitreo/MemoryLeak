@@ -18,13 +18,13 @@ public class BossPlugin implements iGamePluginServices {
 	public void start(GameData gameData, World world)
 	{
 		boss = createBoss(gameData);
-		world.addEntity(boss);
+		world.addMovableEntity(boss);
 	}
 
 	@Override
 	public void stop(GameData gameData, World world)
 	{
-		world.removeEntity(boss);
+		world.removeMovableEntity(boss);
 	}
 
 	private MovableEntity createBoss(GameData gameData)

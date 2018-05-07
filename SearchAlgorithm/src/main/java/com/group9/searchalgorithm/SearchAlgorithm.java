@@ -43,8 +43,13 @@ public class SearchAlgorithm implements iEntityProcessingService
 		for (MovableEntity player : world.getMovableEntities(Player.class))
 		{
 			this.player = player;
-			for (MovableEntity enemy : world.getEnemyEntities())
+			for (MovableEntity enemy : world.getGameMovableEntities())
 			{
+				if(!enemy.getType().equalsEnemy())
+				{
+					continue;
+				}
+				
 				enemies.add(enemy);
 				if (!enemyPaths.containsKey(enemy))
 				{

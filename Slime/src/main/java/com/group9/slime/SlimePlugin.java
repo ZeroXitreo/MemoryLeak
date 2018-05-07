@@ -9,6 +9,7 @@ import com.group9.commonslime.Slime;
 import data.GameData;
 import data.MovableEntity;
 import data.World;
+import java.util.Random;
 import movableentityparts.HealthPart;
 import movableentityparts.Move;
 import movableentityparts.Position;
@@ -23,22 +24,34 @@ import services.iGamePluginServices;
 public class SlimePlugin implements iGamePluginServices {
 
     private MovableEntity enemy;
+    private Random random;
+    private int amountOfEnemies;
 
     @Override
     public void start(GameData gameData, World world) {
-        enemy = createEnemy();
-        world.addEnemyEntity(enemy);
+        random = new Random();
+        amountOfEnemies = 2;
+        for (int i = 0; i < amountOfEnemies; i++) {
+            enemy = createEnemy();
+            world.addMovableEntity(enemy);
+        }
     }
 
     @Override
     public void stop(GameData gameData, World world) {
-        world.removeMovableEntity(enemy);
+        for (MovableEntity slime : world.getMovableEntities(Slime.class)) {
+            world.removeMovableEntity(slime);
+        }
+        for(MovableEntity slime : world.getGameMovableEntities(Slime.class)){
+            world.removeGameMovableEntity(slime);
+        }
+
     }
 
-    private MovableEntity createEnemy(){
-        //Spawn location of enemy/enemies
-        float x = 100;
-        float y = 100;
+    private MovableEntity createEnemy() {
+        //Spawn location
+        float x = 100 + random.nextFloat();
+        float y = 100 + random.nextFloat();
         float maxSpeed = 1;
         MovableEntity enemyCharacter = new Slime();
         enemyCharacter.setRadius(15);

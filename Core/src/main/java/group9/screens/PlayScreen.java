@@ -58,10 +58,10 @@ public class PlayScreen implements Screen {
         alive = false;
         stageClear = true;
         for (MovableEntity movableEntity : ParentScreen.getWorld().getMovableEntities()) {
-            if (movableEntity.getType().equalsIgnoreCase("player")) {
+            if (movableEntity.getType().equalsPlayer()) {
                 alive = true;
             }
-            if (movableEntity.getType().equalsIgnoreCase("enemy")) {
+            if (movableEntity.getType().equalsEnemy()) {
                 stageClear = false;
             }
         }
@@ -116,7 +116,7 @@ public class PlayScreen implements Screen {
     }
 private void draw() {
         for (MovableEntity movableEntity : ParentScreen.getWorld().getMovableEntities()) {
-            if (movableEntity.getType().equalsIgnoreCase("player")) {
+            if (movableEntity.getType().equalsPlayer()) {
                 sr.setColor(1, 1, 1, 1);
             } else {
                 sr.setColor(0, 1, 0, 1);

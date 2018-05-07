@@ -1,0 +1,13 @@
+
+srollpaneskin.png
+size: 512,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+ButtonPressed
+  rotate: false
+  xy: 1, 225
+  size: 260, 36
+  orig: 260, 36
+  offset: 0, 0
+  index: -1

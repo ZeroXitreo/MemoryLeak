@@ -76,7 +76,10 @@
         <module>Slime</module>
         <module>CommonSpaceSlime</module>
         <module>CommonSlime</module>
+        <module>Wall</module>
+        <module>CommonWall</module>
         <module>SearchAlgorithm</module>
+        <module>EnemyRadar</module>
     </modules>
     <properties>
         <netbeans.version>RELEASE82</netbeans.version>

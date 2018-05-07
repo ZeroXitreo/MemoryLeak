@@ -37,12 +37,12 @@ public class SwordPlugin implements iWeapon, iGamePluginServices {
         float shooterY = shooterPos.getY();
         float radians = shooter.getDirection();
 
-        sword = new Sword(shooter.getType().equalsIgnoreCase("player"));
+        sword = new Sword(shooter.getType().equalsPlayer());
         sword.setRadius(7);
 
         float bulletX = (float) cos(radians) * (shooter.getRadius() + sword.getRadius() + 6);
         float bulletY = (float) sin(radians) * (shooter.getRadius() + sword.getRadius() + 6);
-        
+
         sword.add(new Timer(0.1f));
         sword.add(new HealthPart(2));
         sword.add(new Position(bulletX + shooterX, bulletY + shooterY));
@@ -50,7 +50,7 @@ public class SwordPlugin implements iWeapon, iGamePluginServices {
         sword.add(move);
         sword.setShapeX(new float[2]);
         sword.setShapeY(new float[2]);
-        world.addMovableEntity(sword);
+        world.addGameMovableEntity(sword);
     }
 
     @Override
@@ -60,7 +60,7 @@ public class SwordPlugin implements iWeapon, iGamePluginServices {
 
     @Override
     public String getWeaponName() {
-        return "sword";
+        return "Flail";
     }
 
     @Override
@@ -71,7 +71,11 @@ public class SwordPlugin implements iWeapon, iGamePluginServices {
 
     @Override
     public void stop(GameData gameData, World world) {
-        world.removeWeapon(getWeaponName());
+        world.removeWeapon(this);
+        for (MovableEntity flail : world.getGameMovableEntities(Sword.class)) {
+            world.removeGameMovableEntity(flail);
+        }
+
     }
 
 }

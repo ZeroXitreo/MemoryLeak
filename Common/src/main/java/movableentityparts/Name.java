@@ -10,33 +10,75 @@ package movableentityparts;
  * @author jonas
  */
 public class Name {
-        private String theName;
+        private String theNameString;
     
     public void setNameToPlayer(){
-        theName = "player";
+        theNameString = "player";
     }
     
-    public void setNameToSword(){
-        theName = "sword";
+    public void setNameToFlail(){
+        theNameString = "flail";
     }
     
     public void setNameToSlime(){
-        theName = "slime";
+        theNameString = "slime";
     }
     
     public void setNameToSpaceSlime(){
-        theName = "spaceSlime";
+        theNameString = "spaceSlime";
     }
     
     public void setNameToFireball(){
-        theName = "fireball";
+        theNameString = "fireball";
     }
     
-    public void setTypeToWall(){
-        theName = "wall";
+    public void setNameToWall(){
+        theNameString = "wall";
     }
     
     public String getName(){
-        return theName;
+        return theNameString;
+    }
+    
+    public boolean equalsPlayer(){
+        if(theNameString.equals("player")){
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean equalsFlail(){
+        if(theNameString.equals("flail")){
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean equalsFireball(){
+        if(theNameString.equals("fireball")){
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean equalsSlime(){
+        if(theNameString.equals("slime")){
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean equalsSpaceSlime(){
+        if(theNameString.equals("spaceSlime")){
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean equalsWall(){
+        if(theNameString.equals("wall")){
+            return true;
+        }
+        return false;
     }
 }
