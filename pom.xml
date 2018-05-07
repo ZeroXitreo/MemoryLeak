@@ -69,7 +69,6 @@
         <module>Collision</module>
         <module>Sword</module>
         <module>CommonPlayer</module>
-        <module>EnemyRadar</module>
         <module>SpaceSlime</module>
         <module>CommonFireball</module>
         <module>Fireball</module>

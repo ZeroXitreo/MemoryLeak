@@ -6,6 +6,7 @@ import data.MovableEntity;
 import data.World;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Optional;
 import java.util.PriorityQueue;
 import java.util.stream.Stream;
@@ -18,9 +19,10 @@ public class SearchAlgorithm implements iEntityProcessingService
 {
 	int width;
 	int height;
-	int gridDensity = 16;
+	int gridDensity = 4;
 
-	ArrayList<Enemy> enemies = new ArrayList();
+	static ArrayList<MovableEntity> enemies = new ArrayList();
+	static HashMap<MovableEntity, ArrayList<Node>> enemyPaths = new HashMap();
 
 	MovableEntity player;
 	boolean[][] randomlyGenMatrix;
@@ -37,53 +39,54 @@ public class SearchAlgorithm implements iEntityProcessingService
 		{
 			randomlyGenMatrix = createGrid((int) Math.ceil((double) height / gridDensity), (int) Math.ceil((double) width / gridDensity), 0.9);
 		}
-		
-		
-		
+
 		for (MovableEntity player : world.getMovableEntities(Player.class))
 		{
 			this.player = player;
-			Position playerPosition = player.getPart(Position.class);
-			double playerX = playerPosition.getX();
-			double playerY = playerPosition.getY();
 			for (MovableEntity enemy : world.getEnemyEntities())
 			{
-				Position enemyPosition = enemy.getPart(Position.class);
-				double enemyX = enemyPosition.getX();
-				double enemyY = enemyPosition.getY();
-				double direction = Math.atan2(playerY - enemyY, playerX - enemyX);
-				float directionf = (float) direction;
-				enemy.setDirection(directionf);
+				enemies.add(enemy);
+				if (!enemyPaths.containsKey(enemy))
+				{
+					enemyPaths.put(enemy, new ArrayList());
+				}
 			}
 		}
 
-		// Add player and enemies
-		for (int i = 0; i < 1; i++)
-		{
-			enemies.add(new Enemy(width, height));
-		}
-
-		System.out.println(width + ":" + height);
-		
 		processSearch();
+		// Clear
+		player = null;
+		enemies = new ArrayList();
 	}
 
 	public void processSearch()
 	{
+		System.out.println(width + ":" + height);
 		enemies.stream().parallel().forEach(e ->
 		{
+			ArrayList<Node> pathList = enemyPaths.get(e);
+			Position enemyPos = e.getPart(Position.class);
+			int enemyPosX = (int) enemyPos.getX();
+			int enemyPosY = (int) enemyPos.getY();
 			processAStar(e, player, randomlyGenMatrix);
 
-			Optional<Node> matchingObject = e.pathList.stream().
-					filter(p -> p.x == e.y / gridDensity && p.y == e.x / gridDensity).
+			Optional<Node> matchingObject = pathList.stream().
+					filter(p -> p.x == enemyPosY / gridDensity && p.y == enemyPosX / gridDensity).
 					findFirst();
 			Node cell = matchingObject.orElse(null);
 
 			// For movement and beyond (And drawingz)
-			if (cell != null && e.pathList != null && e.pathList.size() >= e.pathList.indexOf(cell) + 3)
+			if (cell != null && pathList.size() >= pathList.indexOf(cell) + 3)
 			{
-				Node nextNode = e.pathList.get(e.pathList.indexOf(cell) + 1);
-				e.moveTowards(nextNode.y * gridDensity + gridDensity / 2, nextNode.x * gridDensity + gridDensity / 2);
+				Node nextNode = pathList.get(pathList.indexOf(cell) + 1);
+				
+				float playerX = nextNode.y * gridDensity + gridDensity / 2;
+				float playerY = nextNode.x * gridDensity + gridDensity / 2;
+				double enemyX = enemyPos.getX();
+				double enemyY = enemyPos.getY();
+				double direction = Math.atan2(playerY - enemyY, playerX - enemyX);
+				float directionf = (float) direction;
+				e.setDirection(directionf);
 			}
 		});
 	}
@@ -103,17 +106,25 @@ public class SearchAlgorithm implements iEntityProcessingService
 		return a;
 	}
 
-	public void processAStar(Enemy enemy, Entity player, boolean[][] randomlyGenMatrix)
+	public void processAStar(MovableEntity enemy, MovableEntity player, boolean[][] randomlyGenMatrix)
 	{
-		Stream<Node> filter = enemy.pathList.stream().
-				filter(p -> (p.x == player.y / gridDensity && p.y == player.x / gridDensity) || p.x == enemy.y / gridDensity && p.y == enemy.x / gridDensity);
+		ArrayList<Node> pathList = enemyPaths.get(enemy);
 
-		ArrayList<Node> pathList = enemy.pathList;
+		Position playerPos = player.getPart(Position.class);
+		int playerPosX = (int) playerPos.getX();
+		int playerPosY = (int) playerPos.getY();
+
+		Position enemyPos = enemy.getPart(Position.class);
+		int enemyPosX = (int) enemyPos.getX();
+		int enemyPosY = (int) enemyPos.getY();
+
+		Stream<Node> filter = pathList.stream().
+				filter(p -> (p.x == playerPosY / gridDensity && p.y == playerPosX / gridDensity) || p.x == enemyPosY / gridDensity && p.y == enemyPosX / gridDensity);
 
 		if (filter.count() != 2) // Does the player and the enemy still operate inside the path generated?
 		{
 			pathList.clear(); // Clear the list
-			generateHValue(randomlyGenMatrix, player.y / gridDensity, player.x / gridDensity, enemy.y / gridDensity, enemy.x / gridDensity, pathList); // Generate new path
+			generateHValue(randomlyGenMatrix, playerPosY / gridDensity, playerPosX / gridDensity, enemyPosY / gridDensity, enemyPosX / gridDensity, pathList); // Generate new path
 		}
 	}
 
@@ -186,7 +197,7 @@ public class SearchAlgorithm implements iEntityProcessingService
 					else if (Math.abs(x) == Math.abs(y)) // Corner
 					{
 						a = 14;
-						continue;
+						//continue;
 					}
 					else // Side
 					{
