@@ -1,37 +1,71 @@
 package com.group9.searchalgorithm;
 
+import com.group9.commonplayer.Player;
+import data.GameData;
+import data.MovableEntity;
+import data.World;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Optional;
 import java.util.PriorityQueue;
 import java.util.stream.Stream;
+import movableentityparts.Position;
+import org.openide.util.lookup.ServiceProvider;
+import services.iEntityProcessingService;
 
-public class SearchAlgorithm
+@ServiceProvider(service = iEntityProcessingService.class)
+public class SearchAlgorithm implements iEntityProcessingService
 {
-	static int width;
-	static int height;
-	static int gridDensity = 16 / 2;
+	int width;
+	int height;
+	int gridDensity = 16;
 
-	static ArrayList<Enemy> enemies = new ArrayList();
+	ArrayList<Enemy> enemies = new ArrayList();
 
-	static Player player;
-	static boolean[][] randomlyGenMatrix;
+	MovableEntity player;
+	boolean[][] randomlyGenMatrix;
 
-	public SearchAlgorithm()
+	@Override
+	public void process(GameData gameData, World world)
 	{
 		// Set size of the screen
-		width = 960;
-		height = 540;
+		width = gameData.getDisplayWidth();
+		height = gameData.getDisplayHeight();
+
+		// GenerateMatrix for walls
+		if (randomlyGenMatrix == null)
+		{
+			randomlyGenMatrix = createGrid((int) Math.ceil((double) height / gridDensity), (int) Math.ceil((double) width / gridDensity), 0.9);
+		}
+		
+		
+		
+		for (MovableEntity player : world.getMovableEntities(Player.class))
+		{
+			this.player = player;
+			Position playerPosition = player.getPart(Position.class);
+			double playerX = playerPosition.getX();
+			double playerY = playerPosition.getY();
+			for (MovableEntity enemy : world.getEnemyEntities())
+			{
+				Position enemyPosition = enemy.getPart(Position.class);
+				double enemyX = enemyPosition.getX();
+				double enemyY = enemyPosition.getY();
+				double direction = Math.atan2(playerY - enemyY, playerX - enemyX);
+				float directionf = (float) direction;
+				enemy.setDirection(directionf);
+			}
+		}
 
 		// Add player and enemies
-		player = new Player(width, height);
 		for (int i = 0; i < 1; i++)
 		{
 			enemies.add(new Enemy(width, height));
 		}
 
-		// GenerateMatrix for walls
-		randomlyGenMatrix = createGrid((int) Math.ceil((double) height / gridDensity), (int) Math.ceil((double) width / gridDensity), 0.9);
+		System.out.println(width + ":" + height);
+		
+		processSearch();
 	}
 
 	public void processSearch()
@@ -56,7 +90,7 @@ public class SearchAlgorithm
 
 	// return a createGrid N-by-N boolean matrix, where each entry is
 	// true with probability p
-	public static boolean[][] createGrid(int y, int x, double p)
+	public boolean[][] createGrid(int y, int x, double p)
 	{
 		boolean[][] a = new boolean[y][x];
 		for (int i = 0; i < y; i++)
@@ -69,7 +103,7 @@ public class SearchAlgorithm
 		return a;
 	}
 
-	public static void processAStar(Enemy enemy, Entity player, boolean[][] randomlyGenMatrix)
+	public void processAStar(Enemy enemy, Entity player, boolean[][] randomlyGenMatrix)
 	{
 		Stream<Node> filter = enemy.pathList.stream().
 				filter(p -> (p.x == player.y / gridDensity && p.y == player.x / gridDensity) || p.x == enemy.y / gridDensity && p.y == enemy.x / gridDensity);
@@ -83,7 +117,7 @@ public class SearchAlgorithm
 		}
 	}
 
-	public static void generateHValue(boolean grid[][], int ax, int ay, int bx, int by, ArrayList<Node> pathList)
+	public void generateHValue(boolean grid[][], int ax, int ay, int bx, int by, ArrayList<Node> pathList)
 	{
 		//Creation of a Node type 2D array
 		Node[][] cell = new Node[grid.length][grid[0].length];
@@ -100,7 +134,7 @@ public class SearchAlgorithm
 		generatePath(ax, ay, bx, by, pathList, cell);
 	}
 
-	public static void generatePath(int Ai, int Aj, int Bi, int Bj, ArrayList<Node> pathList, Node[][] cell)
+	public void generatePath(int Ai, int Aj, int Bi, int Bj, ArrayList<Node> pathList, Node[][] cell)
 	{
 		ArrayList<Node> closedList = new ArrayList();
 

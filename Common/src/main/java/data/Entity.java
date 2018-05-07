@@ -84,7 +84,4 @@ public abstract class Entity implements Serializable {
     public boolean getHit() {
         return isHit;
     }
-
-    
-    
 }

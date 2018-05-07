@@ -86,6 +86,8 @@ public class Move implements EntityPart
 			}
 			x += (float) cos(direction) * maxSpeed;
 			y += (float) sin(direction) * maxSpeed;
+			position.setX(x);
+			position.setY(y);
 		}
 		else // is Player
 		{
@@ -103,6 +105,7 @@ public class Move implements EntityPart
 			{
 				entity.setMoveDirection(1 + (int) moveY);
 			}
+			
 			processMovementTo(position, x + moveX, y + moveY);
 		}
 
