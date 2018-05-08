@@ -80,6 +80,7 @@
         <module>CommonWall</module>
         <module>SearchAlgorithm</module>
         <module>EnemyRadar</module>
+        <module>ScoreSystem</module>
     </modules>
     <properties>
         <netbeans.version>RELEASE82</netbeans.version>
