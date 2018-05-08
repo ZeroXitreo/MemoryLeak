@@ -35,7 +35,7 @@ public class SpaceSlimeAI implements iEntityProcessingService {
             WeaponPart weaponPart = movableEntity.getPart(WeaponPart.class);
             if (!movableEntity.hasWeapon() && world.getWeapons() != null) {
                 for (iWeapon currentWeapon : world.getWeapons()) {
-                    if (currentWeapon.getWeaponName().equalsIgnoreCase("fireball")) {
+                    if (currentWeapon.getWeaponName().equalsIgnoreCase("flail")) {
                         this.weapon = currentWeapon;
                         movableEntity.setHasWeapon(true);
                         break;

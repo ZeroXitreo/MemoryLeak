@@ -40,7 +40,6 @@ public class PlayScreen implements Screen {
         parentScreen = ParentScreen.getInstance();
         stage = new Stage(new ScreenViewport());
         sr = new ShapeRenderer();
-        parentScreen.setResult();
         state = GAME_RUNNING;
         batch = new SpriteBatch();
         font = new BitmapFont();

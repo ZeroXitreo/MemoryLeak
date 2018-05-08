@@ -12,8 +12,8 @@ import static java.lang.Math.sin;
 public class Move implements EntityPart
 {
 
-	private float maxSpeed, direction, wasd;
-	private boolean left, up, right, down, useDirection, moveEntity;
+	private float maxSpeed, direction;
+	private boolean left, up, right, down, useDirection;
 	private double pi = Math.PI;
 
 	public Move(float maxSpeed)

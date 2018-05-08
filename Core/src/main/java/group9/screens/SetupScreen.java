@@ -53,7 +53,6 @@ public class SetupScreen implements Screen {
     public SetupScreen() {
         messageToUser = "";
         parentScreen = ParentScreen.getInstance();
-        parentScreen.setResult();
         stage = new Stage(new ScreenViewport());
         batch = new SpriteBatch();
         entityList = new List<>(parentScreen.getListSkin());

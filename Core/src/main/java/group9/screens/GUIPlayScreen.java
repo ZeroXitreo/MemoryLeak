@@ -268,11 +268,14 @@ public class GUIPlayScreen implements Screen {
                 //Removes movable and immovable entities from the game
                 for (MovableEntity entity : ParentScreen.getWorld().getMovableEntities()) {
                     ParentScreen.getWorld().removeGameMovableEntity(entity);
+                    ParentScreen.getWorld().removeMovableEntity(entity);
                 }
                 for (ImmovableEntity entity : ParentScreen.getWorld().getImmovableEntities()) {
                     ParentScreen.getWorld().removeGameImmovableEntity(entity);
+                    ParentScreen.getWorld().removeImmovableEntity(entity);
                 }
-                //Return to the menu screen
+                //Return to the menu screen and set new results
+                parentScreen.setResult();
                 ParentScreen.getGame().setScreen(new MenuScreen());
             }
 

@@ -40,7 +40,7 @@ public class SearchAlgorithm implements iEntityProcessingService
 			randomlyGenMatrix = createGrid((int) Math.ceil((double) width / gridDensity), (int) Math.ceil((double) height / gridDensity));
 		}
 
-		for (MovableEntity player : world.getMovableEntities(Player.class))
+		for (MovableEntity player : world.getGameMovableEntities(Player.class))
 		{
 			this.player = player;
 			for (MovableEntity enemy : world.getGameMovableEntities())
@@ -152,7 +152,9 @@ public class SearchAlgorithm implements iEntityProcessingService
 		int enemyPosY = (int) enemyPos.getY();
 
 		Stream<Node> filter = pathList.stream().
-				filter(p -> (p.y == playerPosY / gridDensity && p.x == playerPosX / gridDensity) || p.y == enemyPosY / gridDensity && p.x == enemyPosX / gridDensity);
+				filter(p ->
+                                        (p.y == playerPosY / gridDensity && p.x == playerPosX / gridDensity) ||
+                                        p.y == enemyPosY / gridDensity && p.x == enemyPosX / gridDensity);
 
 		if (filter.count() != 2) // Does the player and the enemy still operate inside the path grid generated?
 		{
