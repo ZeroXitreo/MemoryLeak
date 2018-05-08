@@ -2,6 +2,7 @@ package com.group9.searchalgorithm;
 
 import com.group9.commonplayer.Player;
 import data.GameData;
+import data.ImmovableEntity;
 import data.MovableEntity;
 import data.World;
 import java.util.ArrayList;
@@ -38,6 +39,7 @@ public class SearchAlgorithm implements iEntityProcessingService
 		if (randomlyGenMatrix == null)
 		{
 			randomlyGenMatrix = createGrid((int) Math.ceil((double) width / gridDensity), (int) Math.ceil((double) height / gridDensity));
+			generateWalls(world);
 		}
 
 		for (MovableEntity player : world.getGameMovableEntities(Player.class))
@@ -45,11 +47,11 @@ public class SearchAlgorithm implements iEntityProcessingService
 			this.player = player;
 			for (MovableEntity enemy : world.getGameMovableEntities())
 			{
-				if(!enemy.getType().equalsEnemy())
+				if (!enemy.getType().equalsEnemy())
 				{
 					continue;
 				}
-				
+
 				enemies.add(enemy);
 				if (!enemyPaths.containsKey(enemy))
 				{
@@ -111,32 +113,39 @@ public class SearchAlgorithm implements iEntityProcessingService
 				a[y][x] = true;
 			}
 		}
-		
-		// TODO: needs refactoring to walls
-//		int posX = (int) (Math.random() * width);
-//		int posY = (int) (Math.random() * height);
-//		int r = (int) (Math.random() * 250);
-//
-//		a[posY / gridDensity][posX / gridDensity] = false;
-//		int tempR = r + gridDensity / 2;
-//		for (int i = tempR; i > 0; i -= gridDensity)
-//		{
-//			for (int j = 0; j < i; j++)
-//			{
-//				double cos = Math.cos(Math.toRadians(360 * j / i));
-//				double sin = Math.sin(Math.toRadians(360 * j / i));
-//
-//				try
-//				{
-//					a[(int) (posY + cos * i) / gridDensity][(int) (posX + sin * i) / gridDensity] = false;
-//				}
-//				catch (IndexOutOfBoundsException e)
-//				{
-//				}
-//			}
-//		}
-		
+
 		return a;
+	}
+
+	private void generateWalls(World world)
+	{
+		for (ImmovableEntity wall : world.getGameImmovableEntities())
+		{
+			Position pos = wall.getPart(Position.class);
+			int posX = (int) (pos.getX());
+			int posY = (int) (pos.getY());
+			int r = (int) wall.getRadius();
+			
+			
+			randomlyGenMatrix[posY / gridDensity][posX / gridDensity] = false;
+			int tempR = r + gridDensity / 2;
+			for (int i = tempR; i > 0; i -= gridDensity)
+			{
+				for (int j = 0; j < i; j++)
+				{
+					double cos = Math.cos(Math.toRadians(360 * j / i));
+					double sin = Math.sin(Math.toRadians(360 * j / i));
+
+					try
+					{
+						randomlyGenMatrix[(int) (posY + cos * i) / gridDensity][(int) (posX + sin * i) / gridDensity] = false;
+					}
+					catch (IndexOutOfBoundsException e)
+					{
+					}
+				}
+			}
+		}
 	}
 
 	public void processAStar(MovableEntity enemy, MovableEntity player, boolean[][] randomlyGenMatrix)
@@ -152,9 +161,9 @@ public class SearchAlgorithm implements iEntityProcessingService
 		int enemyPosY = (int) enemyPos.getY();
 
 		Stream<Node> filter = pathList.stream().
-				filter(p ->
-                                        (p.y == playerPosY / gridDensity && p.x == playerPosX / gridDensity) ||
-                                        p.y == enemyPosY / gridDensity && p.x == enemyPosX / gridDensity);
+				filter(p
+						-> (p.y == playerPosY / gridDensity && p.x == playerPosX / gridDensity)
+				|| p.y == enemyPosY / gridDensity && p.x == enemyPosX / gridDensity);
 
 		if (filter.count() != 2) // Does the player and the enemy still operate inside the path grid generated?
 		{
