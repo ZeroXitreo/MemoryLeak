@@ -37,7 +37,7 @@ public class SearchAlgorithm implements iEntityProcessingService
 		// GenerateMatrix for walls
 		if (randomlyGenMatrix == null)
 		{
-			randomlyGenMatrix = createGrid((int) Math.ceil((double) height / gridDensity), (int) Math.ceil((double) width / gridDensity), 0.9);
+			randomlyGenMatrix = createGrid((int) Math.ceil((double) width / gridDensity), (int) Math.ceil((double) height / gridDensity));
 		}
 
 		for (MovableEntity player : world.getMovableEntities(Player.class))
@@ -75,7 +75,7 @@ public class SearchAlgorithm implements iEntityProcessingService
 			processAStar(e, player, randomlyGenMatrix);
 
 			Optional<Node> matchingObject = pathList.stream().
-					filter(p -> p.x == enemyPosY / gridDensity && p.y == enemyPosX / gridDensity).
+					filter(p -> p.y == enemyPosY / gridDensity && p.x == enemyPosX / gridDensity).
 					findFirst();
 			Node cell = matchingObject.orElse(null);
 
@@ -85,8 +85,8 @@ public class SearchAlgorithm implements iEntityProcessingService
 				Node nextNode = pathList.get(pathList.indexOf(cell) + 1);
 
 				// Move direction
-				float nodeX = nextNode.y * gridDensity + gridDensity / 2;
-				float nodeY = nextNode.x * gridDensity + gridDensity / 2;
+				float nodeX = nextNode.x * gridDensity + gridDensity / 2;
+				float nodeY = nextNode.y * gridDensity + gridDensity / 2;
 				float direction = (float) Math.atan2(nodeY - enemyPos.getY(), nodeX - enemyPos.getX());
 				e.setDirection(direction);
 
@@ -100,16 +100,15 @@ public class SearchAlgorithm implements iEntityProcessingService
 		});
 	}
 
-	// return a createGrid N-by-N boolean matrix, where each entry is
-	// true with probability p
-	public boolean[][] createGrid(int y, int x, double p)
+	// return a createGrid N-by-N boolean matrix
+	public boolean[][] createGrid(int width, int height)
 	{
-		boolean[][] a = new boolean[y][x];
-		for (int i = 0; i < y; i++)
+		boolean[][] a = new boolean[height][width];
+		for (int y = 0; y < height; y++)
 		{
-			for (int j = 0; j < x; j++)
+			for (int x = 0; x < width; x++)
 			{
-				a[i][j] = true;
+				a[y][x] = true;
 			}
 		}
 		return a;
@@ -128,7 +127,7 @@ public class SearchAlgorithm implements iEntityProcessingService
 		int enemyPosY = (int) enemyPos.getY();
 
 		Stream<Node> filter = pathList.stream().
-				filter(p -> (p.x == playerPosY / gridDensity && p.y == playerPosX / gridDensity) || p.x == enemyPosY / gridDensity && p.y == enemyPosX / gridDensity);
+				filter(p -> (p.y == playerPosY / gridDensity && p.x == playerPosX / gridDensity) || p.y == enemyPosY / gridDensity && p.x == enemyPosX / gridDensity);
 
 		if (filter.count() != 2) // Does the player and the enemy still operate inside the path grid generated?
 		{
@@ -137,24 +136,32 @@ public class SearchAlgorithm implements iEntityProcessingService
 		}
 	}
 
-	public void generateHValue(boolean grid[][], int ax, int ay, int bx, int by, ArrayList<Node> pathList)
+	public void generateHValue(boolean grid[][], int ay, int ax, int by, int bx, ArrayList<Node> pathList)
 	{
 		//Creation of a Node type 2D array
 		Node[][] cell = new Node[grid.length][grid[0].length];
 
-		for (int x = 0; x < grid.length; x++)
+		for (int y = 0; y < grid.length; y++)
 		{
-			for (int y = 0; y < grid[0].length; y++)
+			for (int x = 0; x < grid[0].length; x++)
 			{
-				cell[x][y] = new Node(x, y);
+				cell[y][x] = new Node(x, y);
 				//Checks whether a cell is Blocked or Not by checking the boolean value
-				cell[x][y].hValue = grid[x][y] ? Math.abs(x - bx) + Math.abs(y - by) : -1;
+				cell[y][x].hValue = grid[y][x] ? Math.abs(y - by) + Math.abs(x - bx) : -1;
 			}
 		}
 		generatePath(ax, ay, bx, by, pathList, cell);
 	}
 
-	public void generatePath(int Ai, int Aj, int Bi, int Bj, ArrayList<Node> pathList, Node[][] cell)
+	/**
+	 * @param Ay Starting point's x value
+	 * @param Ax Starting point's y value
+	 * @param By Ending point's x value
+	 * @param Bx Ending point's y value
+	 * @param pathList
+	 * @param cell
+	 */
+	public void generatePath(int Ax, int Ay, int Bx, int By, ArrayList<Node> pathList, Node[][] cell)
 	{
 		ArrayList<Node> closedList = new ArrayList();
 
@@ -170,7 +177,7 @@ public class SearchAlgorithm implements iEntityProcessingService
 		});
 
 		//Adds the Starting cell inside the openList
-		openList.add(cell[Ai][Aj]);
+		openList.add(cell[Ay][Ax]);
 
 		//Executes the rest if there are objects left inside the PriorityQueue
 		while (true)
@@ -186,7 +193,7 @@ public class SearchAlgorithm implements iEntityProcessingService
 
 			// Checks if whether the node returned is having the same node object values of the ending point
 			// If it des then stores that inside the closedList and breaks the while loop
-			if (node == cell[Bi][Bj])
+			if (node == cell[By][Bx])
 			{
 				closedList.add(node);
 				break;
@@ -198,7 +205,7 @@ public class SearchAlgorithm implements iEntityProcessingService
 			{
 				for (int x = -1; x <= 1; x++)
 				{
-					int a = 0;
+					int a;
 					if (x == 0 && y == 0) // Center
 					{
 						continue;
@@ -215,19 +222,19 @@ public class SearchAlgorithm implements iEntityProcessingService
 
 					try
 					{
-						if (cell[node.x + y][node.y + x].hValue != -1
-								&& !openList.contains(cell[node.x + y][node.y + x])
-								&& !closedList.contains(cell[node.x + y][node.y + x]))
+						if (cell[node.y + y][node.x + x].hValue != -1
+								&& !openList.contains(cell[node.y + y][node.x + x])
+								&& !closedList.contains(cell[node.y + y][node.x + x]))
 						{
 							double tCost = node.fValue + a;
-							double cost = cell[node.x + y][node.y + x].hValue + tCost;
-							if (cell[node.x + y][node.y + x].fValue > cost || !openList.contains(cell[node.x + y][node.y + x]))
+							double cost = cell[node.y + y][node.x + x].hValue + tCost;
+							if (cell[node.y + y][node.x + x].fValue > cost || !openList.contains(cell[node.y + y][node.x + x]))
 							{
-								cell[node.x + y][node.y + x].fValue = cost;
+								cell[node.y + y][node.x + x].fValue = cost;
 							}
 
-							openList.add(cell[node.x + y][node.y + x]);
-							cell[node.x + y][node.y + x].parent = node;
+							openList.add(cell[node.y + y][node.x + x]);
+							cell[node.y + y][node.x + x].parent = node;
 						}
 					}
 					catch (IndexOutOfBoundsException e)
@@ -249,6 +256,6 @@ public class SearchAlgorithm implements iEntityProcessingService
 			endNode = endNode.parent;
 		}
 
-		pathList.add(cell[Ai][Aj]);
+		pathList.add(cell[Ay][Ax]);
 	}
 }
