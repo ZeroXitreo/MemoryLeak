@@ -66,11 +66,9 @@
         <module>Boss</module>
         <module>MapBuildingBlocks</module>
         <module>HealthSystem</module>
-        <module>mavenproject1/SearchAlgorithm</module>
         <module>Collision</module>
         <module>Sword</module>
         <module>CommonPlayer</module>
-        <module>EnemyRadar</module>
         <module>SpaceSlime</module>
         <module>CommonFireball</module>
         <module>Fireball</module>
@@ -80,6 +78,8 @@
         <module>CommonSlime</module>
         <module>Wall</module>
         <module>CommonWall</module>
+        <module>SearchAlgorithm</module>
+        <module>EnemyRadar</module>
     </modules>
     <properties>
         <netbeans.version>RELEASE82</netbeans.version>
