@@ -9,6 +9,7 @@ import movableentityparts.Type;
 public abstract class MovableEntity extends Entity {
 
     private float direction = 0;
+    private float shootingDirection = 0;
     private boolean onlyOneWeapon = false;
     private boolean shoot;
     private int moveDirection;
@@ -19,6 +20,14 @@ public abstract class MovableEntity extends Entity {
 
     public void setDirection(float direction) {
         this.direction = direction;
+    }
+
+    public float getShootingDirection() {
+        return shootingDirection;
+    }
+
+    public void setShootingDirection(float shootingDirection) {
+        this.shootingDirection = shootingDirection;
     }
 
     public boolean hasWeapon() {
@@ -47,5 +56,4 @@ public abstract class MovableEntity extends Entity {
     public int getMoveDirection(){
         return moveDirection;
     }
-
 }

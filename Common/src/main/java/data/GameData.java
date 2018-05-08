@@ -1,11 +1,5 @@
 package data;
 
-
-
-/**
- *
- * @author Jorge Báez Garrido
- */
 public class GameData
 {
 	private int displayWidth;
