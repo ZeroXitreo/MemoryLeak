@@ -35,7 +35,7 @@ public class SwordPlugin implements iWeapon, iGamePluginServices {
         Position shooterPos = shooter.getPart(Position.class);
         float shooterX = shooterPos.getX();
         float shooterY = shooterPos.getY();
-        float radians = shooter.getDirection();
+        float radians = shooter.getShootingDirection();
 
         sword = new Sword(shooter.getType().equalsPlayer());
         sword.setRadius(7);
