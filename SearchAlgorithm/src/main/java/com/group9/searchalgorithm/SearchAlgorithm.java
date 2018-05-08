@@ -111,6 +111,31 @@ public class SearchAlgorithm implements iEntityProcessingService
 				a[y][x] = true;
 			}
 		}
+		
+		// TODO: needs refactoring to walls
+//		int posX = (int) (Math.random() * width);
+//		int posY = (int) (Math.random() * height);
+//		int r = (int) (Math.random() * 250);
+//
+//		a[posY / gridDensity][posX / gridDensity] = false;
+//		int tempR = r + gridDensity / 2;
+//		for (int i = tempR; i > 0; i -= gridDensity)
+//		{
+//			for (int j = 0; j < i; j++)
+//			{
+//				double cos = Math.cos(Math.toRadians(360 * j / i));
+//				double sin = Math.sin(Math.toRadians(360 * j / i));
+//
+//				try
+//				{
+//					a[(int) (posY + cos * i) / gridDensity][(int) (posX + sin * i) / gridDensity] = false;
+//				}
+//				catch (IndexOutOfBoundsException e)
+//				{
+//				}
+//			}
+//		}
+		
 		return a;
 	}
 
