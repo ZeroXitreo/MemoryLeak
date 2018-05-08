@@ -80,7 +80,7 @@ public class Move implements EntityPart
 			{
 				entity.setMoveDirection(2); //go right
 			}
-			else if (direction < -1 / 2)
+			else if (direction < -pi / 2)
 			{
 				entity.setMoveDirection(0); //go left
 			}
@@ -112,22 +112,22 @@ public class Move implements EntityPart
 		// Block entity to get beyond the border
 		x = position.getX();
 		y = position.getY();
-		if (x > gameData.getDisplayWidth() - 85)
+		if (x > gameData.getMoveAreaWidthMax())
 		{
-			position.setX(gameData.getDisplayWidth() - 85);
+			position.setX(gameData.getMoveAreaWidthMax());
 		}
-		if (x < 68)
+		if (x < gameData.getMoveAreaWidthMin())
 		{
-			position.setX(68);
+			position.setX(gameData.getMoveAreaWidthMin());
 		}
 
-		if (y > gameData.getDisplayHeight() - 45)
+		if (y > gameData.getMoveAreaHeightMax())
 		{
-			position.setY(gameData.getDisplayHeight() - 45);
+			position.setY(gameData.getMoveAreaHeightMax());
 		}
-		if (y < 64)
+		if (y < gameData.getMoveAreaHeightMin())
 		{
-			position.setY(64);
+			position.setY(gameData.getMoveAreaHeightMin());
 		}
 	}
 

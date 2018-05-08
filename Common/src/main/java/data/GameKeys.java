@@ -31,40 +31,20 @@ public class GameKeys {
             keys = new boolean[NUM_KEYS];
 	}
         
+        /**
+         * @param key what key.
+         * @param pressed boolean if it is down.
+         */
         public void setKeys(int key, boolean pressed){
             keys[key] = pressed;
         }
         
-        public boolean isDown(int k){
-            return keys[k];
+        /**
+         * @param key what key.
+         * @return boolean if the key is down.
+         */
+        public boolean isDown(int key){
+            return keys[key];
         }
-	
-//	public boolean keyPress(){
-//		if(Gdx.input.isKeyPressed(Keys.W)){
-//			
-//		}
-//		if(Gdx.input.isKeyPressed(Keys.A)){
-//			System.out.println("A");
-//		}
-//		if(Gdx.input.isKeyPressed(Keys.S)){
-//			System.out.println("S");
-//		}
-//		if(Gdx.input.isKeyPressed(Keys.D)){
-//			System.out.println("D");
-//		}
-//		if(Gdx.input.isKeyPressed(Keys.UP)){
-//			System.out.println("up");
-//		}
-//		if(Gdx.input.isKeyPressed(Keys.DOWN)){
-//			System.out.println("down");
-//		}
-//		if(Gdx.input.isKeyPressed(Keys.RIGHT)){
-//			System.out.println("right");
-//		}
-//		if(Gdx.input.isKeyPressed(Keys.LEFT)){
-//			System.out.println("left");
-//		}
-//		return false;
-//	}
 
 }

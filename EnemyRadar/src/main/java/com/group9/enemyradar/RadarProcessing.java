@@ -1,8 +1,6 @@
 package com.group9.enemyradar;
 
 import com.group9.commonplayer.Player;
-import com.group9.commonslime.Slime;
-import com.group9.commonspaceslime.SpaceSlime;
 import data.GameData;
 import data.MovableEntity;
 import data.World;

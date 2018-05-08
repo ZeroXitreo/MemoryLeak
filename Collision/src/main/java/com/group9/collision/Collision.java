@@ -187,10 +187,9 @@ public class Collision implements iPostEntityProcessingService {
     }
 
     /**
-     * *
-     *
-     * @param entity1
-     * @param entity2
+     * Checks if the entities needs to take damage.
+     * @param entity1 MovableEntity colliding with entity2.
+     * @param entity2 Entity colliding with eneity1.
      */
     private void collisionDMG(MovableEntity entity1, Entity entity2) {
         //if one of the entities is an enemy and the other one isn't an enemy

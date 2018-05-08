@@ -63,8 +63,6 @@
         <module>Core</module>
         <module>Common</module>
         <module>Player</module>
-        <module>Boss</module>
-        <module>MapBuildingBlocks</module>
         <module>HealthSystem</module>
         <module>Collision</module>
         <module>Sword</module>

@@ -21,7 +21,7 @@ import services.iGamePluginServices;
 
 public class SpaceSlimePlugin implements iGamePluginServices {
 
-    private MovableEntity enemy;
+    private MovableEntity spaceSlime;
     private Random random;
     private int amountOfEnemies;
 
@@ -30,26 +30,30 @@ public class SpaceSlimePlugin implements iGamePluginServices {
         random = new Random();
         amountOfEnemies = 2;
         for (int i = 0; i < amountOfEnemies; i++) {
-            enemy = createEnemy();
-            world.addMovableEntity(enemy);
+            spaceSlime = createSpaceSlime();
+            world.addMovableEntity(spaceSlime);
         }
     }
 
-    private MovableEntity createEnemy() {
+    /**
+     * Creates a SpaceSlime
+     * @return SpaceSlime MovableEntity
+     */
+    private MovableEntity createSpaceSlime() {
         //Spawn location of enemy/enemies
         float x = 100 + random.nextFloat();
         float y = 420 + random.nextFloat();
         float maxSpeed = 1;
-        MovableEntity enemyCharacter = new SpaceSlime();
-        enemyCharacter.setRadius(15);
+        MovableEntity spaceSlime = new SpaceSlime();
+        spaceSlime.setRadius(15);
         Move move = new Move(maxSpeed);
         move.setUseDirection(true);
-        enemyCharacter.add(move);
-        enemyCharacter.add(new Position(x, y));
-        enemyCharacter.add(new HealthPart(1));
-        enemyCharacter.add(new WeaponPart());
-        enemyCharacter.add(new Attack());
-        return enemyCharacter;
+        spaceSlime.add(move);
+        spaceSlime.add(new Position(x, y));
+        spaceSlime.add(new HealthPart(1));
+        spaceSlime.add(new WeaponPart());
+        spaceSlime.add(new Attack());
+        return spaceSlime;
     }
 
     @Override

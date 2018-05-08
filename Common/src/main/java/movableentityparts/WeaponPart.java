@@ -39,10 +39,16 @@ public class WeaponPart implements EntityPart {
 
     }
 
+    /**
+     * @param weapon iWeapon to be set as the weapon.
+     */
     public void setWeapon(iWeapon weapon) {
         this.weapon = weapon;
     }
 
+    /**
+     * removes the weapon.
+     */
     public void removeWeapon() {
         weapon = null;
     }

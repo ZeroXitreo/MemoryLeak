@@ -23,6 +23,7 @@ import services.iEntityProcessingService;
 @ServiceProvider(service = iEntityProcessingService.class)
 public class SwordControlSystem implements iEntityProcessingService{
     private double pi = Math.PI;
+    @Override
     public void process(GameData gameData, World world) {
         for (MovableEntity sword : world.getGameMovableEntities(Sword.class)) {
             Position position = sword.getPart(Position.class);
@@ -40,13 +41,16 @@ public class SwordControlSystem implements iEntityProcessingService{
         }
     }
 
+    /**
+     * Updates the circle sprite of the MovableEntity.
+     * @param movableEntity The MovableEntity to be updated.
+     */
     private void updateSpriteCircle(MovableEntity movableEntity) {
         int numPoints = 12;
         float[] shapeX = new float[numPoints];
         float[] shapeY = new float[numPoints];
 
         Position position = movableEntity.getPart(Position.class);
-        float radians = position.getRadians();
         float radius = movableEntity.getRadius();
         float x = position.getX();
         float y = position.getY();
@@ -54,8 +58,8 @@ public class SwordControlSystem implements iEntityProcessingService{
         float angle = 0;
 
         for (int i = 0; i < numPoints; i++) {
-            shapeX[i] = x + (float) Math.cos(angle + radians) * radius;
-            shapeY[i] = y + (float) Math.sin(angle + radians) * radius;
+            shapeX[i] = x + (float) Math.cos(angle) * radius;
+            shapeY[i] = y + (float) Math.sin(angle) * radius;
             angle += 2 * pi / numPoints;
         }
         movableEntity.setShapeX(shapeX);

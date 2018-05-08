@@ -12,8 +12,6 @@ import data.World;
  *
  * @author Jorge Báez Garrido
  */
-public interface iPostEntityProcessingService
-{
-	public void process(GameData gameData, World world);
-	
+public interface iPostEntityProcessingService {
+    public void process(GameData gameData, World world);
 }

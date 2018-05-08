@@ -38,13 +38,16 @@ public class SlimeAI implements iEntityProcessingService {
         }
     }
 
+    /**
+     * Updates the sprite of the MovableEntity.
+     * @param movableEntity The MovableEntity to update their sprite.
+     */
     private void updateSprite(MovableEntity movableEntity) {
         int numPoints = 12;
         float[] shapeX = new float[numPoints];
         float[] shapeY = new float[numPoints];
 
         Position position = movableEntity.getPart(Position.class);
-        float radians = position.getRadians();
         float radius = movableEntity.getRadius();
         float x = position.getX();
         float y = position.getY();
@@ -52,8 +55,8 @@ public class SlimeAI implements iEntityProcessingService {
         float angle = 0;
 
         for (int i = 0; i < numPoints; i++) {
-            shapeX[i] = x + (float) Math.cos(angle + radians) * radius;
-            shapeY[i] = y + (float) Math.sin(angle + radians) * radius;
+            shapeX[i] = x + (float) Math.cos(angle) * radius;
+            shapeY[i] = y + (float) Math.sin(angle) * radius;
             angle += 2 * pi / numPoints;
         }
         movableEntity.setShapeX(shapeX);

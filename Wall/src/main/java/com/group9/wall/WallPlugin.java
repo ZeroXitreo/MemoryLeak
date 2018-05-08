@@ -46,6 +46,11 @@ public class WallPlugin implements iGamePluginServices {
         }
     }
 
+    /**
+     * Creates the ImmovableEntity wall.
+     * @param gameData The data of the game.
+     * @return ImmovableEntity wall.
+     */
     private ImmovableEntity createWall(GameData gameData) {
         float x = gameData.getMoveAreaWidthMin() + random.nextFloat() * (gameData.getMoveAreaWidthMax() - gameData.getMoveAreaWidthMin());;
         float y = gameData.getMoveAreaHeightMin() + random.nextFloat() * (gameData.getMoveAreaHeightMax() - gameData.getMoveAreaHeightMin());

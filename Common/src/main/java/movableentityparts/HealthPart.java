@@ -24,22 +24,37 @@ public class HealthPart implements EntityPart {
         this.maxHealth = health;
     }
 
+    /**
+     * @return int indicating max health of the entity.
+     */
     public int getMaxHealth() {
         return maxHealth;
     }
 
+    /**
+     * @return int indicating current health of entity.
+     */
     public int getHealth() {
         return health;
     }
 
+    /**
+     * @param health int indicating how much health the entity should have.
+     */
     public void setHealth(int health) {
         this.health = health;
     }
 
+    /**
+     * @param dead boolean if the entity is dead.
+     */
     public void setDead(boolean dead) {
         this.dead = dead;
     }
 
+    /**
+     * @return boolean if the entity is dead.
+     */
     public boolean isDead() {
         return dead;
     }

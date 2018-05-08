@@ -48,7 +48,7 @@ public class SwordPlugin implements iWeapon, iGamePluginServices {
         sword.add(new Position(bulletX + shooterX, bulletY + shooterY));
         Move move = shooter.getPart(Move.class);
         sword.add(move);
-        //sword.setDirection(radians);
+        sword.setDirection(radians);
         sword.setShapeX(new float[2]);
         sword.setShapeY(new float[2]);
         world.addGameMovableEntity(sword);

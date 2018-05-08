@@ -24,14 +24,12 @@ public class Attack implements EntityPart {
 
     @Override
     public void process(GameData gameData, MovableEntity entity) {
-        if (entity.getType().equalsEnemy()) {
+        if (entity.getType().equalsEnemy()) { //if the entity is an enemy
             entity.setShoot(true);
-        }
-
-        if (entity.getType().equalsPlayer()) {
+        } else if (entity.getType().equalsPlayer()) { //else if it is a player
             direction = 0;
             if (gameData.getKeys().isDown(LEFT)) {
-                direction = (float)pi;
+                direction = (float) pi;
                 entity.setShoot(true);
                 newDirection = true;
             }
@@ -41,7 +39,7 @@ public class Attack implements EntityPart {
                 newDirection = true;
             }
             if (gameData.getKeys().isDown(UP)) {
-                direction = (float)pi / 2;
+                direction = (float) pi / 2;
                 entity.setShoot(true);
                 newDirection = true;
             }
@@ -52,22 +50,22 @@ public class Attack implements EntityPart {
             }
 
             if (gameData.getKeys().isDown(LEFT) && gameData.getKeys().isDown(UP)) {
-                direction = (float)(3 * pi) / 4;
+                direction = (float) (3 * pi) / 4;
                 entity.setShoot(true);
                 newDirection = true;
             }
             if (gameData.getKeys().isDown(LEFT) && gameData.getKeys().isDown(DOWN)) {
-                direction = (float)(4 * pi) / 3;
+                direction = (float) (4 * pi) / 3;
                 entity.setShoot(true);
                 newDirection = true;
             }
             if (gameData.getKeys().isDown(RIGHT) && gameData.getKeys().isDown(UP)) {
-                direction = (float)pi / 4;
+                direction = (float) pi / 4;
                 entity.setShoot(true);
                 newDirection = true;
             }
             if (gameData.getKeys().isDown(RIGHT) && gameData.getKeys().isDown(DOWN)) {
-                direction = (float)(7 * pi) / 4;
+                direction = (float) (7 * pi) / 4;
                 entity.setShoot(true);
                 newDirection = true;
             }

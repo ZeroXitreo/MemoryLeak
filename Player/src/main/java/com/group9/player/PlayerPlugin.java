@@ -32,6 +32,11 @@ public class PlayerPlugin implements iGamePluginServices {
         world.addMovableEntity(player);
     }
 
+    /**
+     * Creates the MovableEntity Player.
+     * @param gameData The data of the game.
+     * @return The created MovableEntity Player.
+     */
     private MovableEntity createPlayer(GameData gameData) {
         float x = gameData.getDisplayWidth() / 2;
         float y = gameData.getDisplayHeight() / 2;

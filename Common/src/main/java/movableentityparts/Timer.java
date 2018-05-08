@@ -33,6 +33,9 @@ public class Timer implements EntityPart{
         }
     }
 
+    /**
+     * @return boolean if the entity should be removed.
+     */
     public boolean isRemove() {
         return remove;
     }

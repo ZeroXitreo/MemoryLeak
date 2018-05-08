@@ -23,7 +23,7 @@ import services.iGamePluginServices;
 @ServiceProvider(service = iGamePluginServices.class)
 public class SlimePlugin implements iGamePluginServices {
 
-    private MovableEntity enemy;
+    private MovableEntity slime;
     private Random random;
     private int amountOfEnemies;
 
@@ -32,8 +32,8 @@ public class SlimePlugin implements iGamePluginServices {
         random = new Random();
         amountOfEnemies = 2;
         for (int i = 0; i < amountOfEnemies; i++) {
-            enemy = createEnemy();
-            world.addMovableEntity(enemy);
+            slime = createSlime();
+            world.addMovableEntity(slime);
         }
     }
 
@@ -48,7 +48,11 @@ public class SlimePlugin implements iGamePluginServices {
 
     }
 
-    private MovableEntity createEnemy() {
+    /**
+     * Creates a MovableEntity Slime.
+     * @return The created MovableEntity Slime.
+     */
+    private MovableEntity createSlime() {
         //Spawn location
         float x = 100 + random.nextFloat();
         float y = 100 + random.nextFloat();
