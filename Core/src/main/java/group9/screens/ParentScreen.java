@@ -21,6 +21,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import org.openide.util.Lookup;
 import org.openide.util.LookupEvent;
 import org.openide.util.LookupListener;
@@ -41,7 +42,7 @@ public class ParentScreen {
     private static ParentScreen instance = null;
     private Lookup lookup = Lookup.getDefault();
     private Lookup.Result<iGamePluginServices> result;
-    private List<iGamePluginServices> gamePlugin = new ArrayList<>();
+    private List<iGamePluginServices> gamePlugin = new CopyOnWriteArrayList<>();
     private AssetManager am;
     private Image menuBackground;
     private Skin buttonSkin;
@@ -415,11 +416,9 @@ public class ParentScreen {
      */
     public void startStopMusic() {
         if (!musicOnOff) {
-            System.out.println("start");
             music.play();
             musicOnOff = true;
         } else {
-            System.out.println("stop");
             music.stop();
             musicOnOff = false;
         }
