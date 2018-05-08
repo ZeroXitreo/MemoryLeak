@@ -79,6 +79,7 @@
         <module>SearchAlgorithm</module>
         <module>EnemyRadar</module>
         <module>ScoreSystem</module>
+        <module>SilentUpdate</module>
     </modules>
     <properties>
         <netbeans.version>RELEASE82</netbeans.version>
