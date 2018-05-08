@@ -73,7 +73,7 @@ public class Attack implements EntityPart {
             }
 
             if (newDirection) {
-                entity.setDirection(direction);
+                entity.setShootingDirection(direction);
                 newDirection = false;
             }
         }
