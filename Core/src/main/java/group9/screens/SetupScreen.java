@@ -68,13 +68,11 @@ public class SetupScreen implements Screen {
     @Override
     public void show() {
         createStartButton();
-        createAddEnemyButton();
-        createRemoveEnemyButton();
+        createAddEntityButton();
+        createRemoveEntityButton();
         createAddWeapon();
         showAddableEntities();
         showWeaponEntities();
-        //Don't let user start without picking a class
-        startButton.setVisible(false);
 
         Gdx.input.setInputProcessor(stage);
     }
@@ -84,7 +82,8 @@ public class SetupScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); // Clear screen
         Gdx.gl.glClearColor(25 / 255f, 24 / 255f, 27 / 255f, 0); // Clear screen
         batch.begin();
-        font.draw(batch, "SELECT WEAPON", ParentScreen.getGameData().getDisplayWidth() / 2 - 170, ParentScreen.getGameData().getDisplayHeight() / 2 + 200);
+        font.draw(batch, "WEAPONS", ParentScreen.getGameData().getDisplayWidth() / 2 - 350, ParentScreen.getGameData().getDisplayHeight() / 2 + 140);
+        font.draw(batch, "ENTITIES", ParentScreen.getGameData().getDisplayWidth() / 2 + 100, ParentScreen.getGameData().getDisplayHeight() / 2 + 140);
         font.draw(batch, messageToUser, ParentScreen.getGameData().getDisplayWidth() / 2 - 250, ParentScreen.getGameData().getDisplayHeight() / 2 - 60);
         batch.end();
 
@@ -140,18 +139,22 @@ public class SetupScreen implements Screen {
      * Creates a button that will add an enemy entity to the game stage when
      * start is pressed.
      */
-    private void createAddEnemyButton() {
+    private void createAddEntityButton() {
         addEnemyButton = new TextButton(" + ", parentScreen.getButtonSkin(), "default");
         addEnemyButton.setSize(40, 30);
         addEnemyButton.setPosition(Gdx.graphics.getWidth() / 2 + 360, Gdx.graphics.getHeight() / 2 + 50);
         addEnemyButton.addListener(new InputListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                messageToUser = "You added: " + entityList.getSelected();
-                if (entityMap.get(entityList.getSelected()) instanceof MovableEntity) {
-                    ParentScreen.getWorld().addGameMovableEntity((MovableEntity) entityMap.get(entityList.getSelected()));
-                } else if (entityMap.get(entityList.getSelected()) instanceof ImmovableEntity) {
-                    ParentScreen.getWorld().addGameImmovableEntity((ImmovableEntity) entityMap.get(entityList.getSelected()));
+                try {
+                    messageToUser = "You added: " + entityList.getSelected();
+                    if (entityMap.get(entityList.getSelected()) instanceof MovableEntity) {
+                        ParentScreen.getWorld().addGameMovableEntity((MovableEntity) entityMap.get(entityList.getSelected()));
+                    } else if (entityMap.get(entityList.getSelected()) instanceof ImmovableEntity) {
+                        ParentScreen.getWorld().addGameImmovableEntity((ImmovableEntity) entityMap.get(entityList.getSelected()));
+                    }
+                } catch (NullPointerException e) {
+                    messageToUser = "No Entities To Add";
                 }
 
             }
@@ -169,19 +172,24 @@ public class SetupScreen implements Screen {
      * Creates a button that will remove the selected enemy entity from the game
      * stage.
      */
-    private void createRemoveEnemyButton() {
+    private void createRemoveEntityButton() {
         removeEnemyButton = new TextButton(" - ", parentScreen.getButtonSkin(), "default");
         removeEnemyButton.setSize(40, 30);
         removeEnemyButton.setPosition(Gdx.graphics.getWidth() / 2 + 360, Gdx.graphics.getHeight() / 2 + 10);
         removeEnemyButton.addListener(new InputListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                messageToUser = "You removed: " + entityList.getSelected();
-                if (entityMap.get(entityList.getSelected()) instanceof MovableEntity) {
-                    ParentScreen.getWorld().removeGameMovableEntity((MovableEntity) entityMap.get(entityList.getSelected()));
-                } else if (entityMap.get(entityList.getSelected()) instanceof ImmovableEntity) {
-                    ParentScreen.getWorld().removeGameImmovableEntity((ImmovableEntity) entityMap.get(entityList.getSelected()));
+                try {
+                    messageToUser = "You removed: " + entityList.getSelected();
+                    if (entityMap.get(entityList.getSelected()) instanceof MovableEntity) {
+                        ParentScreen.getWorld().removeGameMovableEntity((MovableEntity) entityMap.get(entityList.getSelected()));
+                    } else if (entityMap.get(entityList.getSelected()) instanceof ImmovableEntity) {
+                        ParentScreen.getWorld().removeGameImmovableEntity((ImmovableEntity) entityMap.get(entityList.getSelected()));
+                    }
+                } catch (NullPointerException e){
+                    messageToUser = "No Entities To Remove";
                 }
+
             }
 
             @Override
@@ -203,6 +211,7 @@ public class SetupScreen implements Screen {
         addWeaponButton.addListener(new InputListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                try{
                 for (MovableEntity entity : parentScreen.getWorld().getMovableEntities()) {
                     if (entity instanceof Player) {
                         for (iWeapon wep : parentScreen.getWorld().getWeapons()) {
@@ -210,10 +219,12 @@ public class SetupScreen implements Screen {
                                 WeaponPart temp = entity.getPart(WeaponPart.class);
                                 temp.setWeapon(wep);
                                 messageToUser = "Weapon selected: " + weaponList.getSelected();
-                                startButton.setVisible(true);
                             }
                         }
                     }
+                }
+                }catch(NullPointerException e){
+                    messageToUser = "No Weapons";
                 }
             }
 

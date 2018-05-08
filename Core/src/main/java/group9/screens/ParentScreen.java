@@ -117,11 +117,21 @@ public class ParentScreen {
         music.setLooping(true);
         scrollPaneSkin = am.get(scrollPaneSkinPath, Skin.class);
         scrollAtlas = am.get(scrollAtlasPath, TextureAtlas.class);
+        setResult();
     }
 
     public static ParentScreen getInstance() {
         if (instance == null) {
             instance = new ParentScreen(getGame(), getWorld(), getGameData(), getGip());
+            return instance;
+        } else {
+            return instance;
+        }
+    }
+    
+    public static ParentScreen getInstance(Game game, World world, GameData gameData, GameInputProcessor gip) {
+        if (instance == null) {
+            instance = new ParentScreen(game, world, gameData, gip);
             return instance;
         } else {
             return instance;
@@ -149,7 +159,13 @@ public class ParentScreen {
             for (iGamePluginServices gs : updated) {
                 if (!gamePlugin.contains(gs)) {
                     gs.start(getGameData(), getWorld());
-                    getGamePlugin().remove(gs);
+                    getGamePlugin().add(gs);
+                }
+            }
+            for (iGamePluginServices gs : gamePlugin){
+                if(!updated.contains(gs)){
+                    gs.stop(gameData, world);
+                    gamePlugin.remove(gs);
                 }
             }
         }

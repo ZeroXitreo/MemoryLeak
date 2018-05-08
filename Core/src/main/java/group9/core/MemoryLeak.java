@@ -26,7 +26,7 @@ public class MemoryLeak extends Game {
         gameData.setMoveAreaWidthMin(68);
         gameData.setMoveAreaHeightMin(64);
         gameData.setMoveAreaHeightMax(gameData.getDisplayHeight() - 45);
-        new ParentScreen(this, world, gameData, gip);
+        ParentScreen.getInstance(this, world, gameData, gip);
         this.setScreen(new MenuScreen());
     }
 

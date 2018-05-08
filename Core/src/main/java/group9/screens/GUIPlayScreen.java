@@ -132,17 +132,6 @@ public class GUIPlayScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); // Clear screen
         lavaRegion = animationLava.getKeyFrame(time, true);
 
-        alive = false;
-        stageClear = true;
-        for (MovableEntity movableEntity : ParentScreen.getWorld().getGameMovableEntities()) {
-            if (movableEntity.getType().equalsPlayer()) {
-                alive = true;
-            }
-            if (movableEntity.getType().equalsEnemy()) {
-                stageClear = false;
-            }
-        }
-
         checkState();
         drawMap();
 
@@ -276,14 +265,12 @@ public class GUIPlayScreen implements Screen {
         toMenu.addListener(new InputListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                //Remove entities and movable entities from the game
+                //Removes movable and immovable entities from the game
                 for (MovableEntity entity : ParentScreen.getWorld().getMovableEntities()) {
                     ParentScreen.getWorld().removeGameMovableEntity(entity);
-                    ParentScreen.getWorld().removeMovableEntity(entity);
                 }
                 for (ImmovableEntity entity : ParentScreen.getWorld().getImmovableEntities()) {
                     ParentScreen.getWorld().removeGameImmovableEntity(entity);
-                    ParentScreen.getWorld().removeImmovableEntity(entity);
                 }
                 //Return to the menu screen
                 ParentScreen.getGame().setScreen(new MenuScreen());
@@ -334,6 +321,16 @@ public class GUIPlayScreen implements Screen {
      * Checks which state it needs to be in.
      */
     private void checkState() {
+        alive = false;
+        stageClear = true;
+        for (MovableEntity movableEntity : ParentScreen.getWorld().getGameMovableEntities()) {
+            if (movableEntity.getType().equalsPlayer()) {
+                alive = true;
+            }
+            if (movableEntity.getType().equalsEnemy()) {
+                stageClear = false;
+            }
+        }
         if (alive) {
             state = GAME_RUNNING;
         } else {
