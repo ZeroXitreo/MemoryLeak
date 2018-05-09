@@ -131,6 +131,13 @@ public class Move implements EntityPart
 		}
 	}
 
+	/**
+	 * Processes the movement of a Position towards a coordiante in a set given speed
+	 * 
+	 * @param position the position to be moved
+	 * @param x the x coordinate the position wants to be in
+	 * @param y  the y coordinate the position wants to be in
+	 */
 	private void processMovementTo(Position position, float x, float y)
 	{
 		if (position.getX() == x && position.getY() == y)
