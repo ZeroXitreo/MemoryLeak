@@ -66,6 +66,9 @@ public class SearchAlgorithm implements iEntityProcessingService
 		enemies = new ArrayList();
 	}
 
+	/**
+	 * Processes the search algorithm
+	 */
 	public void processSearch()
 	{
 		enemies.stream().parallel().forEach(e ->
@@ -77,7 +80,7 @@ public class SearchAlgorithm implements iEntityProcessingService
 			processAStar(e, player, randomlyGenMatrix);
 
 			Optional<Node> matchingObject = pathList.stream().
-					filter(p -> p.y == enemyPosY / gridDensity && p.x == enemyPosX / gridDensity).
+					filter(p -> p.getY() == enemyPosY / gridDensity && p.getX() == enemyPosX / gridDensity).
 					findFirst();
 			Node cell = matchingObject.orElse(null);
 
@@ -87,8 +90,8 @@ public class SearchAlgorithm implements iEntityProcessingService
 				Node nextNode = pathList.get(pathList.indexOf(cell) + 1);
 
 				// Move direction
-				float nodeX = nextNode.x * gridDensity + gridDensity / 2;
-				float nodeY = nextNode.y * gridDensity + gridDensity / 2;
+				float nodeX = nextNode.getX() * gridDensity + gridDensity / 2;
+				float nodeY = nextNode.getY() * gridDensity + gridDensity / 2;
 				float direction = (float) Math.atan2(nodeY - enemyPos.getY(), nodeX - enemyPos.getX());
 				e.setDirection(direction);
 
@@ -102,7 +105,13 @@ public class SearchAlgorithm implements iEntityProcessingService
 		});
 	}
 
-	// return a createGrid N-by-N boolean matrix
+	/**
+	 * Generates a grid which allows path finding to be done in a grid based manner
+	 * 
+	 * @param width of the map the grid is to be generated on
+	 * @param height of the map the grid is to be generated on
+	 * @return boolean matrix
+	 */
 	public boolean[][] createGrid(int width, int height)
 	{
 		boolean[][] a = new boolean[height][width];
@@ -117,6 +126,11 @@ public class SearchAlgorithm implements iEntityProcessingService
 		return a;
 	}
 
+	/**
+	 * Generates the walls in the grid based system, allowing the pathing to detect immovable walls
+	 * 
+	 * @param world the world which the walls are in
+	 */
 	private void generateWalls(World world)
 	{
 		for (ImmovableEntity wall : world.getGameImmovableEntities())
@@ -125,8 +139,7 @@ public class SearchAlgorithm implements iEntityProcessingService
 			int posX = (int) (pos.getX());
 			int posY = (int) (pos.getY());
 			int r = (int) wall.getRadius();
-			
-			
+
 			randomlyGenMatrix[posY / gridDensity][posX / gridDensity] = false;
 			int tempR = r + gridDensity / 2;
 			for (int i = tempR; i > 0; i -= gridDensity)
@@ -148,6 +161,13 @@ public class SearchAlgorithm implements iEntityProcessingService
 		}
 	}
 
+	/**
+	 * Processes the AStar algorithm which allows a path to be generated for an enemy
+	 * 
+	 * @param enemy A MovableEntity which needs to move towards player
+	 * @param player A MovableEntity which the enemy moves towards
+	 * @param randomlyGenMatrix The grid which has the data of where walls exist
+	 */
 	public void processAStar(MovableEntity enemy, MovableEntity player, boolean[][] randomlyGenMatrix)
 	{
 		ArrayList<Node> pathList = enemyPaths.get(enemy);
@@ -162,8 +182,8 @@ public class SearchAlgorithm implements iEntityProcessingService
 
 		Stream<Node> filter = pathList.stream().
 				filter(p
-						-> (p.y == playerPosY / gridDensity && p.x == playerPosX / gridDensity)
-				|| p.y == enemyPosY / gridDensity && p.x == enemyPosX / gridDensity);
+						-> (p.getY() == playerPosY / gridDensity && p.getX() == playerPosX / gridDensity)
+				|| p.getY() == enemyPosY / gridDensity && p.getX() == enemyPosX / gridDensity);
 
 		if (filter.count() != 2) // Does the player and the enemy still operate inside the path grid generated?
 		{
@@ -172,6 +192,17 @@ public class SearchAlgorithm implements iEntityProcessingService
 		}
 	}
 
+	/**
+	 * Generates the HValue of the grid which
+	 *
+	 * @param grid parses the grid which will be generated HValues from
+	 * @param ay Starting point's x value
+	 * @param ax Starting point's y value
+	 * @param by Ending point's x value
+	 * @param bx Ending point's y value
+	 * @param pathList to be parsed to another method, allowing the path to be
+	 * generated and stores in pathList
+	 */
 	public void generateHValue(boolean grid[][], int ay, int ax, int by, int bx, ArrayList<Node> pathList)
 	{
 		//Creation of a Node type 2D array
@@ -183,19 +214,22 @@ public class SearchAlgorithm implements iEntityProcessingService
 			{
 				cell[y][x] = new Node(x, y);
 				//Checks whether a cell is Blocked or Not by checking the boolean value
-				cell[y][x].hValue = grid[y][x] ? Math.abs(y - by) + Math.abs(x - bx) : -1;
+				cell[y][x].setHValue(grid[y][x] ? Math.abs(y - by) + Math.abs(x - bx) : -1);
 			}
 		}
 		generatePath(ax, ay, bx, by, pathList, cell);
 	}
 
 	/**
+	 * Generate the path for the given pathList
+	 *
 	 * @param Ay Starting point's x value
 	 * @param Ax Starting point's y value
 	 * @param By Ending point's x value
 	 * @param Bx Ending point's y value
-	 * @param pathList
-	 * @param cell
+	 * @param pathList The pathlist which is to be filled
+	 * @param cell the cells which are to be searched in order to generate a
+	 * path
 	 */
 	public void generatePath(int Ax, int Ay, int Bx, int By, ArrayList<Node> pathList, Node[][] cell)
 	{
@@ -208,7 +242,7 @@ public class SearchAlgorithm implements iEntityProcessingService
 			//Compares 2 Node objects stored in the PriorityQueue and Reorders the Queue according to the object which has the lowest fValue
 			public int compare(Object cell1, Object cell2)
 			{
-				return ((Node) cell1).fValue < ((Node) cell2).fValue ? -1 : ((Node) cell1).fValue > ((Node) cell2).fValue ? 1 : 0;
+				return ((Node) cell1).getFValue() < ((Node) cell2).getFValue() ? -1 : ((Node) cell1).getFValue() > ((Node) cell2).getFValue() ? 1 : 0;
 			}
 		});
 
@@ -258,19 +292,19 @@ public class SearchAlgorithm implements iEntityProcessingService
 
 					try
 					{
-						if (cell[node.y + y][node.x + x].hValue != -1
-								&& !openList.contains(cell[node.y + y][node.x + x])
-								&& !closedList.contains(cell[node.y + y][node.x + x]))
+						if (cell[node.getY() + y][node.getX() + x].getHValue() != -1
+								&& !openList.contains(cell[node.getY() + y][node.getX() + x])
+								&& !closedList.contains(cell[node.getY() + y][node.getX() + x]))
 						{
-							double tCost = node.fValue + a;
-							double cost = cell[node.y + y][node.x + x].hValue + tCost;
-							if (cell[node.y + y][node.x + x].fValue > cost || !openList.contains(cell[node.y + y][node.x + x]))
+							double tCost = node.getFValue() + a;
+							double cost = cell[node.getY() + y][node.getX() + x].getHValue() + tCost;
+							if (cell[node.getY() + y][node.getX() + x].getFValue() > cost || !openList.contains(cell[node.getY() + y][node.getX() + x]))
 							{
-								cell[node.y + y][node.x + x].fValue = cost;
+								cell[node.getY() + y][node.getX() + x].setFValue(cost);
 							}
 
-							openList.add(cell[node.y + y][node.x + x]);
-							cell[node.y + y][node.x + x].parent = node;
+							openList.add(cell[node.getY() + y][node.getX() + x]);
+							cell[node.getY() + y][node.getX() + x].setParent(node);
 						}
 					}
 					catch (IndexOutOfBoundsException e)
@@ -285,11 +319,11 @@ public class SearchAlgorithm implements iEntityProcessingService
 
 		//Checks if whether the endNode variable currently has a parent Node. if it doesn't then stops moving forward.
 		//Stores each parent Node to the PathList so it is easier to trace back the final path
-		while (endNode.parent != null)
+		while (endNode.getParent() != null)
 		{
 			Node currentNode = endNode;
 			pathList.add(currentNode);
-			endNode = endNode.parent;
+			endNode = endNode.getParent();
 		}
 
 		pathList.add(cell[Ay][Ax]);
