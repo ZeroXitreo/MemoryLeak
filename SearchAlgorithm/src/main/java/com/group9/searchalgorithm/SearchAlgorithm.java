@@ -27,6 +27,7 @@ public class SearchAlgorithm implements iEntityProcessingService
 
 	MovableEntity player;
 	boolean[][] randomlyGenMatrix;
+	
 
 	@Override
 	public void process(GameData gameData, World world)
