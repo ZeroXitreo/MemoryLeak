@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.group9.collision;
 
 import data.Entity;
@@ -15,51 +10,54 @@ import movableentityparts.Position;
 import org.openide.util.lookup.ServiceProvider;
 import services.iPostEntityProcessingService;
 
-/**
- *
- * @author ZeroXitreo
- */
 @ServiceProvider(service = iPostEntityProcessingService.class)
-public class Collision implements iPostEntityProcessingService {
+public class Collision implements iPostEntityProcessingService
+{
+	@Override
+	public void process(GameData gameData, World world)
+	{
+		Collection<MovableEntity> movEntities = world.getGameMovableEntities();
+		for (MovableEntity movEntity : movEntities)
+		{
+			checkSingleCollision(movEntity, world);
+		}
+	}
 
-    public Collision() {
-    }
+	/**
+	 * Checks for the desired entity if it's touching any other entity; if it does it'll push the entity in order to create room for both of them
+	 * 
+	 * @param movEntity the entity to be moved (MovableEntity)
+	 * @param world the world which all the entities are in
+	 */
+	public void checkSingleCollision(MovableEntity movEntity, World world)
+	{
+		Collection<MovableEntity> movableEntities = world.getGameMovableEntities();
+		Collection<ImmovableEntity> immovableEntities = world.getGameImmovableEntities();
+		for (MovableEntity entity : movableEntities)
+		{
+			if (movEntity.equals(entity)) // Skips itself if that's what it found
+			{
+				continue;
+			}
 
-    // public void Collision()
-    @Override
-    public void process(GameData gameData, World world) {
-        Collection<MovableEntity> movEntities = world.getGameMovableEntities();
-        for (MovableEntity movEntity : movEntities) {
-            checkSingleCollision(movEntity, world);
-        }
-    }
+//			Position movEntityPos = movEntity.getPart(Position.class);
+//			Position entityPos = movEntity.getPart(Position.class);
 
-    public void checkSingleCollision(MovableEntity movEntity, World world) {
-        Collection<MovableEntity> movableEntities = world.getGameMovableEntities();
-        Collection<ImmovableEntity> immovableEntities = world.getGameImmovableEntities();
-        for (MovableEntity entity : movableEntities) {
-            if (movEntity.equals(entity)) {
-                continue;
-            }
-
-            Position movEntityPos = movEntity.getPart(Position.class);
-            Position entityPos = movEntity.getPart(Position.class);
-
-            /*if (!movableEl['isCircle'] && !solidEl['isCircle']) // is both squares?
+			/*if (!movableEl['isCircle'] && !solidEl['isCircle']) // is both squares?
 				{
 					var averageWidth = getAverage(movableEl['width'], solidEl['width']);
 					var averageHeight = getAverage(movableEl['height'], solidEl['height']);
 
 					SquareCollisionPush(movableEl, solidEl, averageWidth, averageHeight);
 				}/**/
-            if (true) //if (movableEl['isCircle'] && solidEl['isCircle']) // is both circles?
-            {
-                float totalRadius = movEntity.getRadius() + entity.getRadius();
-                //  System.out.println(totalRadius);
-                circleCollisionPush(movEntity, entity, totalRadius);
-            }
+			if (true) //if (movableEl['isCircle'] && solidEl['isCircle']) // is both circles?
+			{
+				float totalRadius = movEntity.getRadius() + entity.getRadius();
+				//  System.out.println(totalRadius);
+				circleCollisionPush(movEntity, entity, totalRadius);
+			}
 
-            /*if (movableEl['isCircle'] && !solidEl['isCircle'])
+			/*if (movableEl['isCircle'] && !solidEl['isCircle'])
 				{
 					var absDisX = Math.abs(movableEl['x'] - solidEl['x']);
 					var absDisY = Math.abs(movableEl['y'] - solidEl['y']);
@@ -100,143 +98,170 @@ public class Collision implements iPostEntityProcessingService {
 						CircleCollisionPush(movableEl, solidEl, solidEl['r'], movableOffsetX, movableOffsetY, true);
 					}
 				}/**/
-        }
-        for(ImmovableEntity immovableEntity : immovableEntities){
-            if (true) //if (movableEl['isCircle'] && solidEl['isCircle']) // is both circles?
-            {
-                float totalRadius = movEntity.getRadius() + immovableEntity.getRadius();
-                circleCollisionPush(movEntity, immovableEntity, totalRadius);
-            }
-        }
-    }
+		}
+		for (ImmovableEntity immovableEntity : immovableEntities)
+		{
+			if (true) //if (movableEl['isCircle'] && solidEl['isCircle']) // is both circles?
+			{
+				float totalRadius = movEntity.getRadius() + immovableEntity.getRadius();
+				circleCollisionPush(movEntity, immovableEntity, totalRadius);
+			}
+		}
+	}
 
-    private float getAverage(float x, float y) // Heh, why did I make this into a function?
-    {
-        return (x + y) / 2;
-    }
+//	private float getAverage(float x, float y) // Heh, why did I make this into a function?
+//	{
+//		return (x + y) / 2;
+//	}
 
-    private void squareCollisionPush(Entity movEntity, Entity entity, float averageWidth, float averageHeight) {
-        Position movEntityPos = movEntity.getPart(Position.class);
-        Position entityPos = movEntity.getPart(Position.class);
+//	private void squareCollisionPush(Entity movEntity, Entity entity, float averageWidth, float averageHeight)
+//	{
+//		Position movEntityPos = movEntity.getPart(Position.class);
+//		Position entityPos = movEntity.getPart(Position.class);
+//
+//		float disX = movEntityPos.getX() - entityPos.getX();
+//		float disY = movEntityPos.getY() - entityPos.getY();
+//
+//		float absDisX = Math.abs(disX);
+//		float absDisY = Math.abs(disY);
+//
+//		if (absDisX < averageWidth && absDisY < averageHeight) // does it collide?
+//		{
+//			float collisionX = averageWidth - absDisX;
+//			float collisionY = averageHeight - absDisY;
+//
+//			if (collisionX < collisionY) // Is collisionY bigger than collisionX?
+//			{
+//				movEntityPos.setX(movEntityPos.getX() + (disX == absDisX ? averageWidth : -averageWidth) - disX);
+//			}
+//			else
+//			{
+//				movEntityPos.setY(movEntityPos.getY() + (disY == absDisY ? averageHeight : -averageHeight) - disY);
+//			}
+//		}
+//	}
 
-        float disX = movEntityPos.getX() - entityPos.getX();
-        float disY = movEntityPos.getY() - entityPos.getY();
+	private void circleCollisionPush(MovableEntity pushedElement, Entity solidElement, float totalRadius)
+	{
+		circleCollisionPush(pushedElement, solidElement, totalRadius, 0, 0);
+	}
 
-        float absDisX = Math.abs(disX);
-        float absDisY = Math.abs(disY);
+	private void circleCollisionPush(MovableEntity pushedElement, Entity solidElement, float totalRadius, float solidOffsetX, float solidOffsetY)
+	{
+		circleCollisionPush(pushedElement, solidElement, totalRadius, solidOffsetX, solidOffsetY, true);
+	}
 
-        if (absDisX < averageWidth && absDisY < averageHeight) // does it collide?
-        {
-            float collisionX = averageWidth - absDisX;
-            float collisionY = averageHeight - absDisY;
+	private void circleCollisionPush(MovableEntity movEntity, Entity entity, float totalRadius, float solidOffsetX, float solidOffsetY, boolean reverseOffset)
+	{
+		Position movEntityPos = movEntity.getPart(Position.class);
+		Position entityPos = entity.getPart(Position.class);
 
-            if (collisionX < collisionY) // Is collisionY bigger than collisionX?
-            {
-                movEntityPos.setX(movEntityPos.getX() + (disX == absDisX ? averageWidth : -averageWidth) - disX);
-            } else {
-                movEntityPos.setY(movEntityPos.getY() + (disY == absDisY ? averageHeight : -averageHeight) - disY);
-            }
-        }
-    }
+		if (movEntityPos.getX() == entityPos.getX() && movEntityPos.getY() == entityPos.getY())
+		{
+			return;
+		}
 
-    private void circleCollisionPush(MovableEntity pushedElement, Entity solidElement, float totalRadius) {
-        circleCollisionPush(pushedElement, solidElement, totalRadius, 0, 0);
-    }
+		float movablePosX = movEntityPos.getX();
+		float movablePosY = movEntityPos.getY();
+		float solidPosX = entityPos.getX();
+		float solidPosY = entityPos.getY();
 
-    private void circleCollisionPush(MovableEntity pushedElement, Entity solidElement, float totalRadius, float solidOffsetX, float solidOffsetY) {
-        circleCollisionPush(pushedElement, solidElement, totalRadius, solidOffsetX, solidOffsetY, true);
-    }
+		if (!reverseOffset)
+		{
+			solidPosX += solidOffsetX;
+			solidPosY += solidOffsetY;
+		}
+		else
+		{
+			movablePosX += solidOffsetX;
+			movablePosY += solidOffsetY;
+		}
 
-    private void circleCollisionPush(MovableEntity movEntity, Entity entity, float totalRadius, float solidOffsetX, float solidOffsetY, boolean reverseOffset) {
-        Position movEntityPos = movEntity.getPart(Position.class);
-        Position entityPos = entity.getPart(Position.class);
+		float disX = movablePosX - solidPosX;
+		float disY = movablePosY - solidPosY;
 
-        if (movEntityPos.getX() == entityPos.getX() && movEntityPos.getY() == entityPos.getY()) {
-            return;
-        }
-
-        float movablePosX = movEntityPos.getX();
-        float movablePosY = movEntityPos.getY();
-        float solidPosX = entityPos.getX();
-        float solidPosY = entityPos.getY();
-
-        if (!reverseOffset) {
-            solidPosX += solidOffsetX;
-            solidPosY += solidOffsetY;
-        } else {
-            movablePosX += solidOffsetX;
-            movablePosY += solidOffsetY;
-        }
-
-        float disX = movablePosX - solidPosX;
-        float disY = movablePosY - solidPosY;
-
-        float disPoints = (float) Math.sqrt(Math.pow(disX, 2) + Math.pow(disY, 2));
-        if (totalRadius > disPoints) {
-            collisionDMG(movEntity, entity);
-            float angle_B = (float) Math.atan(disY / disX);
+		float disPoints = (float) Math.sqrt(Math.pow(disX, 2) + Math.pow(disY, 2));
+		if (totalRadius > disPoints)
+		{
+			collisionDMG(movEntity, entity);
+			float angle_B = (float) Math.atan(disY / disX);
 //            if(angle_B <=0){
 //                angle_B = 1f;
 //            }
-            float pushPos_b = (float) (Math.sin(angle_B) * (totalRadius - disPoints));
-            float pushPos_a = (float) (Math.cos(angle_B) * (totalRadius - disPoints));
+			float pushPos_b = (float) (Math.sin(angle_B) * (totalRadius - disPoints));
+			float pushPos_a = (float) (Math.cos(angle_B) * (totalRadius - disPoints));
 
-            movEntityPos.setX(movEntityPos.getX() + (movablePosX < solidPosX ? -pushPos_a : pushPos_a));
-            movEntityPos.setY(movEntityPos.getY() + (movablePosX < solidPosX ? -pushPos_b : pushPos_b));
-        }
-    }
+			movEntityPos.setX(movEntityPos.getX() + (movablePosX < solidPosX ? -pushPos_a : pushPos_a));
+			movEntityPos.setY(movEntityPos.getY() + (movablePosX < solidPosX ? -pushPos_b : pushPos_b));
+		}
+	}
 
-    /**
-     * Checks if the entities needs to take damage.
-     * @param entity1 MovableEntity colliding with entity2.
-     * @param entity2 Entity colliding with eneity1.
-     */
-    private void collisionDMG(MovableEntity entity1, Entity entity2) {
-        //if one of the entities is an enemy and the other one isn't an enemy
-        //or an enemyBullet.
-        if (entity1.getType().equalsEnemy()
-                && !entity2.getType().equalsEnemy()
-                && !entity2.getType().equalsEnemyBullet()) {
-            entity2.setHit(true);
-        } else if (entity2.getType().equalsEnemy()
-                && !entity1.getType().equalsEnemy()
-                && !entity1.getType().equalsEnemyBullet()) {
-            entity1.setHit(true);
-        }
-        //if one of the entities is a friendlyBullet and the other one
-        //isn't a player or a bullet.
-        if (entity1.getType().equalsFriendlyBullet()
-                && !entity2.getType().equalsFriendlyBullet()
-                && !entity2.getType().equalsPlayer()
-                && !entity2.getType().equalsEnemyBullet()) {
-            entity2.setHit(true);
-        } else if (entity2.getType().equalsFriendlyBullet()
-                && !entity1.getType().equalsFriendlyBullet()
-                && !entity1.getType().equalsPlayer()
-                && !entity1.getType().equalsEnemyBullet()) {
-            entity1.setHit(true);
-        }
-        //if one of the entities is an enemyBullet and the other one is player.
-        //if one of the entities is a bullet and the other one
-        //isn't an enemy or a bullet.
-        if (entity1.getType().equalsEnemyBullet()
-                && entity2.getType().equalsPlayer()) {
-            entity1.setHit(true);
-            entity2.setHit(true);
-        } else if (entity2.getType().equalsEnemyBullet()
-                && entity1.getType().equalsPlayer()){
-            entity1.setHit(true);
-            entity2.setHit(true);
-        } else if (entity1.getType().equalsEnemyBullet()
-                && !entity2.getType().equalsEnemyBullet()
-                && !entity2.getType().equalsEnemy()
-                && !entity2.getType().equalsFriendlyBullet()) {
-            entity2.setHit(true);
-        } else if (entity2.getType().equalsEnemyBullet()
-                && !entity1.getType().equalsEnemyBullet()
-                && !entity1.getType().equalsEnemy()
-                && !entity1.getType().equalsFriendlyBullet()) {
-            entity1.setHit(true);
-        }
-    }
+	/**
+	 * Checks if the entities needs to take damage.
+	 *
+	 * @param entity1 MovableEntity colliding with entity2.
+	 * @param entity2 Entity colliding with eneity1.
+	 */
+	private void collisionDMG(MovableEntity entity1, Entity entity2)
+	{
+		//if one of the entities is an enemy and the other one isn't an enemy
+		//or an enemyBullet.
+		if (entity1.getType().equalsEnemy()
+				&& !entity2.getType().equalsEnemy()
+				&& !entity2.getType().equalsEnemyBullet())
+		{
+			entity2.setHit(true);
+		}
+		else if (entity2.getType().equalsEnemy()
+				&& !entity1.getType().equalsEnemy()
+				&& !entity1.getType().equalsEnemyBullet())
+		{
+			entity1.setHit(true);
+		}
+		//if one of the entities is a friendlyBullet and the other one
+		//isn't a player or a bullet.
+		if (entity1.getType().equalsFriendlyBullet()
+				&& !entity2.getType().equalsFriendlyBullet()
+				&& !entity2.getType().equalsPlayer()
+				&& !entity2.getType().equalsEnemyBullet())
+		{
+			entity2.setHit(true);
+		}
+		else if (entity2.getType().equalsFriendlyBullet()
+				&& !entity1.getType().equalsFriendlyBullet()
+				&& !entity1.getType().equalsPlayer()
+				&& !entity1.getType().equalsEnemyBullet())
+		{
+			entity1.setHit(true);
+		}
+		//if one of the entities is an enemyBullet and the other one is player.
+		//if one of the entities is a bullet and the other one
+		//isn't an enemy or a bullet.
+		if (entity1.getType().equalsEnemyBullet()
+				&& entity2.getType().equalsPlayer())
+		{
+			entity1.setHit(true);
+			entity2.setHit(true);
+		}
+		else if (entity2.getType().equalsEnemyBullet()
+				&& entity1.getType().equalsPlayer())
+		{
+			entity1.setHit(true);
+			entity2.setHit(true);
+		}
+		else if (entity1.getType().equalsEnemyBullet()
+				&& !entity2.getType().equalsEnemyBullet()
+				&& !entity2.getType().equalsEnemy()
+				&& !entity2.getType().equalsFriendlyBullet())
+		{
+			entity2.setHit(true);
+		}
+		else if (entity2.getType().equalsEnemyBullet()
+				&& !entity1.getType().equalsEnemyBullet()
+				&& !entity1.getType().equalsEnemy()
+				&& !entity1.getType().equalsFriendlyBullet())
+		{
+			entity1.setHit(true);
+		}
+	}
 }
