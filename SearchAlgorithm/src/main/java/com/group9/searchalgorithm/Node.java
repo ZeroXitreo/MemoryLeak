@@ -2,8 +2,8 @@ package com.group9.searchalgorithm;
 
 public class Node
 {
-	private final int x;
-	private final int y;
+	private final int X;
+	private final int Y;
 	private double hValue;
 	private double fValue;
 	private Node parent;
@@ -16,8 +16,8 @@ public class Node
 	 */
 	protected Node(int x, int y)
 	{
-		this.x = x;
-		this.y = y;
+		this.X = x;
+		this.Y = y;
 	}
 
 	/**
@@ -25,7 +25,7 @@ public class Node
 	 */
 	protected int getX()
 	{
-		return x;
+		return X;
 	}
 
 	/**
@@ -33,7 +33,7 @@ public class Node
 	 */
 	protected int getY()
 	{
-		return y;
+		return Y;
 	}
 
 	/**

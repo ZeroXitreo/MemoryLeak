@@ -18,15 +18,15 @@ import services.iEntityProcessingService;
 @ServiceProvider(service = iEntityProcessingService.class)
 public class SearchAlgorithm implements iEntityProcessingService
 {
-	int width;
-	int height;
-	int gridDensity = 16;
+	private int width;
+	private int height;
+	private int gridDensity = 16;
 
-	static ArrayList<MovableEntity> enemies = new ArrayList();
-	static HashMap<MovableEntity, ArrayList<Node>> enemyPaths = new HashMap();
+	private static ArrayList<MovableEntity> enemies = new ArrayList();
+	private static HashMap<MovableEntity, ArrayList<Node>> enemyPaths = new HashMap();
 
-	MovableEntity player;
-	boolean[][] randomlyGenMatrix;
+	private MovableEntity player;
+	private boolean[][] randomlyGenMatrix;
 
 	@Override
 	public void process(GameData gameData, World world)
@@ -196,14 +196,14 @@ public class SearchAlgorithm implements iEntityProcessingService
 	 * Generates the HValue of the grid which
 	 *
 	 * @param grid parses the grid which will be generated HValues from
-	 * @param ay Starting point's x value
-	 * @param ax Starting point's y value
-	 * @param by Ending point's x value
-	 * @param bx Ending point's y value
+	 * @param startY Starting point's x value
+	 * @param startX Starting point's y value
+	 * @param endY Ending point's x value
+	 * @param endX Ending point's y value
 	 * @param pathList to be parsed to another method, allowing the path to be
 	 * generated and stores in pathList
 	 */
-	public void generateHValue(boolean grid[][], int ay, int ax, int by, int bx, ArrayList<Node> pathList)
+	public void generateHValue(boolean[][] grid, int startY, int startX, int endY, int endX, ArrayList<Node> pathList)
 	{
 		//Creation of a Node type 2D array
 		Node[][] cell = new Node[grid.length][grid[0].length];
@@ -214,24 +214,24 @@ public class SearchAlgorithm implements iEntityProcessingService
 			{
 				cell[y][x] = new Node(x, y);
 				//Checks whether a cell is Blocked or Not by checking the boolean value
-				cell[y][x].setHValue(grid[y][x] ? Math.abs(y - by) + Math.abs(x - bx) : -1);
+				cell[y][x].setHValue(grid[y][x] ? Math.abs(y - endY) + Math.abs(x - endX) : -1);
 			}
 		}
-		generatePath(ax, ay, bx, by, pathList, cell);
+		generatePath(startX, startY, endX, endY, pathList, cell);
 	}
 
 	/**
 	 * Generate the path for the given pathList
 	 *
-	 * @param Ay Starting point's x value
-	 * @param Ax Starting point's y value
-	 * @param By Ending point's x value
-	 * @param Bx Ending point's y value
+	 * @param startY Starting point's x value
+	 * @param startX Starting point's y value
+	 * @param endY Ending point's x value
+	 * @param endX Ending point's y value
 	 * @param pathList The pathlist which is to be filled
 	 * @param cell the cells which are to be searched in order to generate a
 	 * path
 	 */
-	public void generatePath(int Ax, int Ay, int Bx, int By, ArrayList<Node> pathList, Node[][] cell)
+	public void generatePath(int startX, int startY, int endX, int endY, ArrayList<Node> pathList, Node[][] cell)
 	{
 		ArrayList<Node> closedList = new ArrayList();
 
@@ -247,7 +247,7 @@ public class SearchAlgorithm implements iEntityProcessingService
 		});
 
 		//Adds the Starting cell inside the openList
-		openList.add(cell[Ay][Ax]);
+		openList.add(cell[startY][startX]);
 
 		//Executes the rest if there are objects left inside the PriorityQueue
 		while (true)
@@ -263,7 +263,7 @@ public class SearchAlgorithm implements iEntityProcessingService
 
 			// Checks if whether the node returned is having the same node object values of the ending point
 			// If it des then stores that inside the closedList and breaks the while loop
-			if (node == cell[By][Bx])
+			if (node == cell[endY][endX])
 			{
 				closedList.add(node);
 				break;
@@ -326,6 +326,6 @@ public class SearchAlgorithm implements iEntityProcessingService
 			endNode = endNode.getParent();
 		}
 
-		pathList.add(cell[Ay][Ax]);
+		pathList.add(cell[startY][startX]);
 	}
 }

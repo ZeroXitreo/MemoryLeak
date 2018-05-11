@@ -13,18 +13,18 @@ import movableentityparts.iWeapon;
  */
 public class World {
 
-    private final Map<String, ImmovableEntity> immovableEntityMap = new ConcurrentHashMap<>();
-    private final Map<String, MovableEntity> movableEntityMap = new ConcurrentHashMap<>();
-    private final Map<String, iWeapon> weaponMap = new ConcurrentHashMap<>();
-    private final Map<String, MovableEntity> gameMovableEntities = new ConcurrentHashMap<>();
-    private final Map<String, ImmovableEntity> gameImmovableEntities = new ConcurrentHashMap<>();
+    private final Map<String, ImmovableEntity>  IMMOVABLEENTITYMAP = new ConcurrentHashMap<>();
+    private final Map<String, MovableEntity> MOVABLEENTITYMAP = new ConcurrentHashMap<>();
+    private final Map<String, iWeapon> WEAPONMAP = new ConcurrentHashMap<>();
+    private final Map<String, MovableEntity> GAMEMOVABLEENTITIES = new ConcurrentHashMap<>();
+    private final Map<String, ImmovableEntity> GAMEIMMOVABLEENTITIES = new ConcurrentHashMap<>();
 
     /**
-     * Adds an ImmovableEntity to the immovableEntityMap.
+     * Adds an ImmovableEntity to the IMMOVABLEENTITYMAP.
      * @param immovableEntity The ImmovableEntity to be added.
      */
     public void addImmovableEntity(ImmovableEntity immovableEntity) {
-        immovableEntityMap.put(immovableEntity.getID(), immovableEntity);
+        IMMOVABLEENTITYMAP.put(immovableEntity.getID(), immovableEntity);
     }
 
     /**
@@ -32,7 +32,7 @@ public class World {
      * @param movableEntity The MovableEntity to be added.
      */
     public void addMovableEntity(MovableEntity movableEntity) {
-        movableEntityMap.put(movableEntity.getID(), movableEntity);
+        MOVABLEENTITYMAP.put(movableEntity.getID(), movableEntity);
     }
 
     /**
@@ -41,7 +41,7 @@ public class World {
      * @param weapon The Weapon to be added.
      */
     public void addWeapon(iWeapon weapon) {
-        weaponMap.put(weapon.getWeaponName(), weapon);
+        WEAPONMAP.put(weapon.getWeaponName(), weapon);
     }
 
     /**
@@ -49,7 +49,7 @@ public class World {
      * @param movableEntity The Entity to be added to the game.
      */
     public void addGameMovableEntity(MovableEntity movableEntity) {
-        gameMovableEntities.put(movableEntity.getID(), movableEntity);
+        GAMEMOVABLEENTITIES.put(movableEntity.getID(), movableEntity);
     }
 
     /**
@@ -57,7 +57,7 @@ public class World {
      * @param immovableEntity The Entity to be added to the game.
      */
     public void addGameImmovableEntity(ImmovableEntity immovableEntity) {
-        gameImmovableEntities.put(immovableEntity.getID(), immovableEntity);
+        GAMEIMMOVABLEENTITIES.put(immovableEntity.getID(), immovableEntity);
     }
 
     /**
@@ -65,7 +65,7 @@ public class World {
      * @param immovableEntity The entity to be removed.
      */
     public void removeImmovableEntity(ImmovableEntity immovableEntity) {
-        immovableEntityMap.remove(immovableEntity.getID());
+        IMMOVABLEENTITYMAP.remove(immovableEntity.getID());
     }
 
     /**
@@ -73,7 +73,7 @@ public class World {
      * @param movableEntity The entity to be removed.
      */
     public void removeMovableEntity(MovableEntity movableEntity) {
-        movableEntityMap.remove(movableEntity.getID());
+        MOVABLEENTITYMAP.remove(movableEntity.getID());
     }
 
     /**
@@ -81,7 +81,7 @@ public class World {
      * @param weapon The weapon to be removed.
      */
     public void removeWeapon(iWeapon weapon) {
-        weaponMap.remove(weapon.getWeaponName());
+        WEAPONMAP.remove(weapon.getWeaponName());
     }
     
     /**
@@ -89,7 +89,7 @@ public class World {
      * @param movableEntity The entity to be removed from the game.
      */
     public void removeGameMovableEntity(MovableEntity movableEntity) {
-        gameMovableEntities.remove(movableEntity.getID());
+        GAMEMOVABLEENTITIES.remove(movableEntity.getID());
     }
 
     /**
@@ -97,7 +97,7 @@ public class World {
      * @param immovableEntity The entity to be removed from the game.
      */
     public void removeGameImmovableEntity(ImmovableEntity immovableEntity) {
-        gameImmovableEntities.remove(immovableEntity.getID());
+        GAMEIMMOVABLEENTITIES.remove(immovableEntity.getID());
     }
 
     /**
@@ -105,7 +105,7 @@ public class World {
      * @return Collection of immovableEntities.
      */
     public Collection<ImmovableEntity> getImmovableEntities() {
-        return immovableEntityMap.values();
+        return IMMOVABLEENTITYMAP.values();
     }
 
     /**
@@ -113,7 +113,7 @@ public class World {
      * @return Collection of movableEntities.
      */
     public Collection<MovableEntity> getMovableEntities() {
-        return movableEntityMap.values();
+        return MOVABLEENTITYMAP.values();
     }
 
     /**
@@ -121,7 +121,7 @@ public class World {
      * @return Collection of weapons.
      */
     public Collection<iWeapon> getWeapons() {
-        return weaponMap.values();
+        return WEAPONMAP.values();
     }
 
     /**
@@ -129,7 +129,7 @@ public class World {
      * @return Collection of game movableEntities.
      */
     public Collection<MovableEntity> getGameMovableEntities() {
-        return gameMovableEntities.values();
+        return GAMEMOVABLEENTITIES.values();
     }
 
     /**
@@ -137,7 +137,7 @@ public class World {
      * @return Collection of game ImmovableEntities.
      */
     public Collection<ImmovableEntity> getGameImmovableEntities() {
-        return gameImmovableEntities.values();
+        return GAMEIMMOVABLEENTITIES.values();
     }
 
     /**
