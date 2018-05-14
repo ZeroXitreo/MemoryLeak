@@ -1,6 +1,7 @@
 package group9.core;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 import data.GameData;
 import data.World;
 import group9.manager.GameInputProcessor;
@@ -26,8 +27,13 @@ public class MemoryLeak extends Game {
         gameData.setMoveAreaWidthMin(68);
         gameData.setMoveAreaHeightMin(64);
         gameData.setMoveAreaHeightMax(gameData.getDisplayHeight() - 45);
-        ParentScreen.getInstance(this, world, gameData, gip);
-        this.setScreen(new MenuScreen());
+        try {
+            ParentScreen.getInstance(this, world, gameData, gip);
+            this.setScreen(new MenuScreen());
+        } catch (GdxRuntimeException e) {
+            System.out.println(e);
+        }
+
     }
 
     @Override

@@ -14,11 +14,11 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.List.ListStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 import data.GameData;
 import data.World;
 import group9.manager.GameInputProcessor;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -87,7 +87,7 @@ public class ParentScreen {
         }
     };
 
-    public ParentScreen(Game game, World world, GameData gameData, GameInputProcessor gip) {
+    public ParentScreen(Game game, World world, GameData gameData, GameInputProcessor gip) throws GdxRuntimeException {
         this.game = game;
         this.world = world;
         this.gameData = gameData;
@@ -312,6 +312,7 @@ public class ParentScreen {
 
     /**
      * Gets the MenuBackground
+     *
      * @return Image used for the menu background.
      */
     public Image getMenuBackground() {
@@ -320,6 +321,7 @@ public class ParentScreen {
 
     /**
      * Gets the lava.
+     *
      * @return TextureAtlas of the lava graphics.
      */
     public TextureAtlas getLava() {
@@ -328,6 +330,7 @@ public class ParentScreen {
 
     /**
      * Gets the MemoryLeakPack.
+     *
      * @return TextureAtlas of most of the memoryleak graphics.
      */
     public TextureAtlas getMemoryLeakPack() {
@@ -336,6 +339,7 @@ public class ParentScreen {
 
     /**
      * Gets the button skin.
+     *
      * @return Skin for Buttons.
      */
     public Skin getButtonSkin() {
@@ -344,6 +348,7 @@ public class ParentScreen {
 
     /**
      * Gets the Font.
+     *
      * @return BitmapFont used for text.
      */
     public BitmapFont getFont() {
@@ -352,6 +357,7 @@ public class ParentScreen {
 
     /**
      * Gets the ListSkin
+     *
      * @return Skin for the List.
      */
     public Skin getListSkin() {
@@ -360,6 +366,7 @@ public class ParentScreen {
 
     /**
      * Gets the ListAtlas.
+     *
      * @return TextureArlas for the List.
      */
     public TextureAtlas getListAtlas() {
@@ -368,6 +375,7 @@ public class ParentScreen {
 
     /**
      * Gets the ListStyle.
+     *
      * @return ListStyle.
      */
     public ListStyle getListStyle() {
@@ -376,6 +384,7 @@ public class ParentScreen {
 
     /**
      * Gets the ScollPaneSkin.
+     *
      * @return Skin - ScrollPane
      */
     public Skin getScrollPaneSkin() {
@@ -384,6 +393,7 @@ public class ParentScreen {
 
     /**
      * Return the path to the assets.
+     *
      * @param path The path created from "new File("").getAbsolutePath();".
      * @return String path to the assets.
      */
