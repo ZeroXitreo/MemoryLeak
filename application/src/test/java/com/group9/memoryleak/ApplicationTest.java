@@ -54,8 +54,8 @@ public class ApplicationTest extends NbTestCase {
         copy(get(REMOVE_MODULES_UPDATES_FILE), get(ORIGINAL_UPDATES_FILE), REPLACE_EXISTING);
         waitForUpdate(processors, plugins, postProcessors, 10000);
 
-        // ASSERTS: Modules loaded
-        //Size should be 6 plugins, 7 processors, and 2 post processors.
+        // ASSERTS: Modules unloaded
+        //Size should be 0 plugins, 0 processors, and 0 post processors.
         assertEquals("Six plugins", 0, plugins.size());
         assertEquals("Seven processors", 0, processors.size());
         assertEquals("Two post processors", 0, postProcessors.size());
