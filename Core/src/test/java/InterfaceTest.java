@@ -82,7 +82,7 @@ public class InterfaceTest {
     }
 
     @Test
-    public void IPostEntity() {
+    public void IPostEntityTest() {
         //Check if the lookup can find the services
         assertTrue(!lookup.lookupAll(iPostEntityProcessingService.class).isEmpty());
 
