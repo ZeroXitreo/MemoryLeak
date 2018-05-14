@@ -185,7 +185,7 @@ public class SetupScreen implements Screen {
                     } else if (entityMap.get(entityList.getSelected()) instanceof ImmovableEntity) {
                         ParentScreen.getWorld().removeGameImmovableEntity((ImmovableEntity) entityMap.get(entityList.getSelected()));
                     }
-                } catch (NullPointerException e){
+                } catch (NullPointerException e) {
                     messageToUser = "No Entities To Remove";
                 }
 
@@ -210,20 +210,20 @@ public class SetupScreen implements Screen {
         addWeaponButton.addListener(new InputListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                try{
                 for (MovableEntity entity : parentScreen.getWorld().getMovableEntities()) {
                     if (entity instanceof Player) {
-                        for (iWeapon wep : parentScreen.getWorld().getWeapons()) {
-                            if (wep.getWeaponName().equalsIgnoreCase(weaponList.getSelected())) {
-                                WeaponPart temp = entity.getPart(WeaponPart.class);
-                                temp.setWeapon(wep);
-                                messageToUser = "Weapon selected: " + weaponList.getSelected();
+                        try {
+                            for (iWeapon wep : parentScreen.getWorld().getWeapons()) {
+                                if (wep.getWeaponName().equalsIgnoreCase(weaponList.getSelected())) {
+                                    WeaponPart temp = entity.getPart(WeaponPart.class);
+                                    temp.setWeapon(wep);
+                                    messageToUser = "Weapon selected: " + weaponList.getSelected();
+                                }
                             }
+                        } catch (NullPointerException e) {
+                            messageToUser = "No Weapons";
                         }
                     }
-                }
-                }catch(NullPointerException e){
-                    messageToUser = "No Weapons";
                 }
             }
 

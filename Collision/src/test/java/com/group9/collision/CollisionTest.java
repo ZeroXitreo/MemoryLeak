@@ -46,10 +46,6 @@ public class CollisionTest {
 
         gameData.setDisplayHeight(540);
         gameData.setDisplayWidth(960);
-        //gameData.setMoveAreaHeightMax(gameData.getDisplayHeight());
-        //gameData.setMoveAreaHeightMin(0);
-        //gameData.setMoveAreaWidthMax(gameData.getDisplayWidth());
-        //gameData.setMoveAreaWidthMin(0);
 
         player = new Player();
         enemy = new Slime();
