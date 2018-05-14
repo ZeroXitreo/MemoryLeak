@@ -45,7 +45,7 @@ public class ApplicationTest extends NbTestCase {
         waitForUpdate(processors, plugins, postProcessors, 10000);
 
         //Modules loaded
-        //Size should be 6 plugins, 7 processors, and 2 post processors.
+        //Size should be 6 plugins, 8 processors, and 2 post processors.
         assertEquals("Six plugins", 6, plugins.size());
         assertEquals("Seven processors", 8, processors.size());
         assertEquals("Two post processors", 2, postProcessors.size());
@@ -66,7 +66,7 @@ public class ApplicationTest extends NbTestCase {
         waitForUpdate(processors, plugins, postProcessors, 10000);
 
         // ASSERTS: Modules Loaded
-        //Size should be 6 plugins, 7 processors, and 2 post processors.
+        //Size should be 6 plugins, 8 processors, and 2 post processors.
         assertEquals("Zero plugins", 6, plugins.size());
         assertEquals("Zero processors", 8, processors.size());
         assertEquals("Zero post processors", 2, postProcessors.size());
