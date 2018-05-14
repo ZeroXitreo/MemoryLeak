@@ -108,9 +108,10 @@ public class CollisionTest {
 
         float playerNewX = playerposition.getX();
         float playerNewY = playerposition.getY();
-        
+
         System.out.println("TESTING PLAYER RELOCATION");
-        System.out.println("OLD X: " + playerX + "\t\tOLD Y: " + playerY + "\nNEW X: " + playerNewX + "\tNEW Y: " + playerNewY);
+        System.out.println("OLD X: " + playerX + "\t\tOLD Y: " + playerY
+                + "\nNEW X: " + playerNewX + "\tNEW Y: " + playerNewY);
         assertTrue(playerX != playerNewX && playerY != playerNewY);
 
         //Test enemy has been relocated
@@ -120,7 +121,8 @@ public class CollisionTest {
         float enemyNewX = enemyposition.getX();
         float enemyNewY = enemyposition.getY();
         System.out.println("TESTING ENEMY RELOCATION");
-        System.out.println("OLD X: " + enemyX + "\t\tOLD Y: " + enemyY + "\nNEW X: " + enemyNewX + "\tNEW Y: " + enemyNewY);
+        System.out.println("OLD X: " + enemyX + "\t\tOLD Y: " + enemyY
+                + "\nNEW X: " + enemyNewX + "\tNEW Y: " + enemyNewY);
         assertTrue(enemyX != enemyNewX && enemyY != enemyNewY);
 
     }
