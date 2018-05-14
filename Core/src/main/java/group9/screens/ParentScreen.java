@@ -51,7 +51,6 @@ public class ParentScreen {
     private TextureAtlas listAtlas;
     private TextureAtlas lava;
     private TextureAtlas memoryLeakPack;
-    private TextureAtlas scrollAtlas;
     private ListStyle listStyle;
     private BitmapFont font;
     private String scrollPaneSkinPath;
@@ -137,7 +136,6 @@ public class ParentScreen {
         music.setVolume(0.3f);
         music.setLooping(true);
         scrollPaneSkin = am.get(scrollPaneSkinPath, Skin.class);
-        scrollAtlas = am.get(scrollAtlasPath, TextureAtlas.class);
         setResult();
     }
 
