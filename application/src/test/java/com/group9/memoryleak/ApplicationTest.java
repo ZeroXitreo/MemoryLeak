@@ -56,9 +56,9 @@ public class ApplicationTest extends NbTestCase {
 
         // ASSERTS: Modules unloaded
         //Size should be 0 plugins, 0 processors, and 0 post processors.
-        assertEquals("Six plugins", 0, plugins.size());
-        assertEquals("Seven processors", 0, processors.size());
-        assertEquals("Two post processors", 0, postProcessors.size());
+        assertEquals("Zero plugins", 0, plugins.size());
+        assertEquals("Zero processors", 0, processors.size());
+        assertEquals("Zero post processors", 0, postProcessors.size());
 
         // TEST: Load Modules via UC
         copy(get(ADD_MODULES_UPDATES_FILE), get(ORIGINAL_UPDATES_FILE), REPLACE_EXISTING);
@@ -67,9 +67,9 @@ public class ApplicationTest extends NbTestCase {
 
         // ASSERTS: Modules Loaded
         //Size should be 6 plugins, 8 processors, and 2 post processors.
-        assertEquals("Zero plugins", 6, plugins.size());
-        assertEquals("Zero processors", 8, processors.size());
-        assertEquals("Zero post processors", 2, postProcessors.size());
+        assertEquals("Six plugins", 6, plugins.size());
+        assertEquals("Eight processors", 8, processors.size());
+        assertEquals("Two post processors", 2, postProcessors.size());
     }
 
     private void waitForUpdate(List<iEntityProcessingService> processors, List<iGamePluginServices> plugins, List<iPostEntityProcessingService> postProcessors, long millis) throws InterruptedException {
