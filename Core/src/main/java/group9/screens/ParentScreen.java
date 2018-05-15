@@ -399,7 +399,6 @@ public class ParentScreen {
      */
     public String getAssetPath(String path) {
         int stopHere = 0;
-        boolean oneMore = false;
         String[] section = path.split("\\\\");
         for (int i = section.length - 1; i >= 0; i--) {
             if (section[i].equals("MemoryLeak")) {
