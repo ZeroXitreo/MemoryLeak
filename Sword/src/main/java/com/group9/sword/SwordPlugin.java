@@ -15,6 +15,7 @@ import movableentityparts.HealthPart;
 import movableentityparts.Move;
 import movableentityparts.Position;
 import movableentityparts.Timer;
+import movableentityparts.WeaponPart;
 import movableentityparts.iWeapon;
 import org.openide.util.lookup.ServiceProvider;
 import services.iGamePluginServices;
@@ -73,8 +74,17 @@ public class SwordPlugin implements iWeapon, iGamePluginServices {
     @Override
     public void stop(GameData gameData, World world) {
         world.removeWeapon(this);
+        for (MovableEntity entity : world.getGameMovableEntities()) {
+            WeaponPart weapon = entity.getPart(WeaponPart.class);
+            try {
+                weapon.removeWeapon("Flail");
+            } catch (NullPointerException e) {
+
+            }
+
+        }
         for (MovableEntity flail : world.getGameMovableEntities(Sword.class)) {
-            world.removeGameMovableEntity(flail);
+            world.removeMovableEntity(flail);
         }
 
     }

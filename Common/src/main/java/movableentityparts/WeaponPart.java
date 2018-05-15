@@ -27,10 +27,10 @@ public class WeaponPart implements EntityPart {
 
         endTime = System.currentTimeMillis();
         if (endTime - startTime >= cooldown && weapon != null) { //check for cooldown and if there is a weapon
-            
+
             cooldown = weapon.getCooldown();
 
-            if (entity.getShoot()) {                
+            if (entity.getShoot()) {
                 weapon.createProjectile(entity);
             }
             entity.setShoot(false);
@@ -49,8 +49,10 @@ public class WeaponPart implements EntityPart {
     /**
      * removes the weapon.
      */
-    public void removeWeapon() {
-        weapon = null;
+    public void removeWeapon(String weaponName) {
+        if (weaponName.equalsIgnoreCase(weapon.getWeaponName())) {
+            weapon = null;
+        }
     }
 
 }

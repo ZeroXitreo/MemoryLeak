@@ -15,6 +15,7 @@ import movableentityparts.HealthPart;
 import movableentityparts.Move;
 import movableentityparts.Position;
 import movableentityparts.Timer;
+import movableentityparts.WeaponPart;
 import org.openide.util.lookup.ServiceProvider;
 import services.iGamePluginServices;
 import movableentityparts.iWeapon;
@@ -73,8 +74,18 @@ public class FireballPlugin implements iWeapon, iGamePluginServices {
     @Override
     public void stop(GameData gameData, World world) {
         world.removeWeapon(this);
-        for(MovableEntity fireball : world.getGameMovableEntities(Fireball.class)){
+        for (MovableEntity entity : world.getGameMovableEntities()) {
+            WeaponPart weapon = entity.getPart(WeaponPart.class);
+            try {
+                weapon.removeWeapon("Fireball");
+            } catch (NullPointerException e) {
+                
+            }
+
+        }
+        for (MovableEntity fireball : world.getGameMovableEntities(Fireball.class)) {
             world.removeMovableEntity(fireball);
         }
+
     }
 }
