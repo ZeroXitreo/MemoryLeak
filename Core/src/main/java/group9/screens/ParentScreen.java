@@ -402,12 +402,8 @@ public class ParentScreen {
         boolean oneMore = false;
         String[] section = path.split("\\\\");
         for (int i = section.length - 1; i >= 0; i--) {
-            if (section[i].equalsIgnoreCase("MemoryLeak")) {
-                if (oneMore) {
-                    stopHere = i;
-                    break;
-                }
-                oneMore = true;
+            if (section[i].equals("MemoryLeak")) {
+                stopHere = i;
             }
         }
         String truePath = "";
