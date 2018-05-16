@@ -6,7 +6,7 @@ import movableentityparts.Type;
  *
  * @author Jorge Báez Garrido
  */
-public abstract class MovableEntity extends Entity {
+public class MovableEntity extends Entity {
 
     private float direction = 0;
     private float shootingDirection = 0;
